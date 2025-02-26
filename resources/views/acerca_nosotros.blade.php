@@ -63,10 +63,39 @@
             list-style-type: none;
             padding: 0;
         }
+
+        /* Estilos para el botón de regreso */
+        .back-button-container {
+            position: fixed;
+            top: 50px; /* Posición más intermedia */
+            right: 50px; /* Posición más intermedia */
+            z-index: 2; /* Asegúrate de que esté sobre otros elementos */
+        }
+
+        .back-button {
+            background-color: rgba(255, 255, 255, 0.2); /* Color de fondo más suave */
+            color: #fff; /* Color del texto */
+            border: none;
+            padding: 8px 15px; /* Tamaño del botón */
+            font-size: 14px; /* Tamaño del texto */
+            cursor: pointer; /* Cursor en forma de puntero */
+            border-radius: 5px; /* Redondea las esquinas */
+            transition: background-color 0.3s ease; /* Transición suave al hacer hover */
+        }
+
+        .back-button:hover {
+            background-color: rgba(255, 255, 255, 0.4); /* Color al hacer hover */
+        }
     </style>
 </head>
 <body>
     <div class="overlay"></div>
+
+    <div class="back-button-container">
+        <a href="javascript:history.back()">
+            <button type="button" class="back-button">Regresar</button>
+        </a>
+    </div>
 
     <div class="container">
         <h1>Acerca de WoodWise</h1>
