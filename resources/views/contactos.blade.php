@@ -6,24 +6,24 @@
     <title>Contactos - WoodWise</title>
     <link rel="stylesheet" href="{{ asset('node_modules/bootstrap/dist/css/bootstrap.min.css') }}">
     <style>
-        /* Estilos generales */
+        
         body {
             margin: 0;
             padding: 0;
             height: 90vh;
-            background-image: url('{{ asset("images/acerca.jpg") }}'); /* Ruta correcta a la imagen dentro de la carpeta public */
+            background-image: url('{{ asset("images/acerca.jpg") }}'); 
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             font-family: Arial, sans-serif;
         }
 
-        /* Contenedor principal */
+        
         .container-content {
             text-align: center;
             z-index: 1;
             padding: 50px 15px;
-            max-width: 100%; /* Asegura que no se desborde */
+            max-width: 100%; 
         }
 
         h1 {
@@ -34,7 +34,7 @@
             color: white;
         }
 
-        /* Estilos para la información de contacto */
+        
         .contact-info {
             background: rgba(255, 255, 255, 0.15);
             padding: 30px;
@@ -43,7 +43,7 @@
             color: #fff;
             margin-bottom: 30px;
             max-width: 600px;
-            margin: 0 auto; /* Centrado horizontal */
+            margin: 0 auto; 
         }
 
         .contact-info h2 {
@@ -55,36 +55,36 @@
             font-size: 1.2em;
         }
 
-        /* Estilos para el formulario de contacto */
+       
         .contact-form {
             background: rgba(255, 255, 255, 0.15);
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             color: #fff;
-            max-width: 600px; /* Limitar el ancho del formulario */
-            margin: 0 auto; /* Centrado horizontal */
+            max-width: 600px; 
+            margin: 0 auto;
         }
 
-       /* Estilos para los campos de texto */
+       
 .contact-form input, .contact-form textarea {
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
-    border: 2px solid white;  /* Cambio aquí: borde blanco */
+    border: 2px solid white;  
     border-radius: 4px;
-    background-color: transparent;  /* Cambio aquí: fondo transparente */
-    color: white;  /* Para que el texto sea blanco */
+    background-color: transparent;  
+    color: white;  
 }
 
         
 
-        /* Estilos para el botón de regresar */
+        
         .back-button {
-            background-color: transparent; /* Elimina el fondo */
-            color: white; /* Color del texto */
+            background-color: transparent; 
+            color: white; 
             padding: 12px 30px;
-            border: 2px solid white; /* Contorno blanco */
+            border: 2px solid white; 
             border-radius: 30px;
             font-size: 1.2em;
             cursor: pointer;
@@ -92,29 +92,29 @@
         }
 
         .back-button:hover {
-            background-color: transparent; /* Mantiene el fondo transparente al pasar el ratón */
-            border-color: #3498db; /* Cambia el color del borde al pasar el ratón */
-            color: #3498db; /* Cambia el color del texto al pasar el ratón */
+            background-color: transparent; 
+            border-color: #3498db;
+            color: #3498db; 
         }
 
-        /* Estilos para el botón de enviar mensaje */
+        
         .contact-form button {
-            background-color: transparent; /* Elimina el fondo */
-            color: white; /* Color del texto */
+            background-color: transparent; 
+            color: white; 
             padding: 12px 30px;
-            border: 2px solid white; /* Contorno blanco */
+            border: 2px solid white; 
             border-radius: 30px;
             font-size: 1.2em;
             cursor: pointer;
         }
 
         .contact-form button:hover {
-            background-color: transparent; /* Mantiene el fondo transparente al pasar el ratón */
-            border-color: #f8c291; /* Cambia el color del borde al pasar el ratón */
-            color: #f8c291; /* Cambia el color del texto al pasar el ratón */
+            background-color: transparent; 
+            border-color: #f8c291;
+            color: #f8c291; 
         }
 
-        /* Asegura que el formulario se vea bien en dispositivos pequeños */
+        
         @media (max-width: 768px) {
             .contact-info, .contact-form {
                 padding: 20px;
@@ -124,7 +124,7 @@
             }
         }
 
-        /* Alineación de los botones */
+        
         .form-buttons {
             display: flex;
             justify-content: space-between;
@@ -135,10 +135,10 @@
 </head>
 <body>
 
-    <!-- Contenedor principal con fondo -->
+   
     <div class="container-content">
         <h1>Contactanos</h1>
-        <!-- Información de contacto -->
+        
         <div class="contact-info">
             <h2>Información de contacto</h2>
             <p><strong>Dirección:</strong> Carretera Federal Valle de Bravo Km 30, Ejido San Antonio Laguna, 51200 Valle de Bravo, Méx.</p>
@@ -171,7 +171,7 @@
             
         </div>
         <p>
-        <!-- Formulario de contacto -->
+        
         <div class="contact-form">
             <h2>Envíanos un mensaje</h2>
             <form action="#" method="POST">
@@ -188,14 +188,14 @@
                     <textarea id="mensaje" name="mensaje" rows="5" class="form-control" required></textarea>
                 </div>
 
-                <!-- Contenedor de botones (Regresar y Enviar mensaje) -->
+                
                 <div class="form-buttons">
-                    <!-- Botón de regresar -->
+                   
                     <a href="javascript:history.back()">
                         <button type="button" class="back-button">Regresar</button>
                     </a>
 
-                    <!-- Botón de enviar mensaje -->
+                    
                     <button type="submit" class="btn btn-primary">Enviar mensaje</button>
                 </div>
             </form>
