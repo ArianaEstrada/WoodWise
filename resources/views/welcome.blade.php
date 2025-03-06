@@ -1,144 +1,23 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WoodWise</title>
-    <link rel="stylesheet" href="{{ asset('node_modules/bootstrap/dist/css/bootstrap.min.css') }}">
-    <style>
-        /* Estilos generales */
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fuente más moderna */
-            color: #fff; /* Texto blanco por defecto */
-            background-color: #333; /* Fondo oscuro de respaldo */
-            overflow: hidden; /* Oculta el scroll para el video de fondo */
-        }
+@extends('layouts.app')
 
-        /* Video de fondo */
-        video#bg-video {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -2; /* Detrás del overlay y el contenido */
-        }
-
-        /* Overlay para mejorar la legibilidad del texto */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6); /* Fondo semi-transparente */
-            z-index: -1; /* Detrás del contenido */
-        }
-
-        /* Barra de navegación */
-        .navbar {
-            position: absolute;
-            top: 0;
-            right: 0; /* Alineado a la derecha */
-            padding: 20px;
-            z-index: 10; /* Asegura que esté por encima del contenido */
-        }
-
-        .navbar a {
-            color: #fff;
-            text-decoration: none;
-            margin-left: 20px; /* Espacio entre los enlaces */
-            font-size: 1.1em;
-            transition: color 0.3s ease; /* Transición suave al pasar el ratón */
-        }
-
-        .navbar a:hover {
-            color: #f8c291; /* Color al pasar el ratón */
-        }
-
-        /* Contenedor del título y los botones */
-        .container-content {
-            text-align: center;
-            z-index: 1; /* Asegura que esté por encima del overlay */
-        }
-
-        /* Título principal */
-        .title {
-            font-size: 4em;
-            font-weight: bold;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra sutil */
-        }
-
-        /* Estilos de los botones */
-        .btn-custom {
-            padding: 12px 30px;
-            font-size: 1.2em;
-            border-radius: 30px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            display: inline-block; /* Permite márgenes laterales */
-            margin: 0 10px; /* Espacio entre los botones */
-        }
-
-        .btn-register {
-            background-color: #f8c291;
-            color: #fff;
-            border: none;
-        }
-
-        .btn-register:hover {
-            background-color: #e67e22;
-        }
-
-        .btn-login {
-            background-color: transparent;
-            border: 2px solid #fff;
-            color: #fff;
-        }
-
-        .btn-login:hover {
-            background-color: #fff;
-            color: #333;
-        }
-    </style>
-</head>
-<body>
-    <!-- Video de fondo -->
-    <video id="bg-video" autoplay loop muted>
-        <source src="{{ asset('Videos/inicio.mp4') }}" type="video/mp4">
-        Tu navegador no soporta el video.
-    </video>
-
-    <!-- Overlay -->
-    <div class="overlay"></div>
-
-    <!-- Barra de navegación -->
-    <nav class="navbar">
-        <a href="{{ route('acerca') }}">Acerca de</a>
-        <a href="{{ route('contacto') }}">Contacto</a>
-        <i class="bi bi-person-lines-fill"></i>
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
-  <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5m.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1z"/>
-</svg>
-    </nav>
-
-    <!-- Contenido principal -->
-    <div class="container-content">
-        <h1 class="title">WoodWise</h1>
-        <div>
-            <a href="{{ route('register') }}" class="btn btn-custom btn-register">Regístrate</a>
-            <a href="{{ route('login') }}" class="btn btn-custom btn-login">Inicia Sesión</a>
+@section('content')
+<main class="container mt-5 d-flex justify-content-center align-items-center" style="height: 80vh;">
+    <div class="row w-75">
+        <div class="col-md-6 d-flex flex-column justify-content-center text-center">
+            <h1 class="fw-bold">Bienvenido a <span class="text-primary">WoodWise</span></h1>
+            <p class="fs-5 text-muted">
+                Optimiza y automatiza el cálculo de volúmenes maderables con precisión y eficiencia. 
+                Nuestra plataforma está diseñada para facilitar la gestión y análisis de datos forestales, 
+                asegurando resultados confiables en cada proceso.
+            </p>
+            <div class="mt-4">
+                <a href="{{ route('login') }}" class="btn btn-lg btn-primary me-2">Iniciar Sesión</a>
+                <a href="{{ route('register') }}" class="btn btn-lg btn-outline-secondary">Registrarse</a>
+            </div>
+        </div>
+        <div class="col-md-6 d-flex justify-content-center">
+            <img src="{{ asset('assets/img/forest.jpg') }}" class="img-fluid rounded shadow" alt="Imagen de un bosque">
         </div>
     </div>
-</body>
-</html>
+</main>
+@endsection
