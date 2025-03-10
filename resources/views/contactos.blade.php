@@ -14,7 +14,7 @@
             margin: 0;
             padding: 0;
             height: 100vh;
-            background-color: #f4f4f4; /* Fondo blanco elegante */
+            background-color: #f4f4f4; /* Fondo claro elegante */
             font-family: 'Arial', sans-serif;
             color: #333; /* Texto oscuro para buena legibilidad */
         }
@@ -30,15 +30,16 @@
             margin-bottom: 30px;
             color: #2c3e50; /* Color elegante para el título */
             text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .contact-info, .contact-form {
             background-color: #fff; /* Fondo blanco */
             border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
-            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombra más sutil */
+            padding: 35px;
             margin-bottom: 30px;
-            max-width: 600px;
+            max-width: 650px;
             margin: 0 auto; /* Centrado de los elementos */
             color: #333;
         }
@@ -62,6 +63,12 @@
             border: 2px solid #ddd;
             border-radius: 4px;
             background-color: #f9f9f9;
+            transition: border 0.3s ease;
+        }
+
+        .contact-form input:focus, .contact-form textarea:focus {
+            border-color: #3498db;
+            outline: none;
         }
 
         .contact-form button {
@@ -72,11 +79,12 @@
             border-radius: 30px;
             font-size: 1.2em;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.2s;
         }
 
         .contact-form button:hover {
-            background-color: #2980b9; /* Cambio de color al pasar el mouse */
+            background-color: #2980b9;
+            transform: translateY(-3px); /* Efecto de elevación */
         }
 
         .back-button {
@@ -88,7 +96,7 @@
             font-size: 1.2em;
             cursor: pointer;
             margin-top: 20px;
-            transition: color 0.3s, border-color 0.3s;
+            transition: color 0.3s, border-color 0.3s, background-color 0.3s;
         }
 
         .back-button:hover {
@@ -99,7 +107,7 @@
 
         @media (max-width: 768px) {
             h1 {
-                font-size: 2em;
+                font-size: 2rem; /* Ajustar el tamaño del título en pantallas pequeñas */
             }
             .contact-info, .contact-form {
                 padding: 20px;
@@ -115,12 +123,17 @@
         <div class="contact-info">
             <h2>Información de contacto</h2>
             <p><strong>Dirección:</strong> Carretera Federal Valle de Bravo Km 30, Ejido San Antonio Laguna, 51200 Valle de Bravo, Méx.</p>
+            <i class="bi bi-geo-alt-fill"></i>
             <p><strong>Teléfono:</strong> +52 5511329075</p>
+            <i class="bi bi-telephone-fill"></i>
             <p><strong>Correo electrónico:</strong> woodwise@gmail.com</p>
+            <i class="bi bi-envelope-at-fill"></i>
             <p><strong>WhatsApp:</strong> +52 5511329075</p>
+            <i class="bi bi-whatsapp"></i>
             <p><strong>Facebook:</strong> WoodWise</p>
+            <i class="bi bi-facebook"></i>
         </div>
-
+        <p>
         <div class="contact-form">
             <h2>Envíanos un mensaje</h2>
             <form action="" method="POST">
