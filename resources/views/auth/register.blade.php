@@ -3,84 +3,97 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-5">
-            <div class="login-wrap p-4 p-md-5">
-                <h3 class="mb-4 text-center">Registro a WoodWise</h3>
-                <form method="POST" action="{{ route('register') }}" class="signin-form">
-                    @csrf
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">{{ __('Registro') }}</div>
 
-                    <div class="form-group mb-3">
-                        <input id="nom" type="text" class="form-control @error('nom') is-invalid @enderror" name="nom" value="{{ old('nom') }}" placeholder="Nombre" required autofocus>
-                        @error('nom')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ route('register') }}">
+                        @csrf
 
-                    <div class="form-group mb-3">
-                        <input id="ap" type="text" class="form-control @error('ap') is-invalid @enderror" name="ap" value="{{ old('ap') }}" placeholder="Apellido Paterno" required>
-                        @error('ap')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
+                        <!-- Nombre -->
+                        <div class="mb-3">
+                            <label for="nom" class="form-label">{{ __('Nombre') }}</label>
+                            <input type="text" class="form-control @error('nom') is-invalid @enderror" name="nom" value="{{ old('nom') }}" required autofocus>
+                            @error('nom')
+                                <span class="invalid-feedback">{{ $message }}</span>
+                            @enderror
+                        </div>
 
-                    <div class="form-group mb-3">
-                        <input id="am" type="text" class="form-control @error('am') is-invalid @enderror" name="am" value="{{ old('am') }}" placeholder="Apellido Materno" required>
-                        @error('am')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
+                        <!-- Apellido Paterno -->
+                        <div class="mb-3">
+                            <label for="ap" class="form-label">{{ __('Apellido Paterno') }}</label>
+                            <input type="text" class="form-control @error('ap') is-invalid @enderror" name="ap" value="{{ old('ap') }}" required>
+                            @error('ap')
+                                <span class="invalid-feedback">{{ $message }}</span>
+                            @enderror
+                        </div>
 
-                    <div class="form-group mb-3">
-                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Correo Electrónico" required>
-                        @error('email')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
+                        <!-- Apellido Materno -->
+                        <div class="mb-3">
+                            <label for="am" class="form-label">{{ __('Apellido Materno') }}</label>
+                            <input type="text" class="form-control @error('am') is-invalid @enderror" name="am" value="{{ old('am') }}" required>
+                            @error('am')
+                                <span class="invalid-feedback">{{ $message }}</span>
+                            @enderror
+                        </div>
 
-                    <div class="form-group mb-3">
-                        <input id="telefono" type="text" class="form-control @error('telefono') is-invalid @enderror" name="telefono" value="{{ old('telefono') }}" placeholder="Teléfono" required>
-                        @error('telefono')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
+                        <!-- Teléfono -->
+                        <div class="mb-3">
+                            <label for="telefono" class="form-label">{{ __('Teléfono') }}</label>
+                            <input type="text" class="form-control @error('telefono') is-invalid @enderror" name="telefono" value="{{ old('telefono') }}" required>
+                            @error('telefono')
+                                <span class="invalid-feedback">{{ $message }}</span>
+                            @enderror
+                        </div>
 
-                    <div class="form-group mb-3">
-                        <input id="fecha_nac" type="date" class="form-control @error('fecha_nac') is-invalid @enderror" name="fecha_nac" value="{{ old('fecha_nac') }}" required>
-                        @error('fecha_nac')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
+                        <!-- Correo Electrónico -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label">{{ __('Correo Electrónico') }}</label>
+                            <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required>
+                            @error('email')
+                                <span class="invalid-feedback">{{ $message }}</span>
+                            @enderror
+                        </div>
 
-                    <div class="form-group mb-3">
-                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Contraseña" required>
-                        @error('password')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
+                        <!-- Contraseña -->
+                        <div class="mb-3">
+                            <label for="password" class="form-label">{{ __('Contraseña') }}</label>
+                            <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" required>
+                            @error('password')
+                                <span class="invalid-feedback">{{ $message }}</span>
+                            @enderror
+                        </div>
 
-                    <div class="form-group mb-3">
-                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirmar Contraseña" required>
-                    </div>
+                        <!-- Confirmar Contraseña -->
+                        <div class="mb-3">
+                            <label for="password-confirm" class="form-label">{{ __('Confirmar Contraseña') }}</label>
+                            <input type="password" class="form-control" name="password_confirmation" required>
+                        </div>
 
-                    <div class="form-group mb-0">
-                        <button type="submit" class="form-control btn btn-primary submit px-3">Registrar</button>
-                    </div>
-                </form>
-                <p class="text-center mt-3">¿Ya tienes una cuenta? <a href="{{ route('login') }}">Inicia sesión</a></p>
+                       <!-- Rol (Dinamico desde la BD) -->
+                        <div class="mb-3">
+                            <label for="id_rol" class="form-label">{{ __('Rol') }}</label>
+                            <select class="form-control @error('id_rol') is-invalid @enderror" name="id_rol" required>
+                                <option value="">Selecciona un rol</option>
+                                @foreach($roles as $role)
+                                    <option value="{{ $role->id_rol }}">{{ $role->nom_rol }}</option>
+                                @endforeach
+                            </select>
+                            @error('id_rol')
+                                <span class="invalid-feedback">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+
+                        <!-- Botón de Registro -->
+                        <div class="mb-3 text-center">
+                            <button type="submit" class="btn btn-primary">
+                                {{ __('Registrarse') }}
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
