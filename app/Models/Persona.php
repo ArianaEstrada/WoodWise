@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Persona extends Model
 {
     use HasFactory;
@@ -12,6 +12,7 @@ class Persona extends Model
     protected $primaryKey = 'id_persona';
 
     protected $fillable = ['nom', 'ap', 'am', 'telefono', 'correo', 'contrasena', 'id_rol'];
+    public $timestamps = false;
 
     public function user()
     {

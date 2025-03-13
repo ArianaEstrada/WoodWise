@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Registro') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form id="register-form" method="POST" action="{{ route('register') }}">
                         @csrf
 
                         <!-- Nombre -->
@@ -71,20 +71,27 @@
                             <input type="password" class="form-control" name="password_confirmation" required>
                         </div>
 
-                       <!-- Rol (Dinamico desde la BD) -->
+                     <!-- Rol (Dinamico desde la BD) -->
                         <div class="mb-3">
                             <label for="id_rol" class="form-label">{{ __('Rol') }}</label>
-                            <select class="form-control @error('id_rol') is-invalid @enderror" name="id_rol" required>
+                            <select 
+                                class="form-control @error('id_rol') is-invalid @enderror" 
+                                name="id_rol" 
+                                id="id_rol" 
+                                required
+                            >
                                 <option value="">Selecciona un rol</option>
                                 @foreach($roles as $role)
-                                    <option value="{{ $role->id_rol }}">{{ $role->nom_rol }}</option>
+                                    <option value="{{ $role->id_rol }}" data-nom_rol="{{ $role->nom_rol }}">
+                                        {{ $role->nom_rol }}
+                                    </option>
                                 @endforeach
                             </select>
+
                             @error('id_rol')
                                 <span class="invalid-feedback">{{ $message }}</span>
                             @enderror
                         </div>
-
 
                         <!-- Botón de Registro -->
                         <div class="mb-3 text-center">
@@ -98,4 +105,18 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById('register-form').addEventListener('submit', function(event) {
+        // Obtener el valor del rol seleccionado
+        var roleSelect = document.getElementById('id_rol');
+        var selectedRole = roleSelect.options[roleSelect.selectedIndex].text;
+
+        // Si el rol es "Técnico", redirigir a la página de validación de cédula
+        if (selectedRole === "Técnico") {
+            event.preventDefault(); // Evitar el envío del formulario
+            window.location.href = "{{ route('validar.cedula') }}"; // Redirigir a la página de validación de cédula
+        }
+    });
+</script>
 @endsection
