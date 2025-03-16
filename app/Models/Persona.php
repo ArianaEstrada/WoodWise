@@ -23,5 +23,6 @@ class Persona extends Model
     {
         return $this->belongsTo(Rol::class, 'id_rol');
     }
+    
 }
 

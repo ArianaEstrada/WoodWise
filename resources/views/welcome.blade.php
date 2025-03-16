@@ -20,6 +20,7 @@
             <div class="d-flex justify-content-center justify-content-md-start gap-3">
                 <a href="{{ route('login') }}" class="btn btn-primary px-4 py-2">Iniciar Sesión</a>
                 <a href="{{ route('register') }}" class="btn btn-outline-secondary px-4 py-2">Registrarse</a>
+
             </div>
         </div>
 

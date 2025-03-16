@@ -12,6 +12,7 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     protected $fillable = [
+        'name',
         'email',
         'password',
         'id_persona',
@@ -24,5 +25,11 @@ class User extends Authenticatable
         return $this->belongsTo(Persona::class, 'id_persona');
     }
     
+    public function getRolIdAttribute()
+    {
+        return $this->persona ? $this->persona->id_rol : null;
+    }
+    
+
 }
 

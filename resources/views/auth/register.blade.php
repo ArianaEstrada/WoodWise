@@ -8,6 +8,19 @@
                 <div class="card-header">{{ __('Registro') }}</div>
 
                 <div class="card-body">
+                    <!-- Mensajes Emergentes de Error o Éxito -->
+                    @if(session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+
+                    @if(session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
                     <form id="register-form" method="POST" action="{{ route('register') }}">
                         @csrf
 
@@ -71,7 +84,7 @@
                             <input type="password" class="form-control" name="password_confirmation" required>
                         </div>
 
-                     <!-- Rol (Dinamico desde la BD) -->
+                        <!-- Rol (Dinamico desde la BD) -->
                         <div class="mb-3">
                             <label for="id_rol" class="form-label">{{ __('Rol') }}</label>
                             <select 
@@ -93,6 +106,15 @@
                             @enderror
                         </div>
 
+                        <!-- Campo de Cédula (Solo visible si se selecciona "Técnico") -->
+                        <div id="cedula-container" class="mb-3" style="display: none;">
+                            <label for="cedula" class="form-label">{{ __('Cédula') }}</label>
+                            <input type="text" class="form-control @error('cedula') is-invalid @enderror" name="cedula" id="cedula" value="{{ old('cedula') }}">
+                            @error('cedula')
+                                <span class="invalid-feedback">{{ $message }}</span>
+                            @enderror
+                        </div>
+
                         <!-- Botón de Registro -->
                         <div class="mb-3 text-center">
                             <button type="submit" class="btn btn-primary">
@@ -100,6 +122,11 @@
                             </button>
                         </div>
                     </form>
+
+                    <!-- Botón para redirigir a Iniciar Sesión -->
+                    <div class="text-center mt-3">
+                        <p>¿Ya tienes cuenta? <a href="{{ route('login') }}" class="btn btn-link">Iniciar sesión</a></p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -107,15 +134,15 @@
 </div>
 
 <script>
-    document.getElementById('register-form').addEventListener('submit', function(event) {
-        // Obtener el valor del rol seleccionado
-        var roleSelect = document.getElementById('id_rol');
-        var selectedRole = roleSelect.options[roleSelect.selectedIndex].text;
+    // Función para mostrar/ocultar el campo de Cédula dependiendo del rol seleccionado
+    document.getElementById('id_rol').addEventListener('change', function() {
+        const cedulaContainer = document.getElementById('cedula-container');
+        const selectedRole = this.options[this.selectedIndex].text; // Obtener el nombre del rol seleccionado
 
-        // Si el rol es "Técnico", redirigir a la página de validación de cédula
-        if (selectedRole === "Técnico") {
-            event.preventDefault(); // Evitar el envío del formulario
-            window.location.href = "{{ route('validar.cedula') }}"; // Redirigir a la página de validación de cédula
+        if (selectedRole === "Tecnico") {
+            cedulaContainer.style.display = 'block'; // Mostrar el campo de cédula
+        } else {
+            cedulaContainer.style.display = 'none'; // Ocultar el campo de cédula
         }
     });
 </script>

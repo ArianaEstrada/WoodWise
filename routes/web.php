@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\EspecieController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,3 +20,10 @@ Route::get('/contactos', function () {return view('contactos');})->name('contact
 
 Route::get('/validar-cedula', [RegisterController::class, 'confirmarCedula'])->name('validar.cedula');
 Route::post('/confirmar-cedula', [RegisterController::class, 'confirmarCedula'])->name('confirmar.cedula');
+
+
+Route::get('/dashboard/especies', [EspecieController::class, 'index'])
+    ->middleware('auth')
+    ->name('dashboard.especies');
+
+    Route::get('/perfil', [UserController::class, 'perfil'])->middleware('auth')->name('perfil');
