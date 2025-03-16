@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('extension');
             $table->text('direccion');
             $table->integer('CP');
+
+            $table->foreign('id_productor')->references('id_productor')->on('productores')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

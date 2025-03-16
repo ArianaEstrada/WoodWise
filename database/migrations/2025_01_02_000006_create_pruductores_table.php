@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('parcelas', function (Blueprint $table) {
-            $table->foreign(['id_productor'], 'parcelas_ibfk_1')->references(['id_productor'])->on('pruductores')->onUpdate('restrict')->onDelete('restrict');
+        Schema::create('productores', function (Blueprint $table) {
+            $table->integer('id_productor', true);
+            $table->integer('id_persona')->index('id_persona');
+
+            $table->foreign('id_persona')->references('id_persona')->on('personas')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -21,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('parcelas', function (Blueprint $table) {
-            $table->dropForeign('parcelas_ibfk_1');
-        });
+        Schema::dropIfExists('pruductores');
     }
 };

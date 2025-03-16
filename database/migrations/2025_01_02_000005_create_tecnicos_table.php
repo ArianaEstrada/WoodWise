@@ -16,7 +16,10 @@ return new class extends Migration
             $table->integer('id_persona')->index('id_persona');
             $table->string('cedula_p')->unique('cedula_p');
             $table->string('clave_tecnico')->unique('clave_tecnico');
+
+            $table->foreign('id_persona')->references('id_persona')->on('personas')->onUpdate('cascade')->onDelete('cascade');
         });
+
     }
 
     /**

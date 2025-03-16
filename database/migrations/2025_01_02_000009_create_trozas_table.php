@@ -16,8 +16,12 @@ return new class extends Migration
             $table->double('longitud');
             $table->double('diametro');
             $table->double('densidad');
-            $table->integer('id_especie')->index('id_especie');
-            $table->integer('id_parcela')->index('id_parcela');
+            $table->integer('id_especie');
+            $table->integer('id_parcela');
+            
+            // Claves foráneas
+            $table->foreign('id_especie')->references('id_especie')->on('especies')->onDelete('cascade');
+            $table->foreign('id_parcela')->references('id_parcela')->on('parcelas')->onDelete('cascade');
         });
     }
 

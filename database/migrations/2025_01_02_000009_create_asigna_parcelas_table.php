@@ -15,6 +15,9 @@ return new class extends Migration
             $table->integer('id_asigna_p', true);
             $table->integer('id_tecnico')->index('id_tecnico');
             $table->integer('id_parcela')->index('id_parcela');
+
+            $table->foreign('id_tecnico')->references('id_tecnico')->on('tecnicos')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('id_parcela')->references('id_parcela')->on('parcelas')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

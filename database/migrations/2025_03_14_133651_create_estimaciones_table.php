@@ -13,10 +13,15 @@ return new class extends Migration
     {
         Schema::create('estimaciones', function (Blueprint $table) {
             $table->integer('id_estimacion', true);
-            $table->integer('id_tipo_e')->index('id_tipo_e');
-            $table->integer('id_formula')->index('id_formula');
+            $table->integer('id_tipo_e');
+            $table->integer('id_formula');
             $table->double('calculo');
-            $table->integer('id_troza')->index('id_troza');
+            $table->integer('id_troza');
+            
+            // Claves foráneas
+            $table->foreign('id_tipo_e')->references('id_tipo_e')->on('tipo_estimaciones')->onDelete('cascade');
+            $table->foreign('id_formula')->references('id_formula')->on('formulas')->onDelete('cascade');
+            $table->foreign('id_troza')->references('id_troza')->on('trozas')->onDelete('cascade');
         });
     }
 

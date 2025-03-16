@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('personas', function (Blueprint $table) {
@@ -17,15 +14,14 @@ return new class extends Migration
             $table->string('ap');
             $table->string('am');
             $table->string('telefono');
-            $table->string('correo')->unique('correo');
+            $table->string('correo')->unique();
             $table->string('contrasena');
             $table->integer('id_rol')->index('id_rol');
+
+            $table->foreign('id_rol')->references('id_rol')->on('roles')->onUpdate('restrict')->onDelete('restrict');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('personas');
