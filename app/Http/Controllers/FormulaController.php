@@ -10,10 +10,13 @@ class FormulaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
-    }
+   
+        public function index()
+        {
+            $formulas = Formula::all();
+            return view('CRUDs.formulas.index', compact('formulas'));
+        }
+    
 
     /**
      * Show the form for creating a new resource.

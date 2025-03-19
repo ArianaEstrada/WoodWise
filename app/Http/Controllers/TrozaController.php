@@ -12,7 +12,8 @@ class TrozaController extends Controller
      */
     public function index()
     {
-        //
+        $trozas = Troza::all();
+        return view('CRUDs.trozas.index', compact('trozas'));
     }
 
     /**

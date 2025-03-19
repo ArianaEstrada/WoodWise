@@ -110,3 +110,22 @@
     font-size: 0.8em;
     padding: 0.4em 0.6em;
 }
+/* Agrega transiciones suaves */
+.nav-link {
+    transition: all 0.3s ease;
+}
+
+/* Estilos para las tablas */
+.card-header {
+    background: linear-gradient(45deg, #2c3e50, #3498db);
+    border-radius: 5px 5px 0 0;
+}
+
+.table {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}

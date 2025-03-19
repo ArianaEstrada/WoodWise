@@ -54,47 +54,54 @@
 
 </div>
 
-<script>
-const contentMap = {
-    'especies': {
-        title: 'Registro de Especies',
-        contentId: 'especies-content'
-    },
-    'opcion-1': {
-        title: 'Contenido de la Opción 1',
-        contentId: 'opcion-1-content'
-    },
-    'opcion-2': {
-        title: 'Contenido de la Opción 2',
-        contentId: 'opcion-2-content'
-    },
-    'opcion-3': {
-        title: 'Contenido de la Opción 3',
-        contentId: 'opcion-3-content'
+<script>document.addEventListener('DOMContentLoaded', function () {
+    const contentMap = {
+        'especies': { title: 'Gestión de Especies', route: '/dashboard/especies' },
+        'formulas': { title: 'Gestión de Fórmulas', route: '/dashboard/formulas' },
+        'usuarios': { title: 'Gestión de Usuarios', route: '/dashboard/usuarios' },
+        'trozas': { title: 'Gestión de Trozas', route: '/dashboard/trozas' },
+        'estimaciones': { title: 'Gestión de Estimaciones', route: '/dashboard/estimaciones' },
+        'parcelas': { title: 'Gestión de Parcelas', route: '/dashboard/parcelas' }
+    };
+
+    function loadContent(section, link = null) {
+        const currentSection = contentMap[section];
+        if (!currentSection) return;
+
+        fetch(currentSection.route)
+            .then(response => response.text())
+            .then(html => {
+                console.log("Contenido recibido:", html); // Depuración
+                document.getElementById('dynamic-content').innerHTML = html;
+                document.getElementById('dynamic-title').textContent = currentSection.title;
+                document.getElementById('welcome-message').style.display = 'none';
+
+                // Actualizar clase activa en la navegación
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                if (link) link.classList.add('active');
+            })
+            .catch(error => {
+                console.error('Error al cargar contenido:', error);
+                document.getElementById('dynamic-content').innerHTML = `<div class="alert alert-danger">No se pudo cargar el contenido.</div>`;
+            });
     }
-};
 
+    // Asignar evento a enlaces de navegación
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            const section = this.getAttribute('data-section');
+            loadContent(section, this);
+        });
+    });
 
-function loadContent(opcionId) {
-    // Ocultar el contenido actual
-    document.getElementById('dynamic-content').innerHTML = '';
-
-    // Hacer la solicitud AJAX
-    fetch(`/dashboard/${opcionId}`)
-        .then(response => response.text())
-        .then(html => {
-            document.getElementById('dynamic-content').innerHTML = html;
-            document.getElementById('dynamic-title').textContent = contentMap[opcionId].title;
-        })
-        .catch(error => console.error('Error al cargar el contenido:', error));
-
-    // Ocultar mensaje de bienvenida
-    document.getElementById('welcome-message').style.display = 'none';
-}
-
+    // Opcional: Cargar una sección por defecto al inicio
+    loadContent('especies'); 
+});
 
 
 </script>
+
 
 <style>
 .sidebar a.active {

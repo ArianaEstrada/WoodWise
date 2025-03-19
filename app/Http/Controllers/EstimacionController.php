@@ -12,7 +12,8 @@ class EstimacionController extends Controller
      */
     public function index()
     {
-        //
+        $estimaciones = Estimacion::all();
+        return view('CRUDs.estimaciones.index', compact('estimaciones'));
     }
 
     /**

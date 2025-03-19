@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Parcelas;
+use App\Models\Parcela;
 use Illuminate\Http\Request;
 
 class ParcelaController extends Controller
@@ -12,7 +12,8 @@ class ParcelaController extends Controller
      */
     public function index()
     {
-        //
+        $parcelas = Parcela::all();
+            return view('CRUDs.parcelas.index', compact('parcelas'));
     }
 
     /**

@@ -19,6 +19,7 @@ class Especie extends Model
     protected $fillable = [
         'nom_cientifico',
         'nom_comun',
+        'imagen', // Agrega este campo
     ];
 
     // Si la clave primaria no es auto-incrementable
