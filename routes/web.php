@@ -8,7 +8,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\TrozaController;
 use App\Http\Controllers\EstimacionController;
 use App\Http\Controllers\ParcelaController;
-
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PersonaController;
+use App\Http\Controllers\PerfilController;
 // Ruta principal
 Route::get('/', function () {
     return view('welcome');
@@ -22,25 +24,19 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/acerca-de', fn() => view('acerca_nosotros'))->name('acerca');
 Route::get('/contactos', fn() => view('contactos'))->name('contacto');
 
-// Validación de cédula
-Route::controller(RegisterController::class)->group(function () {
-    Route::get('/validar-cedula', 'confirmarCedula')->name('validar.cedula');
-    Route::post('/confirmar-cedula', 'confirmarCedula')->name('confirmar.cedula');
-});
-
-// Rutas del dashboard con prefijo
-Route::prefix('dashboard')->middleware('auth')->group(function () {
-    Route::get('/formulas', [FormulaController::class, 'index'])->name('formulas.index');
-    Route::get('/usuarios', [UserController::class, 'index'])->name('usuarios.index');
-    Route::get('/trozas', [TrozaController::class, 'index'])->name('trozas.index');
-    Route::get('/estimaciones', [EstimacionController::class, 'index'])->name('estimaciones.index');
-    Route::get('/parcelas', [ParcelaController::class, 'index'])->name('parcelas.index');
-
-    // Resource para especies (incluyendo show, edit, update dentro del dashboard)
-    Route::resource('especies', EspecieController::class)->only(['index', 'show', 'edit', 'update']);
-});
-
 // Ruta de perfil
 
-    Route::get('/perfil', [UserController::class, 'perfil'])->middleware('auth')->name('perfil');
-    Route::resource('dashboard/especies', EspecieController::class);
+Route::middleware(['auth'])->group(function () {
+    Route::get('/perfil', [PerfilController::class, 'index'])->name('perfil.index');
+    Route::put('/perfil', [PerfilController::class, 'update'])->name('perfil.update');
+    Route::put('/perfil/password', [PerfilController::class, 'updatePassword'])->name('perfil.updatePassword');
+});   
+
+Route::get('/dashboard1', [DashboardController::class, 'index'])
+    ->middleware('auth')
+    ->name('dashboard1');
+
+    Route::resource('formulas', FormulaController::class);
+    Route::resource('especies', EspecieController::class);
+    Route::resource('usuarios', PersonaController::class);
+    Route::get('/catalogo-especies', [EspecieController::class, 'catalogo'])->name('especies.catalogo');

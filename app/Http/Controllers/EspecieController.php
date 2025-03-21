@@ -4,17 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Especie;
-use Illuminate\Support\Facades\Storage;
 
 class EspecieController extends Controller
 {
-    
+    public function catalogo()
+    {
+        $especies = Especie::all();
+        return view('especies.catalogo', compact('especies'));
+    }
     public function index()
     {
         $especies = Especie::all();
-       
-
-        return view('CRUDs.especies.index', compact('especies'));
+        return view('especies.index', compact('especies'));
     }
 
     public function store(Request $request)
@@ -22,45 +23,50 @@ class EspecieController extends Controller
         $validatedData = $request->validate([
             'nom_cientifico' => 'required|string|max:255',
             'nom_comun' => 'required|string|max:255',
-            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
-
-        $imagenPath = $request->hasFile('imagen')
-            ? $request->file('imagen')->store('especies', 'public')
-            : null;
-
-        Especie::create(array_merge($validatedData, ['imagen' => $imagenPath]));
-
-        return redirect()->route('especies.index')->with('success', 'Especie registrada correctamente.');
+    
+        // Si hay imagen, almacenarla
+        if ($request->hasFile('imagen')) {
+            $imagePath = $request->file('imagen')->store('imagenes_especies', 'public');
+            $validatedData['imagen'] = $imagePath;
+    
+            // Imprimir la ruta donde se guarda la imagen
+        }
+    
+        Especie::create($validatedData);
+    
+        return redirect()->route('especies.index')->with('register', ' ');
     }
+    
+    
 
-    public function update(Request $request, Especie $especie)
+
+    public function update(Request $request, string $id)
     {
         $validatedData = $request->validate([
             'nom_cientifico' => 'required|string|max:255',
             'nom_comun' => 'required|string|max:255',
-            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
+        $especie = Especie::findOrFail($id);
+
         if ($request->hasFile('imagen')) {
-            if ($especie->imagen) {
-                Storage::delete('public/' . $especie->imagen);
-            }
-            $validatedData['imagen'] = $request->file('imagen')->store('especies', 'public');
+            $imagePath = $request->file('imagen')->store('imagenes_especies', 'public');
+            $validatedData['imagen'] = $imagePath;
         }
 
         $especie->update($validatedData);
 
-        return redirect()->route('especies.index')->with('success', 'Especie actualizada correctamente.');
+        return redirect()->route('especies.index')->with('modify', 'Especie actualizada correctamente.');
     }
 
-    public function destroy(Especie $especie)
+    public function destroy(string $id)
     {
-        if ($especie->imagen) {
-            Storage::delete('public/' . $especie->imagen);
-        }
+        $especie = Especie::findOrFail($id);
         $especie->delete();
 
-        return redirect()->route('especies.index')->with('success', 'Especie eliminada correctamente.');
+        return redirect()->route('especies.index')->with('destroy', 'Especie eliminada correctamente.');
     }
 }

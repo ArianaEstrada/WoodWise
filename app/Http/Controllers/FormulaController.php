@@ -2,67 +2,62 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Formula;
 use Illuminate\Http\Request;
+use App\Models\Formula;
 
 class FormulaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-   
-        public function index()
-        {
-            $formulas = Formula::all();
-            return view('CRUDs.formulas.index', compact('formulas'));
-        }
-    
+    public function index()
+    {
+        $formulas = Formula::all();
+        return view('formulas.index', compact('formulas'));
+    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        // No se necesita porque todo se maneja en index
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'nom_formula' => 'required|string|max:255',
+            'expresion' => 'required|string',
+        ]);
+
+        Formula::create($validatedData);
+
+        return redirect()->route('formulas.index')->with('register', ' ');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Formula $formula)
+    public function show(string $id)
     {
-        //
+        // No se necesita porque todo se maneja en index
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Formula $formula)
+    public function edit(string $id)
     {
-        //
+        // No se necesita porque todo se maneja en index
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Formula $formula)
+    public function update(Request $request, string $id)
     {
-        //
+        $validatedData = $request->validate([
+            'nom_formula' => 'required|string|max:255',
+            'expresion' => 'required|string',
+        ]);
+
+        $formula = Formula::findOrFail($id);
+        $formula->update($validatedData);
+
+        return redirect()->route('formulas.index')->with('modify', ' ');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Formula $formula)
+    public function destroy(string $id)
     {
-        //
+        $formula = Formula::findOrFail($id);
+        $formula->delete();
+
+        return redirect()->route('formulas.index')->with('destroy', ' ');
     }
 }
