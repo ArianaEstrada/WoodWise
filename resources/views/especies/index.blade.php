@@ -6,32 +6,32 @@
 
 @section('crud_content')
 <div class="container py-5">
-    <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <h3>{{ __('Especies') }}</h3>
-            <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#createEspecieModal">
+    <div class="card shadow">  <!-- Añadí 'shadow' para una sutil elevación -->
+        <div class="card-header d-flex justify-content-between align-items-center bg-forest"> <!-- Clase de fondo forestal -->
+            <h3 class="text-white">{{ __('Especies') }}</h3> <!-- Texto blanco para contrastar -->
+            <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#createEspecieModal">
                 {{ __('Agregar Nueva') }}
             </button>
         </div>
 
         <div class="card-body">
             <table class="table table-striped text-center">
-                <thead class="table-dark">
+                <thead class="bg-forest text-white">  <!-- Clase de fondo forestal para la cabecera -->
                     <tr>
-                        <th>ID</th>
-                        <th>Nombre Científico</th>
-                        <th>Nombre Común</th>
-                        <th>Imagen</th>
-                        <th>Acciones</th>
+                        <th class="py-3">ID</th>
+                        <th class="py-3">Nombre Científico</th>
+                        <th class="py-3">Nombre Común</th>
+                        <th class="py-3">Imagen</th>
+                        <th class="py-3">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($especies as $especie)
                     <tr>
-                        <td>{{ $especie->id_especie }}</td>
-                        <td>{{ $especie->nom_cientifico }}</td>
-                        <td>{{ $especie->nom_comun }}</td>
-                        <td>
+                        <td class="py-3">{{ $especie->id_especie }}</td>
+                        <td class="py-3">{{ $especie->nom_cientifico }}</td>
+                        <td class="py-3">{{ $especie->nom_comun }}</td>
+                        <td class="py-3">
                             @if ($especie->imagen)
                             <img src="{{ asset('storage/' . $especie->imagen) }}" class="card-img-top" alt="{{ $especie->nom_comun }}">
                             @else
@@ -39,9 +39,9 @@
                             @endif
                         </td>
                         <td>
-                            <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#viewEspecieModal{{ $especie->id_especie }}">Ver</button>
-                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editEspecieModal{{ $especie->id_especie }}">Editar</button>
-                            <button class="btn btn-danger btn-sm" onclick="confirmDelete('{{ $especie->id_especie }}')">Eliminar</button>
+                            <button class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#viewEspecieModal{{ $especie->id_especie }}">Ver</button>
+                            <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editEspecieModal{{ $especie->id_especie }}">Editar</button>
+                            <button class="btn btn-outline-danger btn-sm" onclick="confirmDelete('{{ $especie->id_especie }}')">Eliminar</button>
                         </td>
                     </tr>
 
@@ -49,7 +49,7 @@
                     <div class="modal fade" id="viewEspecieModal{{ $especie->id_especie }}" tabindex="-1">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <div class="modal-header">
+                                <div class="modal-header bg-forest text-white"> <!-- Clase de fondo forestal -->
                                     <h5 class="modal-title">Detalles de la Especie</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
@@ -69,7 +69,7 @@
                     <div class="modal fade" id="editEspecieModal{{ $especie->id_especie }}" tabindex="-1">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <div class="modal-header">
+                                <div class="modal-header bg-forest text-white"> <!-- Clase de fondo forestal -->
                                     <h5 class="modal-title">Editar Especie</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
@@ -94,9 +94,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    @endforeach
+                    </div>... @endforeach
                 </tbody>
             </table>
         </div>
@@ -107,7 +105,7 @@
 <div class="modal fade" id="createEspecieModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-forest text-white"> <!-- Clase de fondo forestal -->
                 <h5 class="modal-title">Agregar Nueva Especie</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>

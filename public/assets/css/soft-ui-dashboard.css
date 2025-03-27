@@ -15,6 +15,24 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+/* Espaciado en celdas de la tabla */
+.table td,
+.table th {
+  padding: 0.75rem; /* Ajusta este valor según sea necesario */
+  vertical-align: middle; /* Centrar el texto verticalmente */
+}
+
+/* Espaciado entre filas de la tabla */
+.table tbody tr {
+  margin-bottom: 0.5rem; /* Ajusta este valor según sea necesario */
+  border-bottom: 1px solid #dee2e6; /* Añadir una línea divisoria sutil */
+}
+
+/* Eliminar el margen inferior en la última fila */
+.table tbody tr:last-child {
+  margin-bottom: 0;
+  border-bottom: none; /* Eliminar la línea en la última fila */
+}
 
 /*!
    * Bootstrap  v5.2.3 (https://getbootstrap.com/)
@@ -22,6 +40,219 @@
    * Copyright 2011-2022 Twitter, Inc.
    * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
    */
+   /* Establecer el color de texto predeterminado para el body */
+body {
+  color: #212529; /* Un negro sutil, más suave que el negro puro (#000) */
+}
+
+/* Asegurar que los enlaces tengan un color legible */
+a {
+  color: #0d6efd; /* El color azul predeterminado de Bootstrap */
+}
+
+a:hover {
+  color: #0a58ca; /* Un azul más oscuro al pasar el cursor */
+}
+
+/* Para la barra de navegación superior */
+.navbar-main .nav-link,
+.navbar-main .breadcrumb-item {
+  color: #495057; /* Un gris oscuro para mejor legibilidad */
+}
+
+/* Ajustar el color de texto en las tarjetas (cards) */
+.card-body,
+.card-text,
+.card-title {
+  color: #212529;
+}
+
+/* Modificar el color de la tabla */
+.table th,
+.table td {
+  color: #212529;
+}
+
+/* Estilo para el texto dentro de la barra lateral (si es necesario) */
+.sidenav .nav-link .nav-link-text {
+  color: #e9ecef; /* Un gris claro para contrastar con el fondo de la barra lateral */
+}
+
+
+   .bg-forest {
+    background-color: #6A994E; /* Verde Medio */
+}
+
+/* Colores personalizados para el tema forestal */
+.bg-forest {
+  background-color: #6A994E; /* Verde Medio */
+  color: rgb(7, 6, 6);
+}
+
+.btn-forest {
+  background-color: #386641; /* Verde Oscuro */
+  color: rgb(15, 13, 13);
+  border-color: #386641;
+}
+
+.btn-forest:hover {
+  background-color: #A7D1AB; /* Verde Claro */
+  border-color: #386641;
+  color: #386641;
+}
+
+.table-forest {
+  background-color: #D7CCC8; /* Beige/Crema */
+}
+
+
+   body.g-sidenav-show {
+    background-color: #A7D1AB; /* Verde Claro */
+}
+
+#sidenav-main {
+    background-color: #386641; /* Verde Oscuro */
+    color: #120f0f;
+}
+
+.main-content {
+    background-color: #f5f5f5; /* Beige/Crema */
+}
+
+#sidenav-main .nav-link {
+  color: #A7D1AB; /* Verde Claro */
+}
+
+#sidenav-main .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #FFC107; /* Amarillo/Dorado */
+}
+
+#sidenav-main .nav-link.active {
+  background-color: #6A994E; /* Verde Medio */
+  color: #fff;
+}
+.navbar-main {
+  background-color: #D7CCC8; /* Beige/Crema */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-main .breadcrumb-item a {
+  color: #795548; /* Marrón Oscuro */
+}
+
+.navbar-main .breadcrumb-item.active {
+  color: #386641; /* Verde Oscuro */
+}
+
+.navbar-main .btn-outline-primary {
+  color: #386641; /* Verde Oscuro */
+  border-color: #386641;
+}
+
+.navbar-main .btn-outline-primary:hover {
+  background-color: #386641;
+  color: #fff;
+}
+
+.btn-primary {
+  background-color: #6A994E; /* Verde Medio */
+  border-color: #6A994E;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: #386641; /* Verde Oscuro */
+  border-color: #386641;
+}
+
+.form-control:focus {
+  border-color: #6A994E;
+  box-shadow: 0 0 0 0.2rem rgba(106, 153, 78, 0.25);
+}
+
+.alert-success {
+  background-color: #A7D1AB; /* Verde Claro */
+  border-color: #6A994E;
+  color: #386641;
+}
+
+.alert-danger {
+  background-color: #FFDA6D; /* Amarillo Pálido */
+  border-color: #FFC107;
+  color: #795548;
+}
+
+/* Estilos generales para texto */
+body {
+  color: #495057; /* Gris Oscuro para el texto general */
+}
+
+/* Estilos para la barra lateral */
+#sidenav-main {
+  background-color: #386641; /* Verde Oscuro */
+  color: #080707; /* Texto blanco */
+}
+
+#sidenav-main .nav-link {
+  color: #A7D1AB; /* Verde Claro */
+}
+
+#sidenav-main .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #FFC107; /* Amarillo/Dorado */
+}
+
+#sidenav-main .nav-link.active {
+  background-color: #6A994E; /* Verde Medio */
+  color: #0c0a0a;
+}
+
+/* Asegurar contraste en la barra lateral */
+#sidenav-main .nav-link-text {
+  color: #040405; /* Blanco ligeramente más oscuro */
+}
+
+/* Estilos para el encabezado de la tarjeta (card header) */
+.card-header {
+  background-color: #6A994E; /* Verde Medio */
+  color: #050404; /* Texto blanco */
+}
+
+/* Estilos para el título principal */
+.main-content h5.font-weight-bold.text-primary {
+  color: #795548 !important; /* Marrón Oscuro */
+}
+
+
+
+   /* Estilos personalizados para el dashboard con paleta de colores verde olivo y café */
+/* Estilos para la barra lateral */
+@media (max-width: 768px) {
+  #sidenav-main {
+      width: 200px; /* Reducir ancho en móviles */
+  }
+
+  .main-content {
+      margin-left: 200px; /* Ajustar margen en móviles */
+  }
+}
+
+#sidenav-main {
+  height: 100vh; /* Altura completa del viewport */
+  position: fixed; /* Fijar la posición */
+  top: 0;
+  left: 0;
+  overflow-y: auto; /* Habilitar scroll si el contenido excede */
+  background-color: #f8f9fa; /* Fondo claro */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombras suaves */
+}
+
+/* Ajustar el contenido principal */
+.main-content {
+    margin-left: 250px; /* Ancho de la barra lateral */
+    padding: 20px; /* Espaciado interno */
+}
 
    #demo {
     width: 100%;
@@ -115,7 +346,7 @@
   --bs-gray-700: #495057;
   --bs-gray-800: #343a40;
   --bs-gray-900: #212529;
-  --bs-primary: #cb0c9f;
+  --bs-primary: #da9007;
   --bs-secondary: #8392AB;
   --bs-success: #82d616;
   --bs-info: #17c1e8;
@@ -156,9 +387,9 @@
   --bs-border-radius-xl: 1rem;
   --bs-border-radius-2xl: 1.5rem;
   --bs-border-radius-pill: 50rem;
-  --bs-link-color: #cb0c9f;
-  --bs-link-hover-color: #830866;
-  --bs-code-color: #d63384;
+  --bs-link-color: #8d3e06;
+  --bs-link-hover-color: #569909;
+  --bs-code-color: #40ad22;
   --bs-highlight-bg: #fcf8e3;
 }
 
@@ -500,12 +731,7 @@ select:disabled {
   display: none !important;
 }
 
-button,
-[type="button"],
-[type="reset"],
-[type="submit"] {
-  -webkit-appearance: button;
-}
+
 
 button:not(:disabled),
 [type="button"]:not(:disabled),
@@ -565,7 +791,6 @@ legend+* {
 
 [type="search"] {
   outline-offset: -2px;
-  -webkit-appearance: textfield;
 }
 
 /* rtl:raw:
@@ -586,7 +811,6 @@ legend+* {
 
 ::file-selector-button {
   font: inherit;
-  -webkit-appearance: button;
 }
 
 output {
@@ -4646,7 +4870,7 @@ fieldset:disabled .btn {
   --bs-nav-link-font-weight: ;
   --bs-nav-link-color: var(--bs-link-color);
   --bs-nav-link-hover-color: var(--bs-link-hover-color);
-  --bs-nav-link-disabled-color: #6c757d;
+  --bs-nav-link-disabled-color: #1974c4;
   display: flex;
   flex-wrap: wrap;
   padding-left: 0;
@@ -4728,7 +4952,7 @@ fieldset:disabled .btn {
 .nav-pills {
   --bs-nav-pills-border-radius: 0.75rem;
   --bs-nav-pills-link-active-color: #344767;
-  --bs-nav-pills-link-active-bg: #fff;
+  --bs-nav-pills-link-active-bg: #e82323;
 }
 
 .nav-pills .nav-link {
@@ -4778,7 +5002,7 @@ fieldset:disabled .btn {
 .navbar {
   --bs-navbar-padding-x: 1rem;
   --bs-navbar-padding-y: 0.5rem;
-  --bs-navbar-color: #344767;
+  --bs-navbar-color: #135dde;
   --bs-navbar-hover-color: rgba(52, 71, 103, 0.7);
   --bs-navbar-disabled-color: rgba(52, 71, 103, 0.3);
   --bs-navbar-active-color: rgba(52, 71, 103, 0.9);
@@ -22605,7 +22829,6 @@ html {
   }
 }
 
-@use "sass:math";
 
 .navbar-vertical .navbar-brand>img,
 .navbar-vertical .navbar-brand-img {
@@ -25204,7 +25427,6 @@ p {
   -ms-touch-action: manipulation;
   touch-action: manipulation;
   background: #fff;
-  -webkit-box-shadow: 0 8px 26px -4px rgba(20, 20, 20, 0.15), 0 8px 9px -5px rgba(20, 20, 20, 0.06);
 }
 
 .flatpickr-calendar.open,
@@ -26323,10 +26545,8 @@ span.flatpickr-weekday {
   background: #fff;
   cursor: default;
   box-shadow: inset 0 0 1px #fff, inset 0 1px 7px #EBEBEB, 0 3px 6px -3px #BBB;
-  webkit-transition: .3s ease 0s;
   -moz-transition: .3s ease 0s;
   -ms-transition: .3s ease 0s;
-  -o-transform: .3s ease 0s;
   transition: .3s ease 0s;
 }
 

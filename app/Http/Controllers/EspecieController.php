@@ -20,6 +20,7 @@ class EspecieController extends Controller
 
     public function store(Request $request)
     {
+    
         $validatedData = $request->validate([
             'nom_cientifico' => 'required|string|max:255',
             'nom_comun' => 'required|string|max:255',

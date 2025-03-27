@@ -5,41 +5,85 @@
 @section('content')
 <div class="row justify-content-center">
     <div class="col-md-6 text-center mb-5">
-        <h2 class="heading-section">Login #10</h2>
+        <h2 class="heading-section">Acceso al Sistema</h2>
     </div>
 </div>
+
 <div class="row justify-content-center">
     <div class="col-md-6 col-lg-4">
-        <div class="login-wrap p-0">
-            <h3 class="mb-4 text-center">Have an account?</h3>
+        <div class="login-wrap p-5 bg-white rounded-3 shadow-lg">
+            <div class="text-center mb-5">
+                <img src="{{ asset('img/woodwise.png') }}" 
+                     alt="WoodWise Logo" 
+                     width="80" 
+                     height="80" 
+                     class="rounded-circle border border-2 border-primary">
+            </div>
+
+            <h3 class="mb-5 text-center text-primary">Iniciar Sesión</h3>
+            
             <form method="POST" action="{{ route('login') }}" class="signin-form">
                 @csrf
-                <div class="form-group">
-                    <input type="email" name="email" class="form-control" placeholder="Email" required autofocus>
+                <div class="form-group mb-5">
+                    <input type="email" 
+                           name="email" 
+                           class="form-control border-primary" 
+                           placeholder="Correo electrónico" 
+                           required 
+                           autofocus>
                 </div>
-                <div class="form-group">
-                    <input id="password-field" type="password" name="password" class="form-control" placeholder="Password" required>
-                    <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                
+                <div class="form-group mb-5 position-relative">
+                    <input id="password-field" 
+                           type="password" 
+                           name="password" 
+                           class="form-control border-primary" 
+                           placeholder="Contraseña" 
+                           required>
+                    <span toggle="#password-field" 
+                          class="fa fa-fw fa-eye field-icon toggle-password 
+                          position-absolute end-0 top-50 translate-middle-y me-3"></span>
                 </div>
-                <div class="form-group">
-                    <button type="submit" class="form-control btn btn-primary submit px-3">Sign In</button>
+
+                <div class="form-group mb-5">
+                    <button type="submit" 
+                            class="form-control btn btn-primary btn-lg rounded-3">
+                        <i class="bi bi-box-arrow-in-right me-2"></i> Acceder
+                    </button>
                 </div>
-                <div class="form-group d-md-flex">
-                    <div class="w-50">
-                        <label class="checkbox-wrap checkbox-primary">Remember Me
-                            <input type="checkbox" name="remember">
-                            <span class="checkmark"></span>
+
+                <div class="form-group d-flex justify-content-between align-items-center mb-5">
+                    <div class="form-check">
+                        <input class="form-check-input" 
+                               type="checkbox" 
+                               name="remember">
+                        <label class="form-check-label text-muted">
+                            Recuérdame
                         </label>
                     </div>
-                    <div class="w-50 text-md-right">
-                        <a href="{{ route('password.request') }}" style="color: #fff">Forgot Password</a>
-                    </div>
+                    <a href="{{ route('password.request') }}" 
+                       class="text-decoration-none text-primary">
+                        ¿Olvidó su contraseña?
+                    </a>
                 </div>
             </form>
-            <p class="w-100 text-center">&mdash; Or Sign In With &mdash;</p>
-            <div class="social d-flex text-center">
-                <a href="#" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span> Facebook</a>
-                <a href="#" class="px-2 py-2 ml-md-1 rounded"><span class="ion-logo-twitter mr-2"></span> Twitter</a>
+
+            <div class="text-center mb-5">
+                <p class="text-muted">¿No tiene cuenta? <a href="{{ route('register') }}" class="text-decoration-none text-primary">Registrarse</a></p>
+            </div>
+
+            <div class="text-center">
+                <p class="text-muted mb-4">O acceder con:</p>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="#" 
+                       class="btn btn-outline-primary rounded-pill px-4">
+                        <i class="bi bi-facebook"></i>
+                    </a>
+                    <a href="#" 
+                       class="btn btn-outline-primary rounded-pill px-4">
+                        <i class="bi bi-google"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

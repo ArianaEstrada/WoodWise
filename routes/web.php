@@ -11,6 +11,7 @@ use App\Http\Controllers\ParcelaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\PerfilController;
+
 // Ruta principal
 Route::get('/', function () {
     return view('welcome');
@@ -39,4 +40,5 @@ Route::get('/dashboard1', [DashboardController::class, 'index'])
     Route::resource('formulas', FormulaController::class);
     Route::resource('especies', EspecieController::class);
     Route::resource('usuarios', PersonaController::class);
+
     Route::get('/catalogo-especies', [EspecieController::class, 'catalogo'])->name('especies.catalogo');

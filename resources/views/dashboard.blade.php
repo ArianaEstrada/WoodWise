@@ -56,7 +56,7 @@
   <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
 </head>
 
-<body class="g-sidenav-show  bg-gray-100">
+<body class="g-sidenav-show  bg-light">
 
 <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl fixed-start bg-light px-2" id="sidenav-main">
     <div class="sidenav-header d-flex align-items-center justify-content-between p-2">
@@ -96,7 +96,7 @@
             @endif
             @if( Auth::user()->persona->rol->nom_rol == 'Administrador' || Auth::user()->persona->rol->nom_rol == 'Tecnico')
             <li class="nav-item mb-1">
-                <a class="nav-link d-flex align-items-center py-2" href="#">
+                <a class="nav-link d-flex align-items-center py-2" href="{{ route('tipo_estimaciones.index') }}">
                     <div class="icon icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center me-2" style="width: 30px; height: 30px;">
                         <i class="fas fa-cubes text-warning"></i>
                     </div>
