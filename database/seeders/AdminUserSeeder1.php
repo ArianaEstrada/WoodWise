@@ -8,14 +8,14 @@ use App\Models\Persona;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
-class AdminUserSeeder extends Seeder
+class AdminUserSeeder1 extends Seeder
 {
     public function run()
     {
         // 1. Crear o obtener el rol de Administrador
         $adminRol = Rol::firstOrCreate(
-            ['nom_rol' => 'Administrador'], // Condición para verificar si ya existe
-            ['desc_rol' => 'Rol con acceso total al sistema'] // Si no existe, se crea con esta descripción
+            ['nom_rol' => 'Administrador'],
+            ['desc_rol' => 'Rol con acceso total al sistema']
         );
 
         // 2. Crear la persona administradora
@@ -26,8 +26,8 @@ class AdminUserSeeder extends Seeder
             'telefono' => '0000000000',
             'correo' => 'admin@empresa.com',
             'contrasena' => Hash::make('AdminPassword123!'), // Se encripta correctamente con Bcrypt
-            'id_rol' => $adminRol->id_rol, // Asocia el rol de administrador
-            'is_producer' => 0 // Establece que no es productor
+            'id_rol' => $adminRol->id_rol,
+            'is_producer' => 0
         ]);
 
         // 3. Crear el usuario de autenticación
@@ -35,12 +35,12 @@ class AdminUserSeeder extends Seeder
             'name' => 'Administrador del Sistema',
             'email' => 'admin@empresa.com',
             'password' => Hash::make('AdminPassword123!'), // Se encripta correctamente con Bcrypt
-            'id_persona' => $personaAdmin->id_persona // Asocia el usuario con la persona administradora
+            'id_persona' => $personaAdmin->id_persona
         ]);
 
-        // Mensajes informativos para el comando de la terminal
         $this->command->info('✅ Usuario administrador creado exitosamente!');
         $this->command->info('📧 Email: admin@empresa.com');
         $this->command->info('🔑 Contraseña: AdminPassword123!');
     }
+
 }

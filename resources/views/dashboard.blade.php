@@ -124,6 +124,14 @@
             <li class="nav-item mb-1">
                 <a class="nav-link d-flex align-items-center py-2" href="#">
                     <div class="icon icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center me-2" style="width: 30px; height: 30px;">
+                        <i class="fas fa-clock text-primary"></i>
+                    </div>
+                    <span class="nav-link-text">Productor</span>
+                </a>
+            </li>
+            <li class="nav-item mb-1">
+                <a class="nav-link d-flex align-items-center py-2" href="#">
+                    <div class="icon icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center me-2" style="width: 30px; height: 30px;">
                         <i class="fas fa-map-marked-alt text-dark"></i>
                     </div>
                     <span class="nav-link-text">Gestión de Parcelas</span>
@@ -134,7 +142,7 @@
                     <div class="icon icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center me-2" style="width: 30px; height: 30px;">
                         <i class="fas fa-file-alt text-secondary"></i>
                     </div>
-                    <span class="nav-link-text">Reportes</span>
+                    <span class="nav-link-text">Tecnicos</span>
                 </a>
             </li>
             <li class="nav-item mb-1">
