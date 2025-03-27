@@ -96,7 +96,7 @@
             @endif
             @if( Auth::user()->persona->rol->nom_rol == 'Administrador' || Auth::user()->persona->rol->nom_rol == 'Tecnico')
             <li class="nav-item mb-1">
-                <a class="nav-link d-flex align-items-center py-2" href="{{ route('tipo_estimaciones.index') }}">
+                <a class="nav-link d-flex align-items-center py-2" href="">
                     <div class="icon icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center me-2" style="width: 30px; height: 30px;">
                         <i class="fas fa-cubes text-warning"></i>
                     </div>
@@ -104,11 +104,11 @@
                 </a>
             </li>
             <li class="nav-item mb-1">
-                <a class="nav-link d-flex align-items-center py-2" href="#">
+                <a class="nav-link d-flex align-items-center py-2" href="{{ route('tipo_estimaciones.index') }}">
                     <div class="icon icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center me-2" style="width: 30px; height: 30px;">
                         <i class="fas fa-chart-line text-info"></i>
                     </div>
-                    <span class="nav-link-text">Gestión de Estimaciones</span>
+                    <span class="nav-link-text">Tipo Estimaciones</span>
                 </a>
             </li>
             <li class="nav-item mb-1">
