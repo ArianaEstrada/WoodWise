@@ -18,14 +18,14 @@ class TipoEstimacionController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate(['nombre' => 'required|string|max:255']);
+        $request->validate(['desc_estimacion' => 'required|string|max:255']);
         Tipo_Estimacion::create($request->all());
         return redirect()->route('tipo_estimaciones.index')->with('success', 'Tipo de estimación creado correctamente.');
     }
 
     public function update(Request $request, $id)
     {
-        $request->validate(['nombre' => 'required|string|max:255']);
+        $request->validate(['desc_estimacion' => 'required|string|max:255']);
         $tipo = Tipo_Estimacion::findOrFail($id);
         $tipo->update($request->all());
         return redirect()->route('tipo_estimaciones.index')->with('success', 'Tipo de estimación actualizado.');

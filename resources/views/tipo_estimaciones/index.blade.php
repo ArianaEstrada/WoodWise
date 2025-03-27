@@ -1,4 +1,3 @@
-// Vista: resources/views/tipo_estimaciones/index.blade.php
 @extends('dashboard')
 
 @section('template_title', 'Gestión de Tipos de Estimaciones')
@@ -23,7 +22,7 @@
                         @foreach ($tipo_estimaciones as $tipo)
                         <tr>
                             <td>{{ $tipo->id_tipo_e }}</td>
-                            <td>{{ $tipo->nombre }}</td>
+                            <td>{{ $tipo->desc_estimacion }}</td>
                             <td>
                                 <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editTipoModal{{ $tipo->id_tipo_e }}">Editar</button>
                                 <button class="btn btn-outline-danger btn-sm" onclick="confirmDelete('{{ route('tipo_estimaciones.destroy', $tipo->id_tipo_e) }}')">Eliminar</button>
@@ -41,7 +40,7 @@
                                             @csrf @method('PUT')
                                             <div class="mb-3">
                                                 <label class="form-label">Nombre</label>
-                                                <input type="text" name="nombre" class="form-control" value="{{ old('nombre', $tipo->nombre) }}" required>
+                                                <input type="text" name="desc_estimacion" class="form-control" value="{{ old('nombre', $tipo->nombre) }}" required>
                                             </div>
                                             <button type="submit" class="btn btn-success">Actualizar</button>
                                         </form>
@@ -68,7 +67,7 @@
                     @csrf
                     <div class="mb-3">
                         <label class="form-label">Nombre</label>
-                        <input type="text" name="nombre" class="form-control" required>
+                        <input type="text" name="desc_estimacion" class="form-control" required>
                     </div>
                     <button type="submit" class="btn btn-success">Crear</button>
                 </form>
