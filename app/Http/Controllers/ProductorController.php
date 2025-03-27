@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Productores;
+use App\Models\Productor;
+use App\Models\Persona;
 use Illuminate\Http\Request;
 
 class ProductorController extends Controller
@@ -12,15 +13,9 @@ class ProductorController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $productores = Productor::all(); // Obtener todos los productores
+        $personas = Persona::all();  // Obtener todas las personas para asignarlas al productor
+        return view('productores.index', compact('productores', 'personas')); // Vista con productores y personas
     }
 
     /**
@@ -28,38 +23,42 @@ class ProductorController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'id_persona' => 'required|exists:personas,id_persona', // Validación de persona
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Productores $productores)
-    {
-        //
-    }
+        Productor::create([
+            'id_persona' => $request->id_persona, // Guardar la relación con persona
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Productores $productores)
-    {
-        //
+        return redirect()->route('productores.index')->with('success', 'Productor creado con éxito.');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Productores $productores)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'id_persona' => 'required|exists:personas,id_persona',
+        ]);
+
+        $productor = Productor::findOrFail($id);
+        $productor->update([
+            'id_persona' => $request->id_persona,
+        ]);
+
+        return redirect()->route('productores.index')->with('success', 'Productor actualizado con éxito.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Productores $productores)
+    public function destroy($id)
     {
-        //
+        $productor = Productor::findOrFail($id);
+        $productor->delete();
+
+        return redirect()->route('productores.index')->with('success', 'Productor eliminado con éxito.');
     }
 }

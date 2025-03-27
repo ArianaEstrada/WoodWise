@@ -122,13 +122,14 @@
             @endif
             @if( Auth::user()->persona->rol->nom_rol == 'Administrador' || Auth::user()->persona->rol->nom_rol == 'Productor')
             <li class="nav-item mb-1">
-                <a class="nav-link d-flex align-items-center py-2" href="#">
+                <a class="nav-link d-flex align-items-center py-2" href="{{ route('productores.index') }}">
                     <div class="icon icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center me-2" style="width: 30px; height: 30px;">
-                        <i class="fas fa-clock text-primary"></i>
+                        <i class="fas fa-leaf text-success"></i>
                     </div>
                     <span class="nav-link-text">Productor</span>
                 </a>
             </li>
+
             <li class="nav-item mb-1">
                 <a class="nav-link d-flex align-items-center py-2" href="#">
                     <div class="icon icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center me-2" style="width: 30px; height: 30px;">

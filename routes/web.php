@@ -12,6 +12,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\TipoEstimacionController;
+use App\Http\Controllers\ProductorController;
+
 
 // Ruta principal
 Route::get('/', function () {
@@ -42,6 +44,7 @@ Route::get('/dashboard1', [DashboardController::class, 'index'])
     Route::resource('especies', EspecieController::class);
     Route::resource('usuarios', PersonaController::class);
     Route::resource('tipo_estimaciones', TipoEstimacionController::class);
+    Route::resource('productores', ProductorController::class);
 
 
     Route::get('/catalogo-especies', [EspecieController::class, 'catalogo'])->name('especies.catalogo');
