@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Persona;
+use App\Models\Tecnico;
+use App\Models\Productor;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Rol;
 use Illuminate\Http\Request;
-
+use App\Http\Controllers\Auth;
 class RegisterController extends Controller
 {
     use RegistersUsers;
@@ -90,7 +92,7 @@ class RegisterController extends Controller
         'telefono' => $data['telefono'],
         'correo' => $data['email'],
         'contrasena' => Hash::make($data['password']),
-        'id_rol' => (int)$data['id_rol'], // 🔥 Convertir a entero por seguridad
+        'id_rol' => (int)$data['id_rol'], 
         'cedula' => $data['cedula'] ?? null, // Si la cédula es proporcionada, se almacena
     ]);
 
@@ -122,8 +124,4 @@ class RegisterController extends Controller
         'id_persona' => $persona->id_persona,
     ]);
 }
-
-
-    // Método para confirmar la cédula (ya no será necesario)
-    // public function confirmarCedula(Request $request) { ... }
 }

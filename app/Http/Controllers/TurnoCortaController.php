@@ -3,63 +3,78 @@
 namespace App\Http\Controllers;
 
 use App\Models\Turno_Corta;
+use App\Models\Parcela;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TurnoCortaController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Restringir acceso a administradores.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->persona->rol->nom_rol !== 'Administrador') {
+                return redirect()->route('home')->with('error', 'Acceso denegado.');
+            }
+            return $next($request);
+        });
+    }
+
+    /**
+     * Listar turnos de corta.
      */
     public function index()
     {
-        //
+        $turnos = Turno_Corta::with('parcela')->get();
+        $parcelas = Parcela::all();
+        return view('turno_cortas.index', compact('turnos', 'parcelas'));
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * Guardar un nuevo turno de corta.
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'id_parcela'   => 'required|exists:parcelas,id_parcela',
+            'codigo_corta' => 'required|string|max:255',
+            'fecha_corta'  => 'required|date',
+        ]);
+
+        Turno_Corta::create($validatedData);
+
+        return redirect()->route('turno_cortas.index')->with('register', 'Turno de corta agregado exitosamente.');
     }
 
     /**
-     * Display the specified resource.
+     * Actualizar turno de corta.
      */
-    public function show(Turno_Corta $turno_Corta)
+    public function update(Request $request, int $id_turno)
     {
-        //
+        $turno = Turno_Corta::findOrFail($id_turno);
+
+        $validatedData = $request->validate([
+            'id_parcela'   => 'required|exists:parcelas,id_parcela',
+            'codigo_corta' => 'required|string|max:255',
+            'fecha_corta'  => 'required|date',
+        ]);
+
+        $turno->update($validatedData);
+
+        return redirect()->route('turno_cortas.index')->with('modify', 'Turno de corta actualizado exitosamente.');
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Eliminar turno de corta.
      */
-    public function edit(Turno_Corta $turno_Corta)
+    public function destroy(int $id_turno)
     {
-        //
-    }
+        $turno = Turno_Corta::findOrFail($id_turno);
+        $turno->delete();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Turno_Corta $turno_Corta)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Turno_Corta $turno_Corta)
-    {
-        //
+        return redirect()->route('turno_cortas.index')->with('destroy', 'Turno de corta eliminado exitosamente.');
     }
 }

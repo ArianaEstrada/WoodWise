@@ -21,7 +21,6 @@ Gestión de Técnicos
                         <th class="py-3">Nombre</th>
                         <th class="py-3">Correo</th>
                         <th class="py-3">Teléfono</th>
-                        <th class="py-3">Especialidad</th>
                         <th class="py-3">Acciones</th>
                     </tr>
                 </thead>
@@ -29,10 +28,9 @@ Gestión de Técnicos
                     @foreach ($tecnicos as $tecnico)
                     <tr>
                         <td class="py-3">{{ $tecnico->id_tecnico }}</td>
-                        <td class="py-3">{{ $tecnico->nom }} {{ $tecnico->ap }} {{ $tecnico->am }}</td>
-                        <td class="py-3">{{ $tecnico->correo }}</td>
-                        <td class="py-3">{{ $tecnico->telefono }}</td>
-                        <td class="py-3">{{ $tecnico->especialidad }}</td>
+                        <td class="py-3">{{ $tecnico->persona->nom }} {{ $tecnico->persona->ap }} {{ $tecnico->persona->am }}</td>
+                        <td class="py-3">{{ $tecnico->persona->correo }}</td>
+                        <td class="py-3">{{ $tecnico->persona->telefono }}</td>
                         <td class="py-3">
                             <button class="btn btn-outline-primary btn-sm me-2" data-bs-toggle="modal" data-bs-target="#editTechnicianModal{{ $tecnico->id_tecnico }}">
                                 <i class="fas fa-edit"></i> Editar
@@ -100,31 +98,26 @@ Gestión de Técnicos
                 <form method="POST" action="{{ route('tecnicos.store') }}">
                     @csrf
                     <div class="mb-3">
-                        <label class="form-label">Nombre</label>
-                        <input type="text" name="nom" class="form-control" required>
+                        <label for="id_persona" class="form-label">Seleccionar Persona</label>
+                        <select name="id_persona" id="id_persona" class="form-control" required>
+                            <option value="" disabled selected>Seleccione una persona...</option>
+                            @foreach ($personas as $persona)
+                                <option value="{{ $persona->id_persona }}">{{ $persona->nom }} {{ $persona->ap }} {{ $persona->am }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Apellido Paterno</label>
-                        <input type="text" name="ap" class="form-control" required>
+                        <label for="cedula_p" class="form-label">Cédula Profesional</label>
+                        <input type="text" name="cedula_p" id="cedula_p" class="form-control">
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Correo</label>
-                        <input type="email" name="correo" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Teléfono</label>
-                        <input type="text" name="telefono" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Especialidad</label>
-                        <input type="text" name="especialidad" class="form-control" required>
-                    </div>
+                    <!-- La clave se genera automáticamente en el controlador -->
                     <button type="submit" class="btn btn-success">Crear</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
 
 <!-- SweetAlert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

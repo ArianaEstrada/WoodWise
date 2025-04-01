@@ -1,18 +1,23 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\EspecieController;
+use App\Http\Controllers\ParcelaController;
 use App\Http\Controllers\FormulaController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TrozaController;
 use App\Http\Controllers\EstimacionController;
-use App\Http\Controllers\ParcelaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\TipoEstimacionController;
 use App\Http\Controllers\ProductorController;
+use App\Http\Controllers\TecnicoController;
+use App\Http\Controllers\TurnoCortaController;
+
 
 
 // Ruta principal
@@ -45,6 +50,11 @@ Route::get('/dashboard1', [DashboardController::class, 'index'])
     Route::resource('usuarios', PersonaController::class);
     Route::resource('tipo_estimaciones', TipoEstimacionController::class);
     Route::resource('productores', ProductorController::class);
+    Route::resource('tecnicos', TecnicoController::class);
+    Route::resource('parcelas', ParcelaController::class);
+    Route::resource('trozas', TrozaController::class);
+    Route::resource('turno_cortas', TurnoCortaController::class);
+
 
 
     Route::get('/catalogo-especies', [EspecieController::class, 'catalogo'])->name('especies.catalogo');

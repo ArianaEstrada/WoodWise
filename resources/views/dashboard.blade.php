@@ -96,7 +96,7 @@
             @endif
             @if( Auth::user()->persona->rol->nom_rol == 'Administrador' || Auth::user()->persona->rol->nom_rol == 'Tecnico')
             <li class="nav-item mb-1">
-                <a class="nav-link d-flex align-items-center py-2" href="">
+                <a class="nav-link d-flex align-items-center py-2" href="{{ route('trozas.index') }}">
                     <div class="icon icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center me-2" style="width: 30px; height: 30px;">
                         <i class="fas fa-cubes text-warning"></i>
                     </div>
@@ -131,7 +131,7 @@
             </li>
 
             <li class="nav-item mb-1">
-                <a class="nav-link d-flex align-items-center py-2" href="#">
+                <a class="nav-link d-flex align-items-center py-2" href="{{ route('parcelas.index') }}">
                     <div class="icon icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center me-2" style="width: 30px; height: 30px;">
                         <i class="fas fa-map-marked-alt text-dark"></i>
                     </div>
@@ -139,7 +139,7 @@
                 </a>
             </li>
             <li class="nav-item mb-1">
-                <a class="nav-link d-flex align-items-center py-2" href="#">
+                <a class="nav-link d-flex align-items-center py-2" href="{{ route('tecnicos.index') }}">
                     <div class="icon icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center me-2" style="width: 30px; height: 30px;">
                         <i class="fas fa-file-alt text-secondary"></i>
                     </div>
@@ -147,7 +147,7 @@
                 </a>
             </li>
             <li class="nav-item mb-1">
-                <a class="nav-link d-flex align-items-center py-2" href="#">
+                <a class="nav-link d-flex align-items-center py-2" href="{{ route('turno_cortas.index') }}">
                     <div class="icon icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center me-2" style="width: 30px; height: 30px;">
                         <i class="fas fa-clock text-primary"></i>
                     </div>

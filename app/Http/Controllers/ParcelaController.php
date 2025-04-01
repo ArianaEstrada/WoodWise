@@ -2,65 +2,85 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Parcela;
 use Illuminate\Http\Request;
+use App\Models\Parcela;
+use App\Models\Productor;
+use Illuminate\Support\Facades\Auth;
 
 class ParcelaController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Restringir acceso a administradores.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->persona->rol->nom_rol !== 'Administrador') {
+                return redirect()->route('home')->with('error', 'Acceso denegado.');
+            }
+            return $next($request);
+        });
+    }
+
+    /**
+     * Listar parcelas.
      */
     public function index()
     {
-        $parcelas = Parcela::all();
-            return view('CRUDs.parcelas.index', compact('parcelas'));
+        $parcelas = Parcela::with('productor')->get();
+        $productores = Productor::all(); // Obtener todos los productores para el select
+        return view('parcelas.index', compact('parcelas', 'productores'));
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * Guardar una nueva parcela.
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'nom_parcela'  => 'required|string|max:255|unique:parcelas,nom_parcela',
+            'ubicacion'    => 'required|string|max:255',
+            'id_productor' => 'required|exists:productores,id_productor',
+            'extension'    => 'required|string|max:50',
+            'direccion'    => 'required|string|max:255',
+            'CP'           => 'required|integer|min:10000|max:99999',
+        ]);
+
+        Parcela::create($validatedData);
+
+        return redirect()->route('parcelas.index')->with('register', 'Parcela agregada exitosamente.');
     }
 
     /**
-     * Display the specified resource.
+     * Actualizar parcela.
      */
-    public function show(Parcelas $parcelas)
+    public function update(Request $request, int $id_parcela)
     {
-        //
+        $parcela = Parcela::findOrFail($id_parcela);
+
+        $validatedData = $request->validate([
+            'nom_parcela'  => 'required|string|max:255|unique:parcelas,nom_parcela,' . $parcela->id_parcela . ',id_parcela',
+            'ubicacion'    => 'required|string|max:255',
+            'id_productor' => 'required|exists:productores,id_productor',
+            'extension'    => 'required|string|max:50',
+            'direccion'    => 'required|string|max:255',
+            'CP'           => 'required|integer|min:10000|max:99999',
+        ]);
+
+        $parcela->update($validatedData);
+
+        return redirect()->route('parcelas.index')->with('modify', 'Parcela actualizada exitosamente.');
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Eliminar parcela.
      */
-    public function edit(Parcelas $parcelas)
+    public function destroy(int $id_parcela)
     {
-        //
-    }
+        $parcela = Parcela::findOrFail($id_parcela);
+        $parcela->delete();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Parcelas $parcelas)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Parcelas $parcelas)
-    {
-        //
+        return redirect()->route('parcelas.index')->with('destroy', 'Parcela eliminada exitosamente.');
     }
 }
