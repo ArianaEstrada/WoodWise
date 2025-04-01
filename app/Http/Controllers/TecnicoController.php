@@ -51,9 +51,9 @@ class TecnicoController extends Controller
     /**
      * Actualizar técnico.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id_tecnico)
     {
-        $tecnico = Tecnico::findOrFail($id);
+        $tecnico = Tecnico::findOrFail($id_tecnico);
 
         $validatedData = $request->validate([
             'cedula_p'    => 'required|string|max:50|unique:tecnicos,cedula_p,' . $tecnico->id_tecnico . ',id_tecnico',
@@ -68,9 +68,9 @@ class TecnicoController extends Controller
     /**
      * Eliminar técnico.
      */
-    public function destroy(string $id)
+    public function destroy(string $id_tecnico)
     {
-        $tecnico = Tecnico::findOrFail($id);
+        $tecnico = Tecnico::findOrFail($id_tecnico);
         $tecnico->delete();
 
         return redirect()->route('tecnicos.index')->with('destroy', 'Técnico eliminado exitosamente.');
