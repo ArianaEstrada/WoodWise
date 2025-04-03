@@ -63,14 +63,9 @@ Gestión de Turnos de Corta
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="mb-3">
-                                            <label for="codigo_corta" class="form-label">Código de Corta</label>
-                                            <input type="text" name="codigo_corta" id="codigo_corta" class="form-control" value="{{ $turno->codigo_corta }}" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="fecha_corta" class="form-label">Fecha de Corta</label>
-                                            <input type="date" name="fecha_corta" id="fecha_corta" class="form-control" value="{{ $turno->fecha_corta }}" required>
-                                        </div>
+
+                                        <!-- Campos eliminados: código y fecha -->
+                                        
                                         <button type="submit" class="btn btn-primary">Actualizar</button>
                                     </form>
                                 </div>
@@ -103,20 +98,16 @@ Gestión de Turnos de Corta
                                 @endforeach
                             </select>
                         </div>
-                        <div class="mb-3">
-                            <label for="codigo_corta" class="form-label">Código de Corta</label>
-                            <input type="text" name="codigo_corta" id="codigo_corta" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="fecha_corta" class="form-label">Fecha de Corta</label>
-                            <input type="date" name="fecha_corta" id="fecha_corta" class="form-control" required>
-                        </div>
+
+                        <!-- Campos eliminados: código y fecha -->
+                        
                         <button type="submit" class="btn btn-success">Crear</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
 </div>
 
 <!-- SweetAlert -->
@@ -156,4 +147,5 @@ Gestión de Turnos de Corta
     Swal.fire('¡Éxito!', 'Turno de corta eliminado correctamente', 'success');
     @endif
 </script>
+
 @endsection

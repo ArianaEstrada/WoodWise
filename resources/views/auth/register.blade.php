@@ -137,14 +137,14 @@
                             @enderror
                         </div>
 
-                        <!-- Cédula -->
+                                            <!-- Cédula -->
                         <div id="cedula-container" class="mb-4" style="display: none;">
                             <label for="cedula" class="form-label">{{ __('Cédula') }}</label>
                             <input type="text" 
-                                   class="form-control @error('cedula') is-invalid @enderror" 
-                                   name="cedula" 
-                                   id="cedula" 
-                                   value="{{ old('cedula') }}">
+                                class="form-control @error('cedula') is-invalid @enderror" 
+                                name="cedula" 
+                                id="cedula" 
+                                value="{{ old('cedula') }}">
                             @error('cedula')
                                 <span class="invalid-feedback">{{ $message }}</span>
                             @enderror

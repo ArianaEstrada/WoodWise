@@ -6,6 +6,8 @@ use App\Models\Turno_Corta;
 use App\Models\Parcela;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class TurnoCortaController extends Controller
 {
@@ -39,14 +41,18 @@ class TurnoCortaController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'id_parcela'   => 'required|exists:parcelas,id_parcela',
-            'codigo_corta' => 'required|string|max:255',
-            'fecha_corta'  => 'required|date',
+            'id_parcela' => 'required|exists:parcelas,id_parcela',
+        ]);
+
+        $validatedData = array_merge($validatedData, [
+            'codigo_corta' => Str::uuid()->toString(),
+            'fecha_corta' => Carbon::now(),
         ]);
 
         Turno_Corta::create($validatedData);
 
-        return redirect()->route('turno_cortas.index')->with('register', 'Turno de corta agregado exitosamente.');
+        return redirect()->route('turno_cortas.index')
+            ->with('register', 'Turno de corta agregado exitosamente.');
     }
 
     /**
@@ -57,14 +63,13 @@ class TurnoCortaController extends Controller
         $turno = Turno_Corta::findOrFail($id_turno);
 
         $validatedData = $request->validate([
-            'id_parcela'   => 'required|exists:parcelas,id_parcela',
-            'codigo_corta' => 'required|string|max:255',
-            'fecha_corta'  => 'required|date',
+            'id_parcela' => 'required|exists:parcelas,id_parcela',
         ]);
 
         $turno->update($validatedData);
 
-        return redirect()->route('turno_cortas.index')->with('modify', 'Turno de corta actualizado exitosamente.');
+        return redirect()->route('turno_cortas.index')
+            ->with('modify', 'Turno de corta actualizado exitosamente.');
     }
 
     /**
@@ -75,6 +80,7 @@ class TurnoCortaController extends Controller
         $turno = Turno_Corta::findOrFail($id_turno);
         $turno->delete();
 
-        return redirect()->route('turno_cortas.index')->with('destroy', 'Turno de corta eliminado exitosamente.');
+        return redirect()->route('turno_cortas.index')
+            ->with('destroy', 'Turno de corta eliminado exitosamente.');
     }
 }

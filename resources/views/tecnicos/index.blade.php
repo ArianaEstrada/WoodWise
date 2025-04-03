@@ -69,10 +69,7 @@ Gestión de Técnicos
                                             <label class="form-label">Teléfono</label>
                                             <input type="text" name="telefono" class="form-control" value="{{ $tecnico->telefono }}" required>
                                         </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Especialidad</label>
-                                            <input type="text" name="especialidad" class="form-control" value="{{ $tecnico->especialidad }}" required>
-                                        </div>
+                                      
                                         <button type="submit" class="btn btn-primary">Actualizar</button>
                                     </form>
                                 </div>

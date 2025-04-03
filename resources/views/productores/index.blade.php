@@ -21,7 +21,7 @@
                     <tbody>
                         @foreach ($productores as $productor)
                         <tr>
-                            <td>{{ $productor->persona->nom }} {{ $productor->persona->ap }}</td>
+                            <td>{{ $productor->persona->nom }} {{ $productor->persona->ap }} {{ $productor->persona->am }}</td>
                             <td>
                                 <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editProductorModal{{ $productor->id_productor }}">Editar</button>
 
@@ -50,7 +50,7 @@
                                                 <select name="id_persona" class="form-control" required>
                                                     @foreach ($personas as $persona)
                                                     <option value="{{ $persona->id_persona }}" {{ $persona->id_persona == $productor->id_persona ? 'selected' : '' }}>
-                                                        {{ $persona->nom }} {{ $persona->ap }}
+                                                        {{ $productor->persona->nom }} {{ $productor->persona->ap }} {{ $productor->persona->am }}
                                                     </option>
                                                     @endforeach
                                                 </select>
@@ -84,7 +84,7 @@
                         <label class="form-label">Persona Asociada</label>
                         <select name="id_persona" class="form-control" required>
                             @foreach ($personas as $persona)
-                            <option value="{{ $persona->id_persona }}">{{ $persona->nom }} {{ $persona->ap }}</option>
+                            <option value="{{ $persona->id_persona }}">{{ $productor->persona->nom }} {{ $productor->persona->ap }} {{ $productor->persona->am }}</option>
                             @endforeach
                         </select>
                     </div>

@@ -33,7 +33,7 @@ Gestión de Parcelas
                         <td>{{ $parcela->id_parcela }}</td>
                         <td>{{ $parcela->nom_parcela }}</td>
                         <td>{{ $parcela->ubicacion }}</td>
-                        <td>{{ $parcela->productor->nombre_completo }}</td>
+                        <td>{{ $parcela->productor->persona->nom }} {{ $parcela->productor->persona->ap }} {{ $parcela->productor->persona->am }}</td>
                         <td>{{ $parcela->extension }}</td>
                         <td>{{ $parcela->direccion }}</td>
                         <td>{{ $parcela->CP }}</td>
@@ -75,7 +75,7 @@ Gestión de Parcelas
                                             <select name="id_productor" id="id_productor" class="form-control" required>
                                                 @foreach ($productores as $productor)
                                                     <option value="{{ $productor->id_productor }}" {{ $productor->id_productor == $parcela->id_productor ? 'selected' : '' }}>
-                                                        {{ $productor->nombre_completo }}
+                                                        {{ $parcela->productor->persona->nom }} {{ $parcela->productor->persona->ap }} {{ $parcela->productor->persona->am }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -131,7 +131,7 @@ Gestión de Parcelas
                             <select name="id_productor" id="id_productor" class="form-control" required>
                                 <option value="" disabled selected>Seleccione un productor...</option>
                                 @foreach ($productores as $productor)
-                                    <option value="{{ $productor->id_productor }}">{{ $productor->nombre_completo }}</option>
+                                    <option value="{{ $productor->id_productor }}">{{ $parcela->productor->persona->nom }} {{ $parcela->productor->persona->ap }} {{ $parcela->productor->persona->am }}</option>
                                 @endforeach
                             </select>
                         </div>
