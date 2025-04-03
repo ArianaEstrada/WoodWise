@@ -8,9 +8,20 @@ use Illuminate\Http\Request;
 
 class ProductorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->persona->rol->nom_rol !== 'Administrador') {
+                // Redirige a la vista 'denegado' con un código HTTP 403 (Forbidden)
+                return response()->view('denegado', [], 403);
+                
+                // Opcional: Si prefieres usar abort (mostrará la vista 403 personalizada)
+                // abort(403, 'No tienes permisos de administrador');
+            }
+            return $next($request);
+        });
+    }
     public function index()
     {
         $productores = Productor::all(); // Obtener todos los productores
