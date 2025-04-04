@@ -35,10 +35,24 @@ class Troza extends Model
     {
         return $this->belongsTo(Parcela::class, 'id_parcela');
     }
-
+    public function formula()
+{
+    return $this->belongsTo(Formula::class, 'id_formula');
+}
     // Si la clave primaria no es auto-incrementable
     public $incrementing = true;
 
     // Si no estás utilizando las marcas de tiempo (created_at y updated_at)
     public $timestamps = false;
+    public function getDiametroCmAttribute()
+    {
+        return $this->diametro * 100;
+    }
+
+    // Método de acceso para mostrar longitud en cm (opcional)
+    public function getLongitudCmAttribute()
+    {
+        return $this->longitud * 100;
+    }
+
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Productor;
 use App\Models\Persona;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductorController extends Controller
 {
@@ -24,8 +25,8 @@ class ProductorController extends Controller
     }
     public function index()
     {
-        $productores = Productor::all(); // Obtener todos los productores
-        $personas = Persona::all();  // Obtener todas las personas para asignarlas al productor
+        $productores = Productor::with('persona')->get();
+                $personas = Persona::all();  // Obtener todas las personas para asignarlas al productor
         return view('productores.index', compact('productores', 'personas')); // Vista con productores y personas
     }
 

@@ -78,6 +78,14 @@
                 </a>
             </li>
             <li class="nav-item mb-1">
+              <a class="nav-link active d-flex align-items-center py-2" href="{{ route('asigna_parcelas.index') }}">
+                  <div class="icon icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center me-2" style="width: 30px; height: 30px;">
+                      <i class="fas fa-users text-primary"></i>
+                  </div>
+                  <span class="nav-link-text">Asignacion de parcelas</span>
+              </a>
+          </li>
+            <li class="nav-item mb-1">
                 <a class="nav-link d-flex align-items-center py-2" href="{{ route('formulas.index') }}">
                     <div class="icon icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center me-2" style="width: 30px; height: 30px;">
                         <i class="fas fa-flask text-secondary"></i>
@@ -103,6 +111,7 @@
                     <span class="nav-link-text">Gestión de Trozas</span>
                 </a>
             </li>
+            
             <li class="nav-item mb-1">
                 <a class="nav-link d-flex align-items-center py-2" href="{{ route('tipo_estimaciones.index') }}">
                     <div class="icon icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center me-2" style="width: 30px; height: 30px;">
@@ -112,11 +121,11 @@
                 </a>
             </li>
             <li class="nav-item mb-1">
-                <a class="nav-link d-flex align-items-center py-2" href="#">
+                <a class="nav-link d-flex align-items-center py-2" href="{{ route('estimaciones.index') }}">
                     <div class="icon icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center me-2" style="width: 30px; height: 30px;">
                         <i class="fas fa-chart-pie text-danger"></i>
                     </div>
-                    <span class="nav-link-text">Resumen de Estimaciones</span>
+                    <span class="nav-link-text">Estimaciones</span>
                 </a>
             </li>
             @endif

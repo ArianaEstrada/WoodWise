@@ -43,8 +43,8 @@ class TrozaController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'longitud'  => 'required|numeric|min:0',
-            'diametro'  => 'required|numeric|min:0',
+            'longitud' => 'required|numeric|min:0.01',
+        'diametro' => 'required|numeric|min:0.01',
             'densidad'  => 'required|numeric|min:0',
             'id_especie' => 'required|exists:especies,id_especie',
             'id_parcela' => 'required|exists:parcelas,id_parcela',

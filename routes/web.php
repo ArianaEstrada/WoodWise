@@ -17,6 +17,7 @@ use App\Http\Controllers\TipoEstimacionController;
 use App\Http\Controllers\ProductorController;
 use App\Http\Controllers\TecnicoController;
 use App\Http\Controllers\TurnoCortaController;
+use App\Http\Controllers\AsignaParcelaController;
 
 
 
@@ -54,7 +55,7 @@ Route::get('/dashboard1', [DashboardController::class, 'index'])
     Route::resource('parcelas', ParcelaController::class);
     Route::resource('trozas', TrozaController::class);
     Route::resource('turno_cortas', TurnoCortaController::class);
-
-
-
+    Route::resource('asigna_parcelas', AsignaParcelaController::class);
+    Route::resource('estimaciones', EstimacionController::class);
+    Route::get('/estimaciones/formulas-por-tipo/{tipoId}', [EstimacionController::class, 'getFormulasByTipo']);
     Route::get('/catalogo-especies', [EspecieController::class, 'catalogo'])->name('especies.catalogo');

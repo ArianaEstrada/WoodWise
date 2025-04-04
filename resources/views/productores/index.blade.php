@@ -84,8 +84,7 @@
                         <label class="form-label">Persona Asociada</label>
                         <select name="id_persona" class="form-control" required>
                             @foreach ($personas as $persona)
-                            <option value="{{ $persona->id_persona }}">{{ $productor->persona->nom }} {{ $productor->persona->ap }} {{ $productor->persona->am }}</option>
-                            @endforeach
+                            <option value="{{ $persona->id_persona }}">{{ $persona->nom }} {{ $persona->ap }} {{ $persona->am }}</option>                            @endforeach
                         </select>
                     </div>
                     <button type="submit" class="btn btn-success">Crear</button>

@@ -123,12 +123,13 @@
                         <form method="POST" action="{{ route('trozas.store') }}">
                             @csrf
                             <div class="mb-3">
-                                <label for="longitud" class="form-label">Longitud</label>
-                                <input type="number" class="form-control" id="longitud" name="longitud" required>
+                                <label class="form-label">Diámetro (metros)</label>
+                                <input type="number" step="0.01" name="diametro" class="form-control" required>
                             </div>
+                            
                             <div class="mb-3">
-                                <label for="diametro" class="form-label">Diámetro</label>
-                                <input type="number" class="form-control" id="diametro" name="diametro" required>
+                                <label class="form-label">Longitud (metros)</label>
+                                <input type="number" step="0.01" name="longitud" class="form-control" required>
                             </div>
                             <div class="mb-3">
                                 <label for="densidad" class="form-label">Densidad</label>

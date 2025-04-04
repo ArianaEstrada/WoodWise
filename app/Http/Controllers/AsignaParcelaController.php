@@ -1,65 +1,64 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Asigna_Parcela;
+use App\Models\Tecnico;
+use App\Models\Parcela;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AsignaParcelaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->persona->rol->nom_rol !== 'Administrador') {
+                return response()->view('denegado', [], 403);
+            }
+            return $next($request);
+        });
+    }
+
     public function index()
     {
-        //
+        $asignaciones = Asigna_Parcela::with(['tecnico.persona', 'parcela.productor.persona'])->get();
+        $tecnicos = Tecnico::with('persona')->get();
+        $parcelas = Parcela::with('productor.persona')->get();
+        
+        return view('asigna_parcelas.index', compact('asignaciones', 'tecnicos', 'parcelas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'id_tecnico' => 'required|exists:tecnicos,id_tecnico',
+            'id_parcela' => 'required|exists:parcelas,id_parcela',
+        ]);
+
+        Asigna_Parcela::create($request->all());
+
+        return redirect()->route('asigna_parcelas.index')->with('success', 'Asignación creada con éxito.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Asigna_Parcela $asigna_Parcela)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'id_tecnico' => 'required|exists:tecnicos,id_tecnico',
+            'id_parcela' => 'required|exists:parcelas,id_parcela',
+        ]);
+
+        $asignacion = Asigna_Parcela::findOrFail($id);
+        $asignacion->update($request->all());
+
+        return redirect()->route('asigna_parcelas.index')->with('success', 'Asignación actualizada con éxito.');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Asigna_Parcela $asigna_Parcela)
+    public function destroy($id)
     {
-        //
-    }
+        $asignacion = Asigna_Parcela::findOrFail($id);
+        $asignacion->delete();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Asigna_Parcela $asigna_Parcela)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Asigna_Parcela $asigna_Parcela)
-    {
-        //
+        return redirect()->route('asigna_parcelas.index')->with('success', 'Asignación eliminada con éxito.');
     }
 }
