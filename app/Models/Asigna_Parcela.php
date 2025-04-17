@@ -21,6 +21,10 @@ class Asigna_Parcela extends Model
         'id_parcela',
     ];
 
+    protected $dates = [
+        'created_at',
+        'updated_at'
+    ];
     // Relación con la tabla 'tecnicos'
     public function tecnico()
     {

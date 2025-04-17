@@ -20,7 +20,10 @@ class Formula extends Model
         'nom_formula',
         'expresion',
     ];
-
+    protected $dates = [
+        'created_at',
+        'updated_at'
+    ];
     // Si la clave primaria no es auto-incrementable
     public $incrementing = true;
 

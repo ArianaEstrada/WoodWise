@@ -22,7 +22,7 @@ class AsignaParcelaController extends Controller
 
     public function index()
     {
-        $asignaciones = Asigna_Parcela::with(['tecnico.persona', 'parcela.productor.persona'])->get();
+        $asignaciones = Asigna_Parcela::with(['tecnico.persona', 'parcela.productor.persona'])->paginate(10);
         $tecnicos = Tecnico::with('persona')->get();
         $parcelas = Parcela::with('productor.persona')->get();
         
