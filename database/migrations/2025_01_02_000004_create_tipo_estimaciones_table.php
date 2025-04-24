@@ -12,8 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tipo_estimaciones', function (Blueprint $table) {
-            $table->integer('id_tipo_e', true);
+            $table->id('id_tipo_e');
             $table->string('desc_estimacion')->unique('desc_estimacion');
+            $table->timestamps();
         });
     }
 

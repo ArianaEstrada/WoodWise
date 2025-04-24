@@ -12,12 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tecnicos', function (Blueprint $table) {
-            $table->integer('id_tecnico', true);
-            $table->integer('id_persona')->index('id_persona');
-            $table->string('cedula_p')->unique('cedula_p');
-            $table->string('clave_tecnico')->unique('clave_tecnico');
-
-            $table->foreign('id_persona')->references('id_persona')->on('personas')->onUpdate('cascade')->onDelete('cascade');
+            $table->id('id_tecnico');
+            $table->unsignedBigInteger('id_persona');
+            $table->string('cedula_p')->unique();
+            $table->string('clave_tecnico')->unique();
+            
+            $table->foreign('id_persona')->references('id_persona')->on('personas');
+            $table->timestamps();
         });
 
     }

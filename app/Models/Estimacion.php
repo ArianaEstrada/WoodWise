@@ -93,4 +93,40 @@ public static function calcularNewton($troza)
 
     public $incrementing = true;
     public $timestamps = false;
+
+
+    // Métodos para carbono
+public static function calcularCarbonoFormula1($troza)
+{
+    // Implementa la fórmula real para carbono
+    return $troza->longitud * $troza->diametro * 0.5; // Ejemplo
+}
+
+public static function calcularCarbonoFormula2($troza)
+{
+    // Implementa la fórmula real para carbono
+    return $troza->longitud * pow($troza->diametro, 2) * 0.3; // Ejemplo
+}
+
+// Métodos para biomasa
+public static function calcularBiomasaFormula1($troza)
+{
+    // Implementa la fórmula real para biomasa
+    return $troza->volumen * 500; // Ejemplo (500 kg/m³)
+}
+
+// Métodos para área basal
+public static function calcularAreaBasal($troza)
+{
+    return pi() * pow($troza->diametro, 2) / 4;
+}
+public function getDiametroOtroExtremoAttribute($value)
+{
+    return $value ?? $this->diametro; // Devuelve el diámetro principal si no tiene valor
+}
+
+public function getDiametroMedioAttribute($value)
+{
+    return $value ?? $this->diametro; // Devuelve el diámetro principal si no tiene valor
+}
 }

@@ -24,7 +24,7 @@
                         <tr>
                             <th class="py-3 ps-4">Tipo Estimación</th>
                             <th class="py-3">Fórmula</th>
-                            <th class="py-3">Cálculo (m³)</th>
+                            <th class="py-3">Cálculo</th>
                             <th class="py-3">Troza (Especie/Parcela)</th>
                             <th class="py-3 pe-4 text-end">Acciones</th>
                         </tr>
@@ -40,7 +40,13 @@
                             <td class="fw-semibold">{{ $estimacion->formula->nom_formula }}</td>
                             <td>
                                 <span class="badge bg-success bg-opacity-10 text-success">
-                                    {{ number_format($estimacion->calculo, 4) }}
+                                    {{ number_format($estimacion->calculo, 4) }} 
+                                    @switch($estimacion->tipoEstimacion->desc_estimacion)
+                                        @case('Volumen Maderable') m³ @break
+                                        @case('Carbono') kg CO₂ @break
+                                        @case('Biomasa') kg @break
+                                        @case('Área Basal') m² @break
+                                    @endswitch
                                 </span>
                             </td>
                             <td>
@@ -74,7 +80,7 @@
                             </td>
                         </tr>
 
-                        <!-- Modal Ver Estimación - Nuevo -->
+                        <!-- Modal Ver Estimación -->
                         <div class="modal fade" id="viewEstimacionModal{{ $estimacion->id_estimacion }}" tabindex="-1" 
                              aria-labelledby="viewEstimacionLabel{{ $estimacion->id_estimacion }}" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
@@ -110,7 +116,14 @@
                                         <div class="row mb-3">
                                             <div class="col-md-6">
                                                 <h6 class="text-muted">Cálculo:</h6>
-                                                <p class="fw-bold">{{ number_format($estimacion->calculo, 4) }} m³</p>
+                                                <p class="fw-bold">{{ number_format($estimacion->calculo, 4) }} 
+                                                    @switch($estimacion->tipoEstimacion->desc_estimacion)
+                                                        @case('Volumen Maderable') m³ @break
+                                                        @case('Carbono') kg CO₂ @break
+                                                        @case('Biomasa') kg @break
+                                                        @case('Área Basal') m² @break
+                                                    @endswitch
+                                                </p>
                                             </div>
                                             <div class="col-md-6">
                                                 <h6 class="text-muted">Troza:</h6>
@@ -126,6 +139,12 @@
                                                 <p class="fw-bold">
                                                     Diámetro: {{ $estimacion->troza->diametro }}m, 
                                                     Longitud: {{ $estimacion->troza->longitud }}m
+                                                    @if($estimacion->formula->nom_formula === 'Formula de SMALIAN' || $estimacion->formula->nom_formula === 'Formula de NEWTON')
+                                                        <br>Diámetro otro extremo: {{ $estimacion->troza->diametro_otro_extremo ?? 'N/A' }}m
+                                                    @endif
+                                                    @if($estimacion->formula->nom_formula === 'Formula de NEWTON')
+                                                        <br>Diámetro medio: {{ $estimacion->troza->diametro_medio ?? 'N/A' }}m
+                                                    @endif
                                                 </p>
                                             </div>
                                         </div>
@@ -138,7 +157,7 @@
                             </div>
                         </div>
 
-                        <!-- Modal Editar Estimación - Mejorado -->
+                        <!-- Modal Editar Estimación -->
                         <div class="modal fade" id="editEstimacionModal{{ $estimacion->id_estimacion }}" tabindex="-1" 
                              aria-labelledby="editEstimacionLabel{{ $estimacion->id_estimacion }}" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
@@ -182,24 +201,36 @@
                                                     @foreach ($trozas as $troza)
                                                     <option value="{{ $troza->id_troza }}" 
                                                             data-diametro="{{ $troza->diametro }}"
-                                                            data-diametro2="{{ $troza->diametro_otro_extremo ?? $troza->diametro }}"
-                                                            data-diametro-medio="{{ $troza->diametro_medio ?? $troza->diametro }}"
+                                                            data-diametro2="{{ $troza->diametro_otro_extremo ?? null }}"
+                                                            data-diametro-medio="{{ $troza->diametro_medio ?? null }}"
                                                             data-longitud="{{ $troza->longitud }}"
                                                             {{ $troza->id_troza == $estimacion->id_troza ? 'selected' : '' }}>
                                                         {{ $troza->especie->nom_especie ?? 'N/A' }} ({{ $troza->parcela->nom_parcela ?? 'N/A' }})
                                                         - D: {{ $troza->diametro }}m, L: {{ $troza->longitud }}m
+                                                        @if($troza->diametro_otro_extremo) - D2: {{ $troza->diametro_otro_extremo }}m @endif
+                                                        @if($troza->diametro_medio) - DM: {{ $troza->diametro_medio }}m @endif
                                                     </option>
                                                     @endforeach
                                                 </select>
                                             </div>
+                                            
+                                            <!-- Contenedor para mensajes de validación -->
+                                            <div id="messages-container-edit{{ $estimacion->id_estimacion }}"></div>
+                                            
                                             <input type="hidden" name="calculo" id="calculoHiddenEdit{{ $estimacion->id_estimacion }}">
                                             <div class="alert alert-info" id="resultadoEstimacionEdit{{ $estimacion->id_estimacion }}" style="display: none;">
-                                                <strong>Nueva estimación:</strong> <span id="valorEstimacionEdit{{ $estimacion->id_estimacion }}"></span> m³
+                                                <strong>Nueva estimación:</strong> <span id="valorEstimacionEdit{{ $estimacion->id_estimacion }}"></span>
+                                                @switch($estimacion->tipoEstimacion->desc_estimacion)
+                                                    @case('Volumen Maderable') m³ @break
+                                                    @case('Carbono') kg CO₂ @break
+                                                    @case('Biomasa') kg @break
+                                                    @case('Área Basal') m² @break
+                                                @endswitch
                                             </div>
                                             <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
                                                 <button type="button" class="btn btn-outline-secondary me-md-2 rounded-pill" 
                                                         data-bs-dismiss="modal">Cancelar</button>
-                                                <button type="submit" class="btn btn-primary rounded-pill">
+                                                <button type="submit" class="btn btn-primary rounded-pill" id="submitEdit{{ $estimacion->id_estimacion }}">
                                                     <i class="fas fa-save me-1"></i>Actualizar
                                                 </button>
                                             </div>
@@ -216,7 +247,7 @@
     </div>
 </div>
 
-<!-- Modal Crear Estimación - Mejorado -->
+<!-- Modal Crear Estimación -->
 <div class="modal fade" id="createEstimacionModal" tabindex="-1" aria-labelledby="createEstimacionLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow">
@@ -254,23 +285,30 @@
                             @foreach ($trozas as $troza)
                             <option value="{{ $troza->id_troza }}" 
                                     data-diametro="{{ $troza->diametro }}"
-                                    data-diametro2="{{ $troza->diametro_otro_extremo ?? $troza->diametro }}"
-                                    data-diametro-medio="{{ $troza->diametro_medio ?? $troza->diametro }}"
+                                    data-diametro2="{{ $troza->diametro_otro_extremo ?? null }}"
+                                    data-diametro-medio="{{ $troza->diametro_medio ?? null }}"
                                     data-longitud="{{ $troza->longitud }}">
                                 {{ $troza->especie->nom_especie ?? 'N/A' }} ({{ $troza->parcela->nom_parcela ?? 'N/A' }})
                                 - D: {{ $troza->diametro }}m, L: {{ $troza->longitud }}m
+                                @if($troza->diametro_otro_extremo) - D2: {{ $troza->diametro_otro_extremo }}m @endif
+                                @if($troza->diametro_medio) - DM: {{ $troza->diametro_medio }}m @endif
                             </option>
                             @endforeach
                         </select>
                     </div>
+                    
+                    <!-- Contenedor para mensajes de validación -->
+                    <div id="messages-container"></div>
+                    
                     <input type="hidden" name="calculo" id="calculoHidden">
                     <div class="alert alert-info" id="resultadoEstimacion" style="display: none;">
-                        <strong>Estimación calculada:</strong> <span id="valorEstimacion"></span> m³
+                        <strong>Estimación calculada:</strong> <span id="valorEstimacion"></span>
+                        <span id="unidadMedida"></span>
                     </div>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
                         <button type="button" class="btn btn-outline-secondary me-md-2 rounded-pill" 
                                 data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary rounded-pill">
+                        <button type="submit" class="btn btn-primary rounded-pill" id="submitButton">
                             <i class="fas fa-check-circle me-1"></i>Crear Estimación
                         </button>
                     </div>
@@ -286,17 +324,29 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Funciones de cálculo
+    // =============================================
+    // FUNCIONES DE CÁLCULO
+    // =============================================
+    
+    /**
+     * Calcula el volumen usando la fórmula de Humber
+     */
     function calcularHumber(diametro, longitud) {
         return (longitud * Math.pow(diametro, 2)) / (4 * Math.PI);
     }
 
+    /**
+     * Calcula el volumen usando la fórmula de Smalian
+     */
     function calcularSmalian(diametro1, diametro2, longitud) {
         const area1 = (Math.PI * Math.pow(diametro1, 2)) / 4;
         const area2 = (Math.PI * Math.pow(diametro2, 2)) / 4;
         return ((area1 + area2) / 2) * longitud;
     }
 
+    /**
+     * Calcula el volumen usando la fórmula de Newton
+     */
     function calcularNewton(diametro1, diametroMedio, diametro2, longitud) {
         const area1 = (Math.PI * Math.pow(diametro1, 2)) / 4;
         const areaMedio = (Math.PI * Math.pow(diametroMedio, 2)) / 4;
@@ -304,7 +354,77 @@ document.addEventListener('DOMContentLoaded', function() {
         return ((area1 + (4 * areaMedio) + area2) / 6) * longitud;
     }
 
-    // Filtrado de fórmulas por tipo de estimación
+    /**
+     * Obtiene la unidad de medida según el tipo de estimación
+     */
+    function getUnidadMedida(tipoEstimacion) {
+        switch(tipoEstimacion) {
+            case 'Volumen Maderable': return 'm³';
+            case 'Carbono': return 'kg CO₂';
+            case 'Biomasa': return 'kg';
+            case 'Área Basal': return 'm²';
+            default: return '';
+        }
+    }
+
+    // =============================================
+    // VALIDACIÓN DE CAMPOS OPCIONALES
+    // =============================================
+    
+    /**
+     * Valida que la troza tenga los campos requeridos para la fórmula seleccionada
+     */
+    function validarCamposTroza(formulaNombre, trozaData, containerId) {
+        const container = document.getElementById(containerId);
+        if (!container) return true;
+        
+        // Limpiar mensajes anteriores
+        container.innerHTML = '';
+        
+        let missingFields = [];
+        let isValid = true;
+        
+        // Validar según fórmula
+        if (formulaNombre.includes('SMALIAN') && (!trozaData.diametro2 || trozaData.diametro2 === 'null')) {
+            missingFields.push('diámetro del otro extremo');
+            isValid = false;
+        }
+        
+        if (formulaNombre.includes('NEWTON')) {
+            if (!trozaData.diametro2 || trozaData.diametro2 === 'null') {
+                missingFields.push('diámetro del otro extremo');
+                isValid = false;
+            }
+            if (!trozaData.diametroMedio || trozaData.diametroMedio === 'null') {
+                missingFields.push('diámetro medio');
+                isValid = false;
+            }
+        }
+        
+        // Mostrar advertencia si faltan campos
+        if (missingFields.length > 0) {
+            const alert = document.createElement('div');
+            alert.className = 'alert alert-warning mt-3';
+            alert.innerHTML = `
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                <strong>¡Atención!</strong> La fórmula seleccionada requiere: 
+                ${missingFields.join(' y ')}.
+                <div class="mt-2">
+                    <a href="/trozas/${trozaData.id}/edit" target="_blank" class="btn btn-sm btn-outline-primary">
+                        <i class="fas fa-edit me-1"></i>Editar troza
+                    </a>
+                </div>
+            `;
+            container.appendChild(alert);
+        }
+        
+        return isValid;
+    }
+
+    // =============================================
+    // FILTRADO DE FÓRMULAS POR TIPO DE ESTIMACIÓN
+    // =============================================
+
     const tipoEstimacionSelect = document.getElementById('tipoEstimacionSelect');
     if (tipoEstimacionSelect) {
         tipoEstimacionSelect.addEventListener('change', function() {
@@ -325,77 +445,68 @@ document.addEventListener('DOMContentLoaded', function() {
                             formulaSelect.appendChild(option);
                         });
                         
-                        // Disparar evento de cambio para recalcular
                         if (form) {
-                            const event = new Event('change');
-                            form.dispatchEvent(event);
+                            form.dispatchEvent(new Event('change'));
                         }
-                    });
+                    })
+                    .catch(error => console.error('Error al cargar fórmulas:', error));
             }
         });
+        
+        // Inicializar al cargar
+        tipoEstimacionSelect.dispatchEvent(new Event('change'));
     }
 
-    // Configurar evento para el modal de creación
+    // =============================================
+    // CONFIGURACIÓN DEL MODAL DE CREACIÓN
+    // =============================================
+
     const formCreacion = document.getElementById('formCreacionEstimacion');
     if (formCreacion) {
         formCreacion.addEventListener('change', function() {
             const trozaSelect = this.querySelector('select[name="id_troza"]');
             const formulaSelect = this.querySelector('select[name="id_formula"]');
             const tipoSelect = this.querySelector('select[name="id_tipo_e"]');
+            const submitButton = this.querySelector('#submitButton');
+            const unidadMedidaElement = this.querySelector('#unidadMedida');
             
             if (trozaSelect && formulaSelect && tipoSelect) {
                 const selectedTroza = trozaSelect.options[trozaSelect.selectedIndex];
                 const selectedFormula = formulaSelect.options[formulaSelect.selectedIndex];
+                const selectedTipo = tipoSelect.options[tipoSelect.selectedIndex];
                 
-                if (selectedTroza && selectedFormula) {
-                    const diametro = parseFloat(selectedTroza.dataset.diametro);
-                    const diametro2 = parseFloat(selectedTroza.dataset.diametro2 || diametro);
-                    const diametroMedio = parseFloat(selectedTroza.dataset.diametroMedio || diametro);
-                    const longitud = parseFloat(selectedTroza.dataset.longitud);
+                if (selectedTroza && selectedFormula && selectedTipo) {
+                    // Obtener datos de la troza
+                    const trozaData = {
+                        id: selectedTroza.value,
+                        diametro: selectedTroza.dataset.diametro,
+                        diametro2: selectedTroza.dataset.diametro2,
+                        diametroMedio: selectedTroza.dataset.diametroMedio,
+                        longitud: selectedTroza.dataset.longitud
+                    };
+                    
                     const formulaNombre = selectedFormula.dataset.formulaNombre || selectedFormula.text;
+                    const tipoEstimacion = selectedTipo.text;
                     
-                    let resultado = null;
-                    
-                    if (formulaNombre.includes('HUMBER')) {
-                        resultado = calcularHumber(diametro, longitud);
-                    } else if (formulaNombre.includes('SMALIAN')) {
-                        resultado = calcularSmalian(diametro, diametro2, longitud);
-                    } else if (formulaNombre.includes('NEWTON')) {
-                        resultado = calcularNewton(diametro, diametroMedio, diametro2, longitud);
+                    // Actualizar unidad de medida
+                    if (unidadMedidaElement) {
+                        unidadMedidaElement.textContent = getUnidadMedida(tipoEstimacion);
                     }
                     
-                    if (resultado !== null) {
-                        const resultadoElement = this.querySelector('#valorEstimacion');
-                        const hiddenElement = this.querySelector('input[name="calculo"]');
-                        const alertElement = this.querySelector('#resultadoEstimacion');
-                        
-                        if (resultadoElement) resultadoElement.textContent = resultado.toFixed(4);
-                        if (hiddenElement) hiddenElement.value = resultado;
-                        if (alertElement) alertElement.style.display = 'block';
-                    }
-                }
-            }
-        });
-    }
-
-    // Configurar eventos para los modales de edición
-    @foreach ($estimaciones as $estimacion)
-        const formEdit{{ $estimacion->id_estimacion }} = document.getElementById('formEditEstimacion{{ $estimacion->id_estimacion }}');
-        if (formEdit{{ $estimacion->id_estimacion }}) {
-            formEdit{{ $estimacion->id_estimacion }}.addEventListener('change', function() {
-                const trozaSelect = this.querySelector('select[name="id_troza"]');
-                const formulaSelect = this.querySelector('select[name="id_formula"]');
-                
-                if (trozaSelect && formulaSelect) {
-                    const selectedTroza = trozaSelect.options[trozaSelect.selectedIndex];
-                    const selectedFormula = formulaSelect.options[formulaSelect.selectedIndex];
+                    // Validar campos requeridos
+                    const isValid = validarCamposTroza(formulaNombre, trozaData, 'messages-container');
                     
-                    if (selectedTroza && selectedFormula) {
-                        const diametro = parseFloat(selectedTroza.dataset.diametro);
-                        const diametro2 = parseFloat(selectedTroza.dataset.diametro2 || diametro);
-                        const diametroMedio = parseFloat(selectedTroza.dataset.diametroMedio || diametro);
-                        const longitud = parseFloat(selectedTroza.dataset.longitud);
-                        const formulaNombre = selectedFormula.dataset.formulaNombre || selectedFormula.text;
+                    // Habilitar/deshabilitar botón de enviar
+                    if (submitButton) {
+                        submitButton.disabled = !isValid;
+                    }
+                    
+                    // Solo calcular si la validación es exitosa
+                    if (isValid) {
+                        const diametro = parseFloat(trozaData.diametro);
+                        const diametro2 = parseFloat(trozaData.diametro2 || trozaData.diametro);
+                        const diametroMedio = parseFloat(trozaData.diametroMedio || trozaData.diametro);
+                        const longitud = parseFloat(trozaData.longitud);
                         
                         let resultado = null;
                         
@@ -408,9 +519,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                         
                         if (resultado !== null) {
-                            const resultadoElement = this.querySelector('#valorEstimacionEdit{{ $estimacion->id_estimacion }}');
+                            const resultadoElement = this.querySelector('#valorEstimacion');
                             const hiddenElement = this.querySelector('input[name="calculo"]');
-                            const alertElement = this.querySelector('#resultadoEstimacionEdit{{ $estimacion->id_estimacion }}');
+                            const alertElement = this.querySelector('#resultadoEstimacion');
                             
                             if (resultadoElement) resultadoElement.textContent = resultado.toFixed(4);
                             if (hiddenElement) hiddenElement.value = resultado;
@@ -418,11 +529,101 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                     }
                 }
+            }
+        });
+        
+        // Disparar evento inicial
+        formCreacion.dispatchEvent(new Event('change'));
+    }
+
+    // =============================================
+    // CONFIGURACIÓN DE MODALES DE EDICIÓN
+    // =============================================
+
+    @foreach ($estimaciones as $estimacion)
+        const formEdit{{ $estimacion->id_estimacion }} = document.getElementById('formEditEstimacion{{ $estimacion->id_estimacion }}');
+        if (formEdit{{ $estimacion->id_estimacion }}) {
+            formEdit{{ $estimacion->id_estimacion }}.addEventListener('change', function() {
+                const trozaSelect = this.querySelector('select[name="id_troza"]');
+                const formulaSelect = this.querySelector('select[name="id_formula"]');
+                const tipoSelect = this.querySelector('select[name="id_tipo_e"]');
+                const submitButton = this.querySelector('#submitEdit{{ $estimacion->id_estimacion }}');
+                
+                if (trozaSelect && formulaSelect && tipoSelect) {
+                    const selectedTroza = trozaSelect.options[trozaSelect.selectedIndex];
+                    const selectedFormula = formulaSelect.options[formulaSelect.selectedIndex];
+                    const selectedTipo = tipoSelect.options[tipoSelect.selectedIndex];
+                    
+                    if (selectedTroza && selectedFormula && selectedTipo) {
+                        const trozaData = {
+                            id: selectedTroza.value,
+                            diametro: selectedTroza.dataset.diametro,
+                            diametro2: selectedTroza.dataset.diametro2,
+                            diametroMedio: selectedTroza.dataset.diametroMedio,
+                            longitud: selectedTroza.dataset.longitud
+                        };
+                        
+                        const formulaNombre = selectedFormula.dataset.formulaNombre || selectedFormula.text;
+                        const tipoEstimacion = selectedTipo.text;
+                        
+                        // Validar campos requeridos
+                        const isValid = validarCamposTroza(
+                            formulaNombre, 
+                            trozaData, 
+                            'messages-container-edit{{ $estimacion->id_estimacion }}'
+                        );
+                        
+                        // Habilitar/deshabilitar botón de enviar
+                        if (submitButton) {
+                            submitButton.disabled = !isValid;
+                        }
+                        
+                        // Solo calcular si la validación es exitosa
+                        if (isValid) {
+                            const diametro = parseFloat(trozaData.diametro);
+                            const diametro2 = parseFloat(trozaData.diametro2 || trozaData.diametro);
+                            const diametroMedio = parseFloat(trozaData.diametroMedio || trozaData.diametro);
+                            const longitud = parseFloat(trozaData.longitud);
+                            
+                            let resultado = null;
+                            
+                            if (formulaNombre.includes('HUMBER')) {
+                                resultado = calcularHumber(diametro, longitud);
+                            } else if (formulaNombre.includes('SMALIAN')) {
+                                resultado = calcularSmalian(diametro, diametro2, longitud);
+                            } else if (formulaNombre.includes('NEWTON')) {
+                                resultado = calcularNewton(diametro, diametroMedio, diametro2, longitud);
+                            }
+                            
+                            if (resultado !== null) {
+                                const resultadoElement = this.querySelector('#valorEstimacionEdit{{ $estimacion->id_estimacion }}');
+                                const hiddenElement = this.querySelector('input[name="calculo"]');
+                                const alertElement = this.querySelector('#resultadoEstimacionEdit{{ $estimacion->id_estimacion }}');
+                                
+                                if (resultadoElement) resultadoElement.textContent = resultado.toFixed(4);
+                                if (hiddenElement) hiddenElement.value = resultado;
+                                if (alertElement) alertElement.style.display = 'block';
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Configurar evento para cuando se abre el modal
+            $('#editEstimacionModal{{ $estimacion->id_estimacion }}').on('show.bs.modal', function () {
+                formEdit{{ $estimacion->id_estimacion }}.dispatchEvent(new Event('change'));
+                const tipoSelect = formEdit{{ $estimacion->id_estimacion }}.querySelector('select[name="id_tipo_e"]');
+                if (tipoSelect) {
+                    tipoSelect.dispatchEvent(new Event('change'));
+                }
             });
         }
     @endforeach
 
-    // Función para confirmar eliminación
+    // =============================================
+    // FUNCIÓN PARA CONFIRMAR ELIMINACIÓN
+    // =============================================
+
     function confirmDelete(url) {
         Swal.fire({
             title: '¿Confirmar eliminación?',
@@ -450,7 +651,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Solución para el problema de modales que se traban
+    // =============================================
+    // MANEJO DE MODALES
+    // =============================================
+
     $(document).ready(function() {
         $('.modal').on('show.bs.modal', function (e) {
             $('body').addClass('modal-open');
@@ -462,6 +666,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// =============================================
+// NOTIFICACIONES
+// =============================================
 
 @if(session('success'))
 Swal.fire({
@@ -519,5 +727,10 @@ Swal.fire({
         align-items: center;
         justify-content: center;
         font-size: 0.8rem;
+    }
+    
+    /* Estilos para los mensajes de validación */
+    .alert-troza {
+        border-left: 4px solid #ffc107;
     }
 </style>

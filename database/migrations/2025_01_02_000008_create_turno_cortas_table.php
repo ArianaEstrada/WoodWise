@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('turno_cortas', function (Blueprint $table) {
-            $table->integer('id_turno', true);
-            $table->integer('id_parcela');
-            $table->string('codigo_corta')->unique('codigo_corta');
+            $table->id('id_turno');
+            $table->unsignedBigInteger('id_parcela');
+            $table->string('codigo_corta')->unique();
             $table->date('fecha_corta');
             
-            // Clave foránea
-            $table->foreign('id_parcela')->references('id_parcela')->on('parcelas')->onDelete('cascade');
+            $table->foreign('id_parcela')->references('id_parcela')->on('parcelas');
+            $table->timestamps();
         });
     }
 

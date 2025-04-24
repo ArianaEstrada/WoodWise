@@ -12,9 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('formulas', function (Blueprint $table) {
-            $table->integer('id_formula', true);
+            $table->id('id_formula');
             $table->string('nom_formula')->unique('nom_formula');
             $table->string('expresion');
+            $table->timestamps();
         });
     }
 

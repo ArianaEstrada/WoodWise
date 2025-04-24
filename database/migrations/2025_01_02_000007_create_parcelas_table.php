@@ -12,15 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('parcelas', function (Blueprint $table) {
-            $table->integer('id_parcela', true);
-            $table->string('nom_parcela')->unique('nom_parcela');
+            $table->id('id_parcela');
+            $table->string('nom_parcela')->unique();
             $table->string('ubicacion');
-            $table->integer('id_productor')->index('id_productor');
+            $table->unsignedBigInteger('id_productor');
             $table->string('extension');
             $table->text('direccion');
             $table->integer('CP');
-
-            $table->foreign('id_productor')->references('id_productor')->on('productores')->onUpdate('cascade')->onDelete('cascade');
+            
+            $table->foreign('id_productor')->references('id_productor')->on('productores');
+            $table->timestamps();
         });
     }
 

@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Auth;
 class RegisterController extends Controller
 {
+
     use RegistersUsers;
 
     /**
@@ -100,8 +101,7 @@ class RegisterController extends Controller
     if ($rol->nom_rol === 'Técnico') {
         // Generar una clave de técnico única de 8 dígitos alfanuméricos
         do {
-            $clave_tecnico = strtoupper(str_random(8)); // Generar una clave aleatoria de 8 caracteres
-        } while (Tecnico::where('clave_tecnico', $clave_tecnico)->exists()); // Verificar si ya existe la clave en la base de datos
+            $clave_tecnico = strtoupper(\Illuminate\Support\Str::random(8));        } while (Tecnico::where('clave_tecnico', $clave_tecnico)->exists()); // Verificar si ya existe la clave en la base de datos
 
         // Registrar en la tabla de técnicos
         $tecnico = Tecnico::create([

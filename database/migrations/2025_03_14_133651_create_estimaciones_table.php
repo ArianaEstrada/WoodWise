@@ -12,16 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('estimaciones', function (Blueprint $table) {
-            $table->integer('id_estimacion', true);
-            $table->integer('id_tipo_e');
-            $table->integer('id_formula');
+            $table->id('id_estimacion');
+            $table->unsignedBigInteger('id_tipo_e');
+            $table->unsignedBigInteger('id_formula');
             $table->double('calculo');
-            $table->integer('id_troza');
+            $table->unsignedBigInteger('id_troza');
             
-            // Claves foráneas
-            $table->foreign('id_tipo_e')->references('id_tipo_e')->on('tipo_estimaciones')->onDelete('cascade');
-            $table->foreign('id_formula')->references('id_formula')->on('formulas')->onDelete('cascade');
-            $table->foreign('id_troza')->references('id_troza')->on('trozas')->onDelete('cascade');
+            $table->foreign('id_tipo_e')->references('id_tipo_e')->on('tipo_estimaciones');
+            $table->foreign('id_formula')->references('id_formula')->on('formulas');
+            $table->foreign('id_troza')->references('id_troza')->on('trozas');
+            $table->timestamps();
         });
     }
 

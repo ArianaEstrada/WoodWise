@@ -9,9 +9,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('roles', function (Blueprint $table) {
-            $table->integer('id_rol', true);
+            $table->id('id_rol');
             $table->string('nom_rol')->unique();
             $table->string('desc_rol');
+            $table->timestamps();
         });
     }
 

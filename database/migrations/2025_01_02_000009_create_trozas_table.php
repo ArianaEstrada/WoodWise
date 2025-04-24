@@ -12,17 +12,21 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('trozas', function (Blueprint $table) {
-            $table->integer('id_troza', true);
+            $table->id('id_troza');
             $table->double('longitud');
             $table->double('diametro');
+            $table->double('diametro_otro_extremo')->nullable();
+            $table->double('diametro_medio')->nullable();
             $table->double('densidad');
-            $table->integer('id_especie');
-            $table->integer('id_parcela');
+            $table->unsignedBigInteger('id_especie');
+            $table->unsignedBigInteger('id_parcela');
             
-            // Claves foráneas
-            $table->foreign('id_especie')->references('id_especie')->on('especies')->onDelete('cascade');
-            $table->foreign('id_parcela')->references('id_parcela')->on('parcelas')->onDelete('cascade');
+            $table->foreign('id_especie')->references('id_especie')->on('especies');
+            $table->foreign('id_parcela')->references('id_parcela')->on('parcelas');
+            
+            $table->timestamps();
         });
+    
     }
 
     /**
