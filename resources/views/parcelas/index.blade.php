@@ -15,14 +15,13 @@
                 <i class="fas fa-plus me-2"></i>Nueva Parcela
             </button>
         </div>
-        
+
         <!-- Card Body - Tabla Mejorada -->
         <div class="card-body p-0">
             <div class="table-responsive rounded-lg">
                 <table class="table table-hover align-middle mb-0">
                     <thead class="bg-light-forest text-white">
                         <tr>
-                            <th class="py-3 ps-4">ID</th>
                             <th class="py-3">Nombre</th>
                             <th class="py-3">Ubicación</th>
                             <th class="py-3">Productor</th>
@@ -51,17 +50,17 @@
                             </td>
                             <td class="pe-4 text-end">
                                 <div class="btn-group" role="group">
-                                    <button class="btn btn-sm btn-outline-primary rounded-start-pill me-1" 
-                                            data-bs-toggle="modal" 
+                                    <button class="btn btn-sm btn-outline-primary rounded-start-pill me-1"
+                                            data-bs-toggle="modal"
                                             data-bs-target="#viewParcelaModal{{ $parcela->id_parcela }}">
                                         <i class="fas fa-eye me-1"></i>Ver
                                     </button>
-                                    <button class="btn btn-sm btn-outline-warning me-1" 
-                                            data-bs-toggle="modal" 
+                                    <button class="btn btn-sm btn-outline-warning me-1"
+                                            data-bs-toggle="modal"
                                             data-bs-target="#editParcelaModal{{ $parcela->id_parcela }}">
                                         <i class="fas fa-edit me-1"></i>Editar
                                     </button>
-                                    <button class="btn btn-sm btn-outline-danger rounded-end-pill" 
+                                    <button class="btn btn-sm btn-outline-danger rounded-end-pill"
                                             onclick="confirmDelete('{{ route('parcelas.destroy', $parcela->id_parcela) }}')">
                                         <i class="fas fa-trash-alt me-1"></i>Eliminar
                                     </button>
@@ -70,7 +69,7 @@
                         </tr>
 
                         <!-- Modal Ver Parcela - Nuevo -->
-                        <div class="modal fade" id="viewParcelaModal{{ $parcela->id_parcela }}" tabindex="-1" 
+                        <div class="modal fade" id="viewParcelaModal{{ $parcela->id_parcela }}" tabindex="-1"
                              aria-labelledby="viewParcelaLabel{{ $parcela->id_parcela }}" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content border-0 shadow">
@@ -78,7 +77,7 @@
                                         <h5 class="modal-title">
                                             <i class="fas fa-info-circle me-2"></i>Detalles de la Parcela
                                         </h5>
-                                        <button type="button" class="btn-close btn-close-white" 
+                                        <button type="button" class="btn-close btn-close-white"
                                                 data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body p-4">
@@ -128,7 +127,7 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary rounded-pill" 
+                                        <button type="button" class="btn btn-secondary rounded-pill"
                                                 data-bs-dismiss="modal">Cerrar</button>
                                     </div>
                                 </div>
@@ -136,7 +135,7 @@
                         </div>
 
                         <!-- Modal Editar Parcela - Mejorado -->
-                        <div class="modal fade" id="editParcelaModal{{ $parcela->id_parcela }}" tabindex="-1" 
+                        <div class="modal fade" id="editParcelaModal{{ $parcela->id_parcela }}" tabindex="-1"
                              aria-labelledby="editParcelaLabel{{ $parcela->id_parcela }}" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content border-0 shadow">
@@ -144,7 +143,7 @@
                                         <h5 class="modal-title">
                                             <i class="fas fa-edit me-2"></i>Editar Parcela
                                         </h5>
-                                        <button type="button" class="btn-close btn-close-white" 
+                                        <button type="button" class="btn-close btn-close-white"
                                                 data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body p-4">
@@ -153,12 +152,12 @@
                                             @method('PUT')
                                             <div class="mb-3">
                                                 <label class="form-label text-muted">Nombre Parcela</label>
-                                                <input type="text" name="nom_parcela" class="form-control border-2" 
+                                                <input type="text" name="nom_parcela" class="form-control border-2"
                                                        value="{{ $parcela->nom_parcela }}" required>
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label text-muted">Ubicación</label>
-                                                <input type="text" name="ubicacion" class="form-control border-2" 
+                                                <input type="text" name="ubicacion" class="form-control border-2"
                                                        value="{{ $parcela->ubicacion }}" required>
                                             </div>
                                             <div class="mb-3">
@@ -173,7 +172,7 @@
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label text-muted">Extensión (hectáreas)</label>
-                                                <input type="number" step="0.01" name="extension" class="form-control border-2" 
+                                                <input type="number" step="0.01" name="extension" class="form-control border-2"
                                                        value="{{ $parcela->extension }}" required>
                                             </div>
                                             <div class="mb-3">
@@ -182,11 +181,11 @@
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label text-muted">Código Postal</label>
-                                                <input type="number" name="CP" min="10000" max="99999" class="form-control border-2" 
+                                                <input type="number" name="CP" min="10000" max="99999" class="form-control border-2"
                                                        value="{{ $parcela->CP }}" required>
                                             </div>
                                             <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
-                                                <button type="button" class="btn btn-outline-secondary me-md-2 rounded-pill" 
+                                                <button type="button" class="btn btn-outline-secondary me-md-2 rounded-pill"
                                                         data-bs-dismiss="modal">Cancelar</button>
                                                 <button type="submit" class="btn btn-primary rounded-pill">
                                                     <i class="fas fa-save me-1"></i>Guardar Cambios
@@ -213,7 +212,7 @@
                 <h5 class="modal-title">
                     <i class="fas fa-plus-circle me-2"></i>Nueva Parcela
                 </h5>
-                <button type="button" class="btn-close btn-close-white" 
+                <button type="button" class="btn-close btn-close-white"
                         data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-4">
@@ -251,7 +250,7 @@
                         <input type="number" name="CP" min="10000" max="99999" class="form-control border-2" required>
                     </div>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
-                        <button type="button" class="btn btn-outline-secondary me-md-2 rounded-pill" 
+                        <button type="button" class="btn btn-outline-secondary me-md-2 rounded-pill"
                                 data-bs-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-primary rounded-pill">
                             <i class="fas fa-check-circle me-1"></i>Crear Parcela
@@ -350,20 +349,20 @@
     .bg-gradient-forest {
         background: linear-gradient(135deg, #2e7d32, #1b5e20);
     }
-    
+
     .bg-light-forest {
         background-color: rgba(46, 125, 50, 0.9);
     }
-    
+
     .card {
         border-radius: 12px;
         overflow: hidden;
     }
-    
+
     .table-hover tbody tr:hover {
         background-color: rgba(232, 245, 233, 0.5);
     }
-    
+
     .icon-sm {
         width: 28px;
         height: 28px;
@@ -372,17 +371,17 @@
         justify-content: center;
         font-size: 0.8rem;
     }
-    
+
     .form-control.border-2, .form-select.border-2 {
         border-width: 2px !important;
         border-radius: 8px;
     }
-    
+
     .btn-outline-warning {
         color: #ff9800;
         border-color: #ff9800;
     }
-    
+
     .btn-outline-warning:hover {
         background-color: #ff9800;
         color: white;

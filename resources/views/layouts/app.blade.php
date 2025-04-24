@@ -10,7 +10,7 @@
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
-    
+
     <style>
         :root {
             --wood-dark: #5E3023;
@@ -20,14 +20,14 @@
             --wood-text: #3A2D13;
             --wood-bg-light: #F8F5F0;
         }
-        
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--wood-bg-light);
             color: var(--wood-text);
             overflow-x: hidden;
         }
-        
+
         /* Navbar Premium */
         .navbar {
             background: linear-gradient(135deg, var(--wood-dark), var(--wood-medium));
@@ -35,35 +35,35 @@
             padding: 0.8rem 0;
             transition: all 0.3s;
         }
-        
+
         .navbar.scrolled {
             padding: 0.5rem 0;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
-        
+
         .navbar-brand {
             font-weight: 700;
             letter-spacing: 0.5px;
             display: flex;
             align-items: center;
         }
-        
+
         .text-gradient {
             background: linear-gradient(to right, var(--wood-light), #d4a762);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
-        
+
         .navbar-brand img {
             transition: transform 0.3s ease;
             border: 2px solid rgba(255, 255, 255, 0.2);
         }
-        
+
         .navbar-brand:hover img {
             transform: rotate(15deg);
         }
-        
+
         .nav-link {
             font-weight: 500;
             padding: 0.5rem 1rem;
@@ -73,50 +73,50 @@
             color: white !important;
             position: relative;
         }
-        
+
         .nav-link:hover {
             background: rgba(255, 255, 255, 0.1);
         }
-        
+
         .nav-link.active {
             background: var(--wood-accent);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        
+
         .nav-link i {
             margin-right: 6px;
         }
-        
+
         /* Main Content */
         main {
             padding-top: 2rem;
             padding-bottom: 4rem;
         }
-        
+
         /* Footer Premium */
         .footer {
             background: linear-gradient(135deg, var(--wood-dark), #001524);
             color: white;
             padding: 4rem 0 2rem;
         }
-        
+
         .footer-logo {
             font-size: 1.8rem;
             font-weight: 700;
             margin-bottom: 1rem;
         }
-        
+
         .footer-logo span {
             color: var(--wood-light);
         }
-        
+
         .footer h5 {
             font-size: 1.2rem;
             margin-bottom: 1.5rem;
             position: relative;
             display: inline-block;
         }
-        
+
         .footer h5:after {
             content: '';
             position: absolute;
@@ -126,27 +126,27 @@
             bottom: -8px;
             left: 0;
         }
-        
+
         .footer ul {
             list-style: none;
             padding: 0;
         }
-        
+
         .footer li {
             margin-bottom: 0.8rem;
         }
-        
+
         .footer a {
             color: #adb5bd;
             text-decoration: none;
             transition: all 0.3s;
         }
-        
+
         .footer a:hover {
             color: var(--wood-light);
             padding-left: 5px;
         }
-        
+
         .social-icons a {
             display: inline-flex;
             align-items: center;
@@ -159,12 +159,12 @@
             margin-right: 10px;
             transition: all 0.3s;
         }
-        
+
         .social-icons a:hover {
             background: var(--wood-light);
             transform: translateY(-3px);
         }
-        
+
         .copyright {
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             padding-top: 2rem;
@@ -172,7 +172,7 @@
             font-size: 0.9rem;
             color: #adb5bd;
         }
-        
+
         /* Botones */
         .btn-wood {
             background-color: var(--wood-accent);
@@ -184,35 +184,35 @@
             transition: all 0.3s;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        
+
         .btn-wood:hover {
             background-color: #5a7720;
             transform: translateY(-3px);
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
             color: white;
         }
-        
+
         /* Efectos */
         @keyframes float {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
             100% { transform: translateY(0px); }
         }
-        
+
         .floating {
             animation: float 4s ease-in-out infinite;
         }
-        
+
         /* Responsive */
         @media (max-width: 768px) {
             .navbar {
                 padding: 0.5rem 0;
             }
-            
+
             .footer {
                 padding: 3rem 0 1.5rem;
             }
-            
+
             .footer .col-md-4 {
                 margin-bottom: 2rem;
             }
@@ -221,21 +221,21 @@
     @stack('styles')
 </head>
 <body class="d-flex flex-column min-vh-100">
-    
+
     <!-- Encabezado Premium -->
     <header class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container">
             <a class="navbar-brand" href="{{ route('welcome') }}">
-                <img src="{{ asset('img/woodwise.png') }}" 
-                     alt="WoodWise Logo" 
-                     width="50" 
-                     height="50" 
+                <img src="{{ asset('img/woodwise.png') }}"
+                     alt="WoodWise Logo"
+                     width="50"
+                     height="50"
                      class="me-2 rounded-circle floating">
                 <span class="text-gradient">WoodWise</span>
             </a>
 
-            <button class="navbar-toggler" type="button" 
-                    data-bs-toggle="collapse" 
+            <button class="navbar-toggler" type="button"
+                    data-bs-toggle="collapse"
                     data-bs-target="#navbarNav"
                     aria-controls="navbarNav"
                     aria-expanded="false"
@@ -246,25 +246,25 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav gap-1">
                     <li class="nav-item">
-                        <a href="{{ route('welcome') }}" 
+                        <a href="{{ route('welcome') }}"
                            class="nav-link {{ request()->routeIs('welcome') ? 'active' : '' }}">
                             <i class="bi bi-house-door-fill"></i> Inicio
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('acerca') }}" 
+                        <a href="{{ route('acerca') }}"
                            class="nav-link {{ request()->routeIs('acerca') ? 'active' : '' }}">
                             <i class="bi bi-info-circle-fill"></i> Acerca
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('contacto') }}" 
+                        <a href="{{ route('contacto') }}"
                            class="nav-link {{ request()->routeIs('contacto') ? 'active' : '' }}">
                             <i class="bi bi-envelope-fill"></i> Contacto
                         </a>
                     </li>
                     <li class="nav-item ms-lg-3">
-                        <a href="{{ route('login') }}" 
+                        <a href="{{ route('login') }}"
                            class="nav-link bg-success bg-opacity-90">
                             <i class="bi bi-box-arrow-in-right"></i> Ingresar
                         </a>
@@ -293,7 +293,7 @@
                         <a href="https://www.instagram.com/x_edsonj?igsh=Ynh0cXBsZXFpZDR6"><i class="bi bi-instagram"></i></a>
                     </div>
                 </div>
-                
+
                 <div class="col-lg-2 col-md-4">
                     <h5>Enlaces</h5>
                     <ul>
@@ -303,7 +303,7 @@
                         <li><a href="#">Blog</a></li>
                     </ul>
                 </div>
-                
+
                 <div class="col-lg-3 col-md-4">
                     <h5>Contacto</h5>
                     <ul>
@@ -312,7 +312,7 @@
                         <li><i class="bi bi-envelope me-2"></i> contacto@woodwise.cl</li>
                     </ul>
                 </div>
-                
+
                 <div class="col-lg-3 col-md-4">
                     <h5>Legal</h5>
                     <ul>
@@ -323,7 +323,7 @@
                     </ul>
                 </div>
             </div>
-            
+
             <div class="copyright text-center">
                 <p class="mb-2">© 2025 WoodWise - Todos los derechos reservados</p>
                 <small>Desarrollado con <i class="bi bi-heart-fill text-danger"></i> por CDN</small>
@@ -343,7 +343,7 @@
                 navbar.classList.remove('scrolled');
             }
         });
-        
+
         // Validación de formularios
         (function() {
             'use strict';
@@ -360,7 +360,7 @@
                 });
             }, false);
         })();
-        
+
         // Scroll suave
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {

@@ -15,14 +15,13 @@
                 <i class="fas fa-plus me-2"></i>Nuevo Turno
             </button>
         </div>
-        
+
         <!-- Card Body - Tabla Mejorada -->
         <div class="card-body p-0">
             <div class="table-responsive rounded-lg">
                 <table class="table table-hover align-middle mb-0">
                     <thead class="bg-light-forest text-white">
                         <tr>
-                            <th class="py-3 ps-4">ID</th>
                             <th class="py-3">Parcela</th>
                             <th class="py-3">Productor</th>
                             <th class="py-3">Código</th>
@@ -53,17 +52,17 @@
                             </td>
                             <td class="pe-4 text-end">
                                 <div class="btn-group" role="group">
-                                    <button class="btn btn-sm btn-outline-primary rounded-start-pill me-1" 
-                                            data-bs-toggle="modal" 
+                                    <button class="btn btn-sm btn-outline-primary rounded-start-pill me-1"
+                                            data-bs-toggle="modal"
                                             data-bs-target="#viewTurnoModal{{ $turno->id_turno }}">
                                         <i class="fas fa-eye me-1"></i>Ver
                                     </button>
-                                    <button class="btn btn-sm btn-outline-warning me-1" 
-                                            data-bs-toggle="modal" 
+                                    <button class="btn btn-sm btn-outline-warning me-1"
+                                            data-bs-toggle="modal"
                                             data-bs-target="#editTurnoModal{{ $turno->id_turno }}">
                                         <i class="fas fa-edit me-1"></i>Editar
                                     </button>
-                                    <button class="btn btn-sm btn-outline-danger rounded-end-pill" 
+                                    <button class="btn btn-sm btn-outline-danger rounded-end-pill"
                                             onclick="confirmDelete('{{ route('turno_cortas.destroy', $turno->id_turno) }}')">
                                         <i class="fas fa-trash-alt me-1"></i>Eliminar
                                     </button>
@@ -72,7 +71,7 @@
                         </tr>
 
                         <!-- Modal Ver Turno - Nuevo -->
-                        <div class="modal fade" id="viewTurnoModal{{ $turno->id_turno }}" tabindex="-1" 
+                        <div class="modal fade" id="viewTurnoModal{{ $turno->id_turno }}" tabindex="-1"
                              aria-labelledby="viewTurnoLabel{{ $turno->id_turno }}" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content border-0 shadow">
@@ -80,7 +79,7 @@
                                         <h5 class="modal-title">
                                             <i class="fas fa-info-circle me-2"></i>Detalles del Turno
                                         </h5>
-                                        <button type="button" class="btn-close btn-close-white" 
+                                        <button type="button" class="btn-close btn-close-white"
                                                 data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body p-4">
@@ -120,7 +119,7 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary rounded-pill" 
+                                        <button type="button" class="btn btn-secondary rounded-pill"
                                                 data-bs-dismiss="modal">Cerrar</button>
                                     </div>
                                 </div>
@@ -128,7 +127,7 @@
                         </div>
 
                         <!-- Modal Editar Turno - Mejorado -->
-                        <div class="modal fade" id="editTurnoModal{{ $turno->id_turno }}" tabindex="-1" 
+                        <div class="modal fade" id="editTurnoModal{{ $turno->id_turno }}" tabindex="-1"
                              aria-labelledby="editTurnoLabel{{ $turno->id_turno }}" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content border-0 shadow">
@@ -136,7 +135,7 @@
                                         <h5 class="modal-title">
                                             <i class="fas fa-edit me-2"></i>Editar Turno
                                         </h5>
-                                        <button type="button" class="btn-close btn-close-white" 
+                                        <button type="button" class="btn-close btn-close-white"
                                                 data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body p-4">
@@ -154,7 +153,7 @@
                                                 </select>
                                             </div>
                                             <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
-                                                <button type="button" class="btn btn-outline-secondary me-md-2 rounded-pill" 
+                                                <button type="button" class="btn btn-outline-secondary me-md-2 rounded-pill"
                                                         data-bs-dismiss="modal">Cancelar</button>
                                                 <button type="submit" class="btn btn-primary rounded-pill">
                                                     <i class="fas fa-save me-1"></i>Guardar Cambios
@@ -181,7 +180,7 @@
                 <h5 class="modal-title">
                     <i class="fas fa-plus-circle me-2"></i>Nuevo Turno
                 </h5>
-                <button type="button" class="btn-close btn-close-white" 
+                <button type="button" class="btn-close btn-close-white"
                         data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-4">
@@ -199,7 +198,7 @@
                         </select>
                     </div>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
-                        <button type="button" class="btn btn-outline-secondary me-md-2 rounded-pill" 
+                        <button type="button" class="btn btn-outline-secondary me-md-2 rounded-pill"
                                 data-bs-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-primary rounded-pill">
                             <i class="fas fa-check-circle me-1"></i>Crear Turno
@@ -298,20 +297,20 @@
     .bg-gradient-forest {
         background: linear-gradient(135deg, #2e7d32, #1b5e20);
     }
-    
+
     .bg-light-forest {
         background-color: rgba(46, 125, 50, 0.9);
     }
-    
+
     .card {
         border-radius: 12px;
         overflow: hidden;
     }
-    
+
     .table-hover tbody tr:hover {
         background-color: rgba(232, 245, 233, 0.5);
     }
-    
+
     .icon-sm {
         width: 28px;
         height: 28px;
@@ -320,17 +319,17 @@
         justify-content: center;
         font-size: 0.8rem;
     }
-    
+
     .form-control.border-2, .form-select.border-2 {
         border-width: 2px !important;
         border-radius: 8px;
     }
-    
+
     .btn-outline-warning {
         color: #ff9800;
         border-color: #ff9800;
     }
-    
+
     .btn-outline-warning:hover {
         background-color: #ff9800;
         color: white;

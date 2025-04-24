@@ -21,6 +21,7 @@ use App\Http\Controllers\AsignaParcelaController;
 
 
 
+
 // Ruta principal
 Route::get('/', function () {
     return view('welcome');
@@ -40,7 +41,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/perfil', [PerfilController::class, 'index'])->name('perfil.index');
     Route::put('/perfil', [PerfilController::class, 'update'])->name('perfil.update');
     Route::put('/perfil/password', [PerfilController::class, 'updatePassword'])->name('perfil.updatePassword');
-});   
+});
 
 Route::get('/dashboard1', [DashboardController::class, 'index'])
     ->middleware('auth')

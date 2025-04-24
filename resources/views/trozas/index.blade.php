@@ -15,14 +15,13 @@
                 <i class="fas fa-plus me-2"></i>Nueva Troza
             </button>
         </div>
-        
+
         <!-- Card Body - Tabla Mejorada -->
         <div class="card-body p-0">
             <div class="table-responsive rounded-lg">
                 <table class="table table-hover align-middle mb-0">
                     <thead class="bg-light-primary text-white">
                         <tr>
-                            <th class="py-3 ps-4">ID</th>
                             <th class="py-3">Longitud (m)</th>
                             <th class="py-3">Diámetro (m)</th>
                             <th class="py-3">Densidad</th>
@@ -56,17 +55,17 @@
                             </td>
                             <td class="pe-4 text-end">
                                 <div class="btn-group" role="group">
-                                    <button class="btn btn-sm btn-outline-info rounded-start-pill me-1" 
-                                            data-bs-toggle="modal" 
+                                    <button class="btn btn-sm btn-outline-info rounded-start-pill me-1"
+                                            data-bs-toggle="modal"
                                             data-bs-target="#viewTrozaModal{{ $troza->id_troza }}">
                                         <i class="fas fa-eye me-1"></i>Ver
                                     </button>
-                                    <button class="btn btn-sm btn-outline-primary me-1" 
-                                            data-bs-toggle="modal" 
+                                    <button class="btn btn-sm btn-outline-primary me-1"
+                                            data-bs-toggle="modal"
                                             data-bs-target="#editTrozaModal{{ $troza->id_troza }}">
                                         <i class="fas fa-edit me-1"></i>Editar
                                     </button>
-                                    <button class="btn btn-sm btn-outline-danger rounded-end-pill" 
+                                    <button class="btn btn-sm btn-outline-danger rounded-end-pill"
                                             onclick="confirmDelete('{{ route('trozas.destroy', $troza->id_troza) }}')">
                                         <i class="fas fa-trash-alt me-1"></i>Eliminar
                                     </button>
@@ -75,7 +74,7 @@
                         </tr>
 
                         <!-- Modal Ver Troza - Nuevo -->
-                        <div class="modal fade" id="viewTrozaModal{{ $troza->id_troza }}" tabindex="-1" 
+                        <div class="modal fade" id="viewTrozaModal{{ $troza->id_troza }}" tabindex="-1"
                              aria-labelledby="viewTrozaLabel{{ $troza->id_troza }}" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content border-0 shadow">
@@ -83,7 +82,7 @@
                                         <h5 class="modal-title">
                                             <i class="fas fa-info-circle me-2"></i>Detalles de la Troza
                                         </h5>
-                                        <button type="button" class="btn-close btn-close-white" 
+                                        <button type="button" class="btn-close btn-close-white"
                                                 data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body p-4">
@@ -129,7 +128,7 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary rounded-pill" 
+                                        <button type="button" class="btn btn-secondary rounded-pill"
                                                 data-bs-dismiss="modal">Cerrar</button>
                                     </div>
                                 </div>
@@ -137,7 +136,7 @@
                         </div>
 
                         <!-- Modal Editar Troza - Mejorado -->
-                        <div class="modal fade" id="editTrozaModal{{ $troza->id_troza }}" tabindex="-1" 
+                        <div class="modal fade" id="editTrozaModal{{ $troza->id_troza }}" tabindex="-1"
                              aria-labelledby="editTrozaLabel{{ $troza->id_troza }}" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content border-0 shadow">
@@ -145,7 +144,7 @@
                                         <h5 class="modal-title">
                                             <i class="fas fa-edit me-2"></i>Editar Troza
                                         </h5>
-                                        <button type="button" class="btn-close btn-close-white" 
+                                        <button type="button" class="btn-close btn-close-white"
                                                 data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body p-4">
@@ -154,24 +153,24 @@
                                             @method('PUT')
                                             <div class="mb-3">
                                                 <label class="form-label text-muted">Longitud (metros)</label>
-                                                <input type="number" step="0.01" class="form-control border-2" 
+                                                <input type="number" step="0.01" class="form-control border-2"
                                                        name="longitud" value="{{ number_format($troza->longitud, 2) }}" required>
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label text-muted">Diámetro (metros)</label>
-                                                <input type="number" step="0.01" class="form-control border-2" 
+                                                <input type="number" step="0.01" class="form-control border-2"
                                                        name="diametro" value="{{ number_format($troza->diametro, 2) }}" required>
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label text-muted">Densidad</label>
-                                                <input type="number" step="0.01" class="form-control border-2" 
+                                                <input type="number" step="0.01" class="form-control border-2"
                                                        name="densidad" value="{{ number_format($troza->densidad, 2) }}" required>
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label text-muted">Especie</label>
                                                 <select class="form-select border-2" name="id_especie" required>
                                                     @foreach ($especies as $especie)
-                                                    <option value="{{ $especie->id_especie }}" 
+                                                    <option value="{{ $especie->id_especie }}"
                                                             {{ $troza->id_especie == $especie->id_especie ? 'selected' : '' }}>
                                                         {{ $especie->nom_cientifico }}
                                                     </option>
@@ -182,7 +181,7 @@
                                                 <label class="form-label text-muted">Parcela</label>
                                                 <select class="form-select border-2" name="id_parcela" required>
                                                     @foreach ($parcelas as $parcela)
-                                                    <option value="{{ $parcela->id_parcela }}" 
+                                                    <option value="{{ $parcela->id_parcela }}"
                                                             {{ $troza->id_parcela == $parcela->id_parcela ? 'selected' : '' }}>
                                                         {{ $parcela->nom_parcela }}
                                                     </option>
@@ -190,7 +189,7 @@
                                                 </select>
                                             </div>
                                             <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
-                                                <button type="button" class="btn btn-outline-secondary me-md-2 rounded-pill" 
+                                                <button type="button" class="btn btn-outline-secondary me-md-2 rounded-pill"
                                                         data-bs-dismiss="modal">Cancelar</button>
                                                 <button type="submit" class="btn btn-primary rounded-pill">
                                                     <i class="fas fa-save me-1"></i>Guardar Cambios
@@ -217,7 +216,7 @@
                 <h5 class="modal-title">
                     <i class="fas fa-plus-circle me-2"></i>Nueva Troza
                 </h5>
-                <button type="button" class="btn-close btn-close-white" 
+                <button type="button" class="btn-close btn-close-white"
                         data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-4">
@@ -254,7 +253,7 @@
                         </select>
                     </div>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
-                        <button type="button" class="btn btn-outline-secondary me-md-2 rounded-pill" 
+                        <button type="button" class="btn btn-outline-secondary me-md-2 rounded-pill"
                                 data-bs-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-primary rounded-pill">
                             <i class="fas fa-check-circle me-1"></i>Crear Troza
@@ -353,20 +352,20 @@
     .bg-gradient-primary {
         background: linear-gradient(135deg, var(--wood-primary), var(--wood-primary-dark));
     }
-    
+
     .bg-gradient-info {
         background: linear-gradient(135deg, #17a2b8, #138496);
     }
-    
+
     .card {
         border-radius: 12px;
         overflow: hidden;
     }
-    
+
     .table-hover tbody tr:hover {
         background-color: rgba(232, 245, 233, 0.5);
     }
-    
+
     .icon-sm {
         width: 28px;
         height: 28px;
@@ -375,11 +374,11 @@
         justify-content: center;
         font-size: 0.8rem;
     }
-    
+
     .form-control.border-2, .form-select.border-2 {
         border-width: 2px !important;
     }
-    
+
     .border-2 {
         border-width: 2px !important;
     }
