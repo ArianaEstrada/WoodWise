@@ -17,7 +17,7 @@ class TecnicoController extends Controller
         if (Auth::user()->persona->rol->nom_rol !== 'Administrador') {
             // Redirige a la vista 'denegado' con un código HTTP 403 (Forbidden)
             return response()->view('denegado', [], 403);
-            
+
             // Opcional: Si prefieres usar abort (mostrará la vista 403 personalizada)
             // abort(403, 'No tienes permisos de administrador');
         }
@@ -28,7 +28,7 @@ class TecnicoController extends Controller
     {
         return "{$this->nom} {$this->ap} {$this->am}";
     }
-    
+
     /**
      * Listar técnicos.
      */
@@ -39,27 +39,27 @@ class TecnicoController extends Controller
         return view('tecnicos.index', compact('tecnicos', 'personas'));
     }
 
- 
+
     public function store(Request $request)
     {
         $validatedData = $request->validate([
             'id_persona' => 'required|exists:personas,id_persona|unique:tecnicos,id_persona',
             'cedula_p'   => 'nullable|string|max:50|unique:tecnicos,cedula_p',
         ]);
-    
+
         // Generar una clave única para el técnico
         do {
             $clave_tecnico = strtoupper(str()->random(8)); // Generar clave aleatoria de 8 caracteres
         } while (Tecnico::where('clave_tecnico', $clave_tecnico)->exists());
-    
+
         // Agregar la clave generada al arreglo de datos validados
         $validatedData['clave_tecnico'] = $clave_tecnico;
-    
+
         Tecnico::create($validatedData);
-    
+
         return redirect()->route('tecnicos.index')->with('register', 'Técnico agregado exitosamente.');
     }
-    
+
 
     /**
      * Actualizar técnico.
@@ -88,4 +88,5 @@ class TecnicoController extends Controller
 
         return redirect()->route('tecnicos.index')->with('destroy', 'Técnico eliminado exitosamente.');
     }
+
 }

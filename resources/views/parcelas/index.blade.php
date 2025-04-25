@@ -1,4 +1,4 @@
-@extends('dashboard')
+@extends('tecnicos.dashboard')
 
 @section('template_title', 'Gestión de Parcelas')
 

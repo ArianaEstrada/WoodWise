@@ -245,30 +245,72 @@
 
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav gap-1">
-                    <li class="nav-item">
-                        <a href="{{ route('welcome') }}"
-                           class="nav-link {{ request()->routeIs('welcome') ? 'active' : '' }}">
-                            <i class="bi bi-house-door-fill"></i> Inicio
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('acerca') }}"
-                           class="nav-link {{ request()->routeIs('acerca') ? 'active' : '' }}">
-                            <i class="bi bi-info-circle-fill"></i> Acerca
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('contacto') }}"
-                           class="nav-link {{ request()->routeIs('contacto') ? 'active' : '' }}">
-                            <i class="bi bi-envelope-fill"></i> Contacto
-                        </a>
-                    </li>
-                    <li class="nav-item ms-lg-3">
-                        <a href="{{ route('login') }}"
-                           class="nav-link bg-success bg-opacity-90">
-                            <i class="bi bi-box-arrow-in-right"></i> Ingresar
-                        </a>
-                    </li>
+                    @auth
+                        @if(Auth::user()->persona->rol->nom_rol == 'Tecnico')
+                            <li class="nav-item ms-lg-3">
+                                <form action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="nav-link bg-danger bg-opacity-90 border-0">
+                                        <i class="bi bi-box-arrow-right"></i> Salir
+                                    </button>
+                                </form>
+                            </li>
+                        @else
+                            <!-- Menú normal para otros usuarios -->
+                            <li class="nav-item">
+                                <a href="{{ route('welcome') }}"
+                                   class="nav-link {{ request()->routeIs('welcome') ? 'active' : '' }}">
+                                    <i class="bi bi-house-door-fill"></i> Inicio
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('acerca') }}"
+                                   class="nav-link {{ request()->routeIs('acerca') ? 'active' : '' }}">
+                                    <i class="bi bi-info-circle-fill"></i> Acerca
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('contacto') }}"
+                                   class="nav-link {{ request()->routeIs('contacto') ? 'active' : '' }}">
+                                    <i class="bi bi-envelope-fill"></i> Contacto
+                                </a>
+                            </li>
+                            <li class="nav-item ms-lg-3">
+                                <form action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="nav-link bg-danger bg-opacity-90 border-0">
+                                        <i class="bi bi-box-arrow-right"></i> Salir
+                                    </button>
+                                </form>
+                            </li>
+                        @endif
+                    @else
+                        <!-- Menú para usuarios no autenticados -->
+                        <li class="nav-item">
+                            <a href="{{ route('welcome') }}"
+                               class="nav-link {{ request()->routeIs('welcome') ? 'active' : '' }}">
+                                <i class="bi bi-house-door-fill"></i> Inicio
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('acerca') }}"
+                               class="nav-link {{ request()->routeIs('acerca') ? 'active' : '' }}">
+                                <i class="bi bi-info-circle-fill"></i> Acerca
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('contacto') }}"
+                               class="nav-link {{ request()->routeIs('contacto') ? 'active' : '' }}">
+                                <i class="bi bi-envelope-fill"></i> Contacto
+                            </a>
+                        </li>
+                        <li class="nav-item ms-lg-3">
+                            <a href="{{ route('login') }}"
+                               class="nav-link bg-success bg-opacity-90">
+                                <i class="bi bi-box-arrow-in-right"></i> Ingresar
+                            </a>
+                        </li>
+                    @endauth
                 </ul>
             </div>
         </div>

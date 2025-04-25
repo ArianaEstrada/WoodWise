@@ -30,6 +30,15 @@ class Parcela extends Model
     {
         return $this->belongsTo(Productor::class, 'id_productor');
     }
+    public function tecnicos()
+    {
+        return $this->belongsToMany(Tecnico::class, 'asigna_parcelas', 'id_parcela', 'id_tecnico');
+    }
+
+    public function trozas()
+    {
+        return $this->hasMany(Troza::class, 'id_parcela');
+    }
 
     // Si la clave primaria no es auto-incrementable
     public $incrementing = true;

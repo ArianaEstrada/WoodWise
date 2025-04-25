@@ -326,32 +326,7 @@
           @endif
 
           <!-- Sección Administrador/Técnico -->
-          @if(in_array(Auth::user()->persona->rol->nom_rol, ['Administrador', 'Tecnico']))
-          <li class="nav-item mb-1">
-            <a class="nav-link {{ request()->is('trozas*') ? 'active' : '' }}" href="{{ route('trozas.index') }}">
-              <div class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                <i class="fas fa-cut fa-sm text-warning"></i>
-              </div>
-              <span class="nav-link-text">Registro de Trozas</span>
-            </a>
-          </li>
-          <li class="nav-item mb-1">
-            <a class="nav-link {{ request()->is('tipo_estimaciones*') ? 'active' : '' }}" href="{{ route('tipo_estimaciones.index') }}">
-              <div class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                <i class="fas fa-ruler-combined fa-sm text-info"></i>
-              </div>
-              <span class="nav-link-text">Tipos de Estimación</span>
-            </a>
-          </li>
-          <li class="nav-item mb-1">
-            <a class="nav-link {{ request()->is('estimaciones*') ? 'active' : '' }}" href="{{ route('estimaciones.index') }}">
-              <div class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                <i class="fas fa-calculator fa-sm text-danger"></i>
-              </div>
-              <span class="nav-link-text">Estimaciones Volumétricas</span>
-            </a>
-          </li>
-          @endif
+
 
           <!-- Sección Administrador/Productor -->
           @if(in_array(Auth::user()->persona->rol->nom_rol, ['Administrador', 'Productor']))
@@ -389,45 +364,7 @@
           </li>
           @endif
 
-            @if(in_array(Auth::user()->persona->rol->nom_rol, ['tecnico']))
-                <li class="nav-item mb-1">
-                    <a class="nav-link {{ request()->is('parcelas*') ? 'active' : '' }}" href="{{ route('parcelas.index') }}">
-                        <div class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="fas fa-map-marked-alt fa-sm text-primary"></i>
-                        </div>
-                        <span class="nav-link-text">Registrar Parcela</span>
-                    </a>
-                </li>
 
-                <li class="nav-item mb-1">
-                    <a class="nav-link {{ request()->is('trozas*') ? 'active' : '' }}" href="{{ route('trozas.index') }}">
-                        <div class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="fas fa-tree fa-sm text-primary"></i>
-                        </div>
-                        <span class="nav-link-text">Trozas</span>
-                    </a>
-                </li>
-
-                <!-- Botón para "Estimaciones" -->
-                <li class="nav-item mb-1">
-                    <a class="nav-link {{ request()->is('estimaciones*') ? 'active' : '' }}" href="{{ route('estimaciones.index') }}">
-                        <div class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="fas fa-calculator fa-sm text-primary"></i> <!-- Icono de calculadora -->
-                        </div>
-                        <span class="nav-link-text">Estimaciones</span>
-                    </a>
-                </li>
-
-                <!-- Botón para "Turno Corta" -->
-                <li class="nav-item mb-1">
-                    <a class="nav-link {{ request()->is('turno_corta*') ? 'active' : '' }}" href="{{ route('turno_cortas.index') }}">
-                        <div class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="fas fa-calendar-alt fa-sm text-primary"></i> <!-- Icono de calendario -->
-                        </div>
-                        <span class="nav-link-text">Turno Corta</span>
-                    </a>
-                </li>
-                @endif
         </ul>
       </div>
       <div class="sidenav-footer px-3 py-4">

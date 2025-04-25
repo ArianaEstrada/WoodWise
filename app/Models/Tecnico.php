@@ -27,6 +27,10 @@ class Tecnico extends Model
     {
         return $this->belongsTo(Persona::class, 'id_persona');
     }
+    public function parcelas()
+    {
+        return $this->belongsToMany(Parcela::class, 'asigna_parcelas', 'id_tecnico', 'id_parcela');
+    }
 
     // Si la clave primaria no es auto-incrementable
     public $incrementing = true;

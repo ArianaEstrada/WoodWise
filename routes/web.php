@@ -46,6 +46,9 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/dashboard1', [DashboardController::class, 'index'])
     ->middleware('auth')
     ->name('dashboard1');
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth'])
+    ->name('dashboard');
 
     Route::resource('formulas', FormulaController::class);
     Route::resource('especies', EspecieController::class);
