@@ -19,29 +19,43 @@
 
     <style>
       :root {
-        /* Paleta de colores forestal profesional */
-        --wood-primary: #2C5E1A;
-        --wood-primary-dark: #1F4712;
-        --wood-primary-light: #4D8C2B;
-        --wood-secondary: #6B8E23;
-        --wood-accent: #8FBC8F;
-        --wood-light: #E8F5E9;
-        --wood-dark: #1E3A00;
-        --wood-text: #333333;
-        --wood-text-light: #5D6D63;
-
+        /* Nueva paleta de colores verde/café elegante */
+        --wood-primary: #3A5A40;    /* Verde bosque oscuro */
+        --wood-primary-dark: #344E41; /* Verde más oscuro */
+        --wood-primary-light: #588157; /* Verde medio */
+        --wood-secondary: #A3B18A;  /* Verde claro */
+        --wood-accent: #DAD7CD;     /* Beige claro */
+        --wood-brown: #5E503F;      /* Café oscuro */
+        --wood-brown-light: #C6AC8F; /* Café claro */
+        --wood-light: #F8F9FA;      /* Fondo claro */
+        --wood-dark: #1A1A1D;       /* Fondo oscuro */
+        --wood-text: #2B2D42;       /* Texto oscuro */
+        --wood-text-light: #8D99AE;  /* Texto claro */
+        --wood-text-on-dark: #EDF2F4; /* Texto sobre fondo oscuro */
+        
         --sidebar-width: 280px;
         --navbar-height: 60px;
+        
+        /* Efecto glassmorphism */
+        --glass-blur: 8px;
+        --glass-opacity: 0.85;
       }
-
+    
       body {
         font-family: 'Roboto Condensed', 'Open Sans', sans-serif;
-        background-color: #f8f9fa;
+        background-color: var(--wood-light);
         color: var(--wood-text);
         min-height: 100vh;
+        transition: background 0.3s ease;
       }
-
-      /* Sidebar - Mejorado con gradiente y sombras */
+    
+      /* Modo oscuro opcional - puedes activarlo con una clase en body */
+      body.dark-mode {
+        background-color: var(--wood-dark);
+        color: var(--wood-text-on-dark);
+      }
+    
+      /* Sidebar - Efecto glassmorphism */
       .sidenav {
         width: var(--sidebar-width);
         height: 100vh;
@@ -49,40 +63,45 @@
         left: 0;
         top: 0;
         z-index: 1040;
-        background: linear-gradient(160deg, var(--wood-primary-dark), var(--wood-primary));
+        background: rgba(58, 90, 64, var(--glass-opacity)) !important;
+        backdrop-filter: blur(var(--glass-blur));
+        -webkit-backdrop-filter: blur(var(--glass-blur));
         box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
       }
-
+    
       .sidenav-header {
         padding: 1.2rem 1.5rem;
         border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(0, 0, 0, 0.1);
       }
-
+    
       .navbar-brand {
-        color: white;
+        color: var(--wood-text-on-dark);
         font-weight: 700;
         font-size: 1.4rem;
         letter-spacing: 0.5px;
         display: flex;
         align-items: center;
         transition: all 0.3s ease;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.2);
       }
-
+    
       .navbar-brand img {
         margin-right: 12px;
         filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
         transition: transform 0.3s ease;
       }
-
+    
       .navbar-brand:hover img {
         transform: scale(1.05);
       }
-
+    
       .nav-item {
         margin: 0.3rem 0.8rem;
       }
-
+    
       .nav-link {
         color: rgba(255, 255, 255, 0.85);
         border-radius: 8px;
@@ -93,8 +112,9 @@
         font-weight: 500;
         position: relative;
         overflow: hidden;
+        backdrop-filter: blur(4px);
       }
-
+    
       .nav-link::before {
         content: '';
         position: absolute;
@@ -102,26 +122,26 @@
         top: 0;
         height: 100%;
         width: 4px;
-        background: var(--wood-accent);
+        background: var(--wood-brown-light);
         transform: scaleY(0);
         transition: transform 0.3s ease;
       }
-
+    
       .nav-link:hover, .nav-link.active {
-        background: rgba(255, 255, 255, 0.08);
+        background: rgba(255, 255, 255, 0.15);
         color: white;
         transform: translateX(4px);
       }
-
+    
       .nav-link:hover::before, .nav-link.active::before {
         transform: scaleY(1);
       }
-
+    
       .nav-link-text {
         margin-left: 12px;
         font-size: 0.95rem;
       }
-
+    
       .icon {
         background: rgba(255, 255, 255, 0.95);
         width: 36px;
@@ -133,13 +153,14 @@
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         transition: all 0.3s ease;
       }
-
+    
       .nav-link:hover .icon {
         transform: scale(1.05);
         box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        background: white;
       }
-
-      /* Navbar superior - Estilo profesional */
+    
+      /* Navbar superior - Estilo profesional con efecto glass */
       .navbar-main {
         position: fixed;
         left: var(--sidebar-width);
@@ -147,39 +168,51 @@
         right: 0;
         height: var(--navbar-height);
         z-index: 1030;
-        background: white;
+        background: rgba(255, 255, 255, var(--glass-opacity)) !important;
+        backdrop-filter: blur(var(--glass-blur));
+        -webkit-backdrop-filter: blur(var(--glass-blur));
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
         padding: 0.5rem 1.5rem;
         transition: all 0.3s ease;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
       }
-
+    
+      body.dark-mode .navbar-main {
+        background: rgba(30, 30, 30, var(--glass-opacity)) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      }
+    
       .breadcrumb {
         font-size: 0.85rem;
         margin-bottom: 0.25rem;
       }
-
+    
       .breadcrumb-item a {
         color: var(--wood-text-light);
         text-decoration: none;
         transition: color 0.2s ease;
       }
-
+    
       .breadcrumb-item a:hover {
         color: var(--wood-primary);
       }
-
+    
       .breadcrumb-item.active {
         color: var(--wood-primary);
         font-weight: 500;
       }
-
+    
       .navbar-main h6 {
         font-size: 1.25rem;
         font-weight: 600;
         color: var(--wood-primary-dark);
         margin-bottom: 0;
       }
-
+    
+      body.dark-mode .navbar-main h6 {
+        color: var(--wood-secondary);
+      }
+    
       /* Contenido principal */
       .main-content {
         margin-left: var(--sidebar-width);
@@ -187,7 +220,7 @@
         margin-top: var(--navbar-height);
         transition: all 0.3s ease;
       }
-
+    
       /* Botones - Estilo mejorado */
       .btn-outline-primary {
         border-color: var(--wood-primary);
@@ -197,82 +230,132 @@
         padding: 0.375rem 0.75rem;
         transition: all 0.3s ease;
       }
-
+    
       .btn-outline-primary:hover {
         background-color: var(--wood-primary);
         color: white;
-        box-shadow: 0 4px 12px rgba(44, 94, 26, 0.2);
+        box-shadow: 0 4px 12px rgba(58, 90, 64, 0.3);
       }
-
+    
       .btn-outline-secondary {
-        border-color: var(--wood-text-light);
-        color: var(--wood-text-light);
+        border-color: var(--wood-brown-light);
+        color: var(--wood-brown);
       }
-
+    
       .btn-outline-secondary:hover {
-        background-color: var(--wood-text-light);
-        color: white;
+        background-color: var(--wood-brown-light);
+        color: var(--wood-brown);
       }
-
+    
       .btn-outline-danger {
         border-color: #dc3545;
         color: #dc3545;
       }
-
+    
       .btn-outline-danger:hover {
         background-color: #dc3545;
         color: white;
       }
-
+    
       /* Footer de la barra lateral */
       .sidenav-footer {
         margin-top: auto;
         padding: 1.5rem;
         border-top: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(5px);
       }
-
+    
       .sidenav-footer small {
         color: rgba(255, 255, 255, 0.7);
         font-size: 0.8rem;
       }
-
+    
       /* Efectos y transiciones */
       .transition-all {
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       }
-
+    
+      /* Cards y contenedores */
+      .card {
+        border: none;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background: rgba(255, 255, 255, 0.9);
+      }
+    
+      body.dark-mode .card {
+        background: rgba(40, 40, 40, 0.9);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      }
+    
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      }
+    
+      body.dark-mode .card:hover {
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      }
+    
       /* Scrollbar personalizada */
       ::-webkit-scrollbar {
         width: 8px;
       }
-
+    
       ::-webkit-scrollbar-track {
         background: rgba(0, 0, 0, 0.05);
       }
-
+    
       ::-webkit-scrollbar-thumb {
         background: var(--wood-primary-light);
         border-radius: 4px;
       }
-
+    
       ::-webkit-scrollbar-thumb:hover {
         background: var(--wood-primary);
       }
-
+    
       /* Responsividad */
       @media (max-width: 1199.98px) {
         .sidenav {
           transform: translateX(-100%);
         }
-
+    
         .sidenav.show {
           transform: translateX(0);
         }
-
+    
         .navbar-main, .main-content {
           margin-left: 0;
           left: 0;
         }
+      }
+    
+      /* Efecto de borde sutil en elementos activos */
+      .active-element {
+        position: relative;
+      }
+    
+      .active-element::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border: 2px solid rgba(163, 177, 138, 0.3);
+        border-radius: inherit;
+        pointer-events: none;
+        animation: pulseBorder 2s infinite;
+      }
+    
+      @keyframes pulseBorder {
+        0% { border-color: rgba(163, 177, 138, 0.3); }
+        50% { border-color: rgba(163, 177, 138, 0.6); }
+        100% { border-color: rgba(163, 177, 138, 0.3); }
       }
     </style>
   </head>
@@ -283,8 +366,7 @@
       <div class="sidenav-header">
         <a class="navbar-brand m-0" href="{{ route('dashboard1') }}">
           <img src="{{ asset('img/woodwise.png') }}" class="me-2" height="32" alt="WoodWise Logo">
-          <span class="font-weight-bold">WoodWise</span>
-        </a>
+          <span class="font-weight-bold text-white">WoodWise</span>        </a>
       </div>
       <hr class="horizontal dark mt-0 mb-2 mx-3" style="border-color: rgba(255,255,255,0.15);">
       <div class="collapse navbar-collapse w-auto h-100" id="sidenav-collapse-main">
@@ -296,7 +378,7 @@
               <div class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                 <i class="fas fa-user-shield fa-sm text-primary"></i>
               </div>
-              <span class="nav-link-text">Gestión de Usuarios</span>
+              <span class="nav-link-text text-white">Gestión de Usuarios</span>
             </a>
           </li>
           <li class="nav-item mb-1">
@@ -304,7 +386,7 @@
               <div class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                 <i class="fas fa-map-marked-alt fa-sm text-info"></i>
               </div>
-              <span class="nav-link-text">Asignación de Parcelas</span>
+              <span class="nav-link-text text-white">Asignación de Parcelas</span>
             </a>
           </li>
           <li class="nav-item mb-1">
@@ -312,7 +394,7 @@
               <div class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                 <i class="fas fa-square-root-alt fa-sm text-secondary"></i>
               </div>
-              <span class="nav-link-text">Fórmulas de Cálculo</span>
+              <span class="nav-link-text text-white">Fórmulas de Cálculo</span>
             </a>
           </li>
           <li class="nav-item mb-1">
@@ -320,7 +402,7 @@
               <div class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                 <i class="fas fa-tree fa-sm text-success"></i>
               </div>
-              <span class="nav-link-text">Catálogo de Especies</span>
+              <span class="nav-link-text text-white">Catálogo de Especies</span>
             </a>
           </li>
           @endif
@@ -335,7 +417,7 @@
               <div class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                 <i class="fas fa-tractor fa-sm text-success"></i>
               </div>
-              <span class="nav-link-text">Gestión de Productores</span>
+              <span class="nav-link-text text-white">Gestión de Productores</span>
             </a>
           </li>
           <li class="nav-item mb-1">
@@ -343,7 +425,7 @@
               <div class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                 <i class="fas fa-map fa-sm text-dark"></i>
               </div>
-              <span class="nav-link-text">Administrar Parcelas</span>
+              <span class="nav-link-text text-white">Administrar Parcelas</span>
             </a>
           </li>
           <li class="nav-item mb-1">
@@ -351,7 +433,7 @@
               <div class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                 <i class="fas fa-user-tie fa-sm text-secondary"></i>
               </div>
-              <span class="nav-link-text">Equipo Técnico</span>
+              <span class="nav-link-text text-white">Equipo Técnico</span>
             </a>
           </li>
           <li class="nav-item mb-1">
@@ -359,7 +441,7 @@
               <div class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                 <i class="fas fa-calendar-alt fa-sm text-primary"></i>
               </div>
-              <span class="nav-link-text">Planificación de Cortas</span>
+              <span class="nav-link-text text-white">Planificación de Cortas</span>
             </a>
           </li>
           @endif

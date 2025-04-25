@@ -6,8 +6,8 @@
 <div class="container-fluid py-4">
     <div class="card border-0 shadow-lg">
         <div class="card-header bg-gradient-primary text-white d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">
-                <i class="fas fa-map-marked-alt me-2"></i>Asignaciones de Parcelas
+            <h5 class="mb-0 text-white">
+                <i class="fas fa-map-marked-alt me-2 text-white"></i>Asignaciones de Parcelas
             </h5>
             <button class="btn btn-light rounded-pill" data-bs-toggle="modal" data-bs-target="#createAsignacionModal">
                 <i class="fas fa-plus me-2"></i>Nueva Asignación

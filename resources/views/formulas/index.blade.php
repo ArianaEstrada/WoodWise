@@ -9,7 +9,7 @@
         <div class="card-header bg-gradient-primary text-white d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center">
                 <i class="fas fa-square-root-alt fa-lg me-3"></i>
-                <h5 class="mb-0 font-weight-bold">Lista de Fórmulas</h5>
+                <h5 class="mb-0 font-weight-bold text-white">Lista de Fórmulas</h5>
             </div>
             <button class="btn btn-light rounded-pill" data-bs-toggle="modal" data-bs-target="#createFormulaModal">
                 <i class="fas fa-plus me-2"></i>Agregar Fórmula
