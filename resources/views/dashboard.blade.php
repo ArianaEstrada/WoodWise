@@ -381,22 +381,7 @@
               <span class="nav-link-text text-white">Gestión de Usuarios</span>
             </a>
           </li>
-          <li class="nav-item mb-1">
-            <a class="nav-link {{ request()->is('asigna_parcelas*') ? 'active' : '' }}" href="{{ route('asigna_parcelas.index') }}">
-              <div class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                <i class="fas fa-map-marked-alt fa-sm text-info"></i>
-              </div>
-              <span class="nav-link-text text-white">Asignación de Parcelas</span>
-            </a>
-          </li>
-          <li class="nav-item mb-1">
-            <a class="nav-link {{ request()->is('formulas*') ? 'active' : '' }}" href="{{ route('formulas.index') }}">
-              <div class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                <i class="fas fa-square-root-alt fa-sm text-secondary"></i>
-              </div>
-              <span class="nav-link-text text-white">Fórmulas de Cálculo</span>
-            </a>
-          </li>
+
           <li class="nav-item mb-1">
             <a class="nav-link {{ request()->is('especies*') ? 'active' : '' }}" href="{{ route('especies.index') }}">
               <div class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -405,29 +390,28 @@
               <span class="nav-link-text text-white">Catálogo de Especies</span>
             </a>
           </li>
-          @endif
-
-          <!-- Sección Administrador/Técnico -->
 
 
-          <!-- Sección Administrador/Productor -->
-          @if(in_array(Auth::user()->persona->rol->nom_rol, ['Administrador', 'Productor']))
+
           <li class="nav-item mb-1">
-            <a class="nav-link {{ request()->is('productores*') ? 'active' : '' }}" href="{{ route('productores.index') }}">
+            <a class="nav-link {{ request()->is('formulas*') ? 'active' : '' }}" href="{{ route('formulas.index') }}">
               <div class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                <i class="fas fa-tractor fa-sm text-success"></i>
+                <i class="fas fa-square-root-alt fa-sm text-secondary"></i>
               </div>
-              <span class="nav-link-text text-white">Gestión de Productores</span>
+              <span class="nav-link-text text-white">Fórmulas de Cálculo</span>
             </a>
           </li>
+
+
           <li class="nav-item mb-1">
-            <a class="nav-link {{ request()->is('parcelas*') ? 'active' : '' }}" href="{{ route('parcelas.index') }}">
+            <a class="nav-link {{ request()->is('tipo_estimaciones*') ? 'active' : '' }}" href="{{ route('tipo_estimaciones.index') }}">
               <div class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                <i class="fas fa-map fa-sm text-dark"></i>
+                <i class="fas fa-ruler-combined fa-sm text-info"></i>
               </div>
-              <span class="nav-link-text text-white">Administrar Parcelas</span>
+              <span class="nav-link-text text-white">Tipos de Estimación</span>
             </a>
           </li>
+
           <li class="nav-item mb-1">
             <a class="nav-link {{ request()->is('tecnicos*') ? 'active' : '' }}" href="{{ route('tecnicos.index') }}">
               <div class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -436,6 +420,27 @@
               <span class="nav-link-text text-white">Equipo Técnico</span>
             </a>
           </li>
+
+          <li class="nav-item mb-1">
+            <a class="nav-link {{ request()->is('productores*') ? 'active' : '' }}" href="{{ route('productores.index') }}">
+              <div class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="fas fa-tractor fa-sm text-success"></i>
+              </div>
+              <span class="nav-link-text text-white">Gestión de Productores</span>
+            </a>
+          </li>
+
+
+          <li class="nav-item mb-1">
+            <a class="nav-link {{ request()->is('parcelas*') ? 'active' : '' }}" href="{{ route('parcelas.index') }}">
+              <div class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="fas fa-map fa-sm text-dark"></i>
+              </div>
+              <span class="nav-link-text text-white">Administrar Parcelas</span>
+            </a>
+          </li>
+
+
           <li class="nav-item mb-1">
             <a class="nav-link {{ request()->is('turno_cortas*') ? 'active' : '' }}" href="{{ route('turno_cortas.index') }}">
               <div class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -444,9 +449,40 @@
               <span class="nav-link-text text-white">Planificación de Cortas</span>
             </a>
           </li>
+
+
+          <li class="nav-item mb-1">
+            <a class="nav-link {{ request()->is('trozas*') ? 'active' : '' }}" href="{{ route('trozas.index') }}">
+              <div class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="fas fa-cut fa-sm text-warning"></i>
+              </div>
+              <span class="nav-link-text text-white">Registro de Trozas</span>
+            </a>
+          </li>
+
+
+          <li class="nav-item mb-1">
+            <a class="nav-link {{ request()->is('estimaciones*') ? 'active' : '' }}" href="{{ route('estimaciones.index') }}">
+              <div class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="fas fa-calculator fa-sm text-danger"></i>
+              </div>
+              <span class="nav-link-text text-white">Estimaciones Volumétricas</span>
+            </a>
+
+          <li class="nav-item mb-1">
+            <a class="nav-link {{ request()->is('asigna_parcelas*') ? 'active' : '' }}" href="{{ route('asigna_parcelas.index') }}">
+              <div class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="fas fa-map-marked-alt fa-sm text-info"></i>
+              </div>
+              <span class="nav-link-text text-white">Asignación de Parcelas</span>
+            </a>
+          </li>
+       
+         
+       
+  
+     
           @endif
-
-
         </ul>
       </div>
       <div class="sidenav-footer px-3 py-4">
