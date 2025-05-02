@@ -43,12 +43,19 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/perfil/password', [PerfilController::class, 'updatePassword'])->name('perfil.updatePassword');
 });
 
-Route::get('/dashboard1', [DashboardController::class, 'index'])
-    ->middleware('auth')
-    ->name('dashboard1');
+// Dashboard principal
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth'])
     ->name('dashboard');
+
+// Rutas para parcelas
+Route::resource('parcelas', ParcelaController::class)
+    ->middleware(['auth', 'role:Tecnico']);
+
+// Si necesitas mantener la ruta dashboard1 por compatibilidad
+Route::get('/dashboard1', [DashboardController::class, 'index'])
+    ->middleware('auth')
+    ->name('dashboard1');
 
     Route::resource('formulas', FormulaController::class);
     Route::resource('especies', EspecieController::class);

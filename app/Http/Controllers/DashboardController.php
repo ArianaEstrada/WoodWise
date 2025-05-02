@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -9,33 +8,46 @@ use App\Models\Parcela;
 
 class DashboardController extends Controller
 {
-    public function index()
-    {
-        $user = Auth::user();
+public function index()
+{
+// Verificar si el usuario está autenticado
+if (!Auth::check()) {
+return redirect()->route('login');
+}
 
-        if ($user->persona->rol->nom_rol == 'Tecnico') {
-            // Obtener el técnico relacionado con el usuario
-            $tecnico = Tecnico::with(['parcelas' => function($query) {
-                $query->withCount('trozas');
-            }])->where('id_persona', $user->persona->id_persona)->first();
+$user = Auth::user();
 
-            if (!$tecnico) {
-                abort(404, 'Técnico no encontrado');
-            }
+// Verificar si el usuario tiene relación con persona
+if (!$user->persona) {
+abort(403, 'Usuario no tiene perfil de persona asociado');
+}
 
-            // Obtener parcelas asignadas a este técnico
-            $parcelas = $tecnico->parcelas;
+// Verificar si el usuario tiene rol
+if (!$user->persona->rol) {
+abort(403, 'Usuario no tiene rol asignado');
+}
 
-            // Debugging (puedes eliminar esto después)
-            \Log::info('Parcelas del técnico:', [
-                'tecnico_id' => $tecnico->id_tecnico,
-                'parcelas_count' => $parcelas->count(),
-                'parcelas' => $parcelas->pluck('nom_parcela')
-            ]);
+// Si es técnico
+if ($user->persona->rol->nom_rol == 'Tecnico') {
+$tecnico = Tecnico::where('id_persona', $user->persona->id_persona)->first();
 
-            return view('tecnicos.dashboard', compact('user', 'parcelas', 'tecnico'));
-        }
+if (!$tecnico) {
+// Si no es técnico pero tiene rol de técnico, mostrar error
+abort(404, 'Perfil de técnico no encontrado');
+}
 
-        return view('dashboard', compact('user'));
-    }
+$parcelasCount = $tecnico->parcelas()->count();
+
+return view('tecnicos.dashboard', [
+'user' => $user,
+'tecnico' => $tecnico,
+'parcelasCount' => $parcelasCount
+]);
+}
+
+// Para otros roles (si los hay)
+return view('dashboard', [
+'user' => $user
+]);
+}
 }
