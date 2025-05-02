@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('trozas', function (Blueprint $table) {
             $table->id('id_troza');
-            $table->double('longitud');
-            $table->double('diametro');
-            $table->double('diametro_otro_extremo')->nullable();
-            $table->double('diametro_medio')->nullable();
-            $table->double('densidad');
+            $table->decimal('longitud',10,5);
+            $table->decimal('diametro',10,5);
+            $table->decimal('diametro_otro_extremo',10,5)->nullable();
+            $table->decimal('diametro_medio',10,5)->nullable();
+            $table->decimal('densidad',10,5);
             $table->unsignedBigInteger('id_especie');
             $table->unsignedBigInteger('id_parcela');
             
