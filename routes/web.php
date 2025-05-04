@@ -43,19 +43,18 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/perfil/password', [PerfilController::class, 'updatePassword'])->name('perfil.updatePassword');
 });
 
-// Dashboard principal
-Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->middleware(['auth'])
-    ->name('dashboard');
+Route::middleware(['auth'])->group(function() {
+    // Dashboard general
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-// Rutas para parcelas
-Route::resource('parcelas', ParcelaController::class)
-    ->middleware(['auth', 'role:Tecnico']);
+    // Dashboard específico para técnicos
+    Route::get('/dashboard1', [DashboardController::class, 'index'])->name('dashboard1');
 
-// Si necesitas mantener la ruta dashboard1 por compatibilidad
-Route::get('/dashboard1', [DashboardController::class, 'index'])
-    ->middleware('auth')
-    ->name('dashboard1');
+    // Rutas para parcelas (protegidas por middleware de rol)
+    Route::middleware(['role:Tecnico'])->group(function() {
+        Route::resource('parcelas', ParcelaController::class);
+    });
+});
 
     Route::resource('formulas', FormulaController::class);
     Route::resource('especies', EspecieController::class);
