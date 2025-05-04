@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('tecnicos', function (Blueprint $table) {
             $table->id('id_tecnico');
             $table->unsignedBigInteger('id_persona');
-            $table->string('cedula_p')->unique();
+            $table->string('cedula_p')->unique()->nullable();
             $table->string('clave_tecnico')->unique();
             
             $table->foreign('id_persona')->references('id_persona')->on('personas');

@@ -31,5 +31,8 @@ class Turno_Corta extends Model
     public $incrementing = true;
 
     // Si no estás utilizando las marcas de tiempo (created_at y updated_at)
-    public $timestamps = false;
-}
+    public $timestamps = true; // Si no usas created_at/updated_at
+    protected $dates = [
+        'created_at',
+        'updated_at'
+    ];}

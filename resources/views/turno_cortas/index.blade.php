@@ -9,7 +9,7 @@
         <div class="card-header bg-gradient-forest text-white d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center">
                 <i class="fas fa-calendar-alt fa-lg me-3"></i>
-                <h5 class="mb-0 font-weight-bold text-white" >Turnos de Corta</h5>
+                <h5 class="mb-0 font-weight-bold text-white">Turnos de Corta</h5>
             </div>
             <button class="btn btn-light rounded-pill" data-bs-toggle="modal" data-bs-target="#createTurnoModal">
                 <i class="fas fa-plus me-2"></i>Nuevo Turno
@@ -26,7 +26,7 @@
                             <th class="py-3">Productor</th>
                             <th class="py-3">Código</th>
                             <th class="py-3">Fecha Corta</th>
-                            <th class="py-3 pe-4 text-end">Acciones</th>
+                            <th class="py-3 pe-10 text-end">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -43,13 +43,11 @@
                                 </div>
                             </td>
                             <td>
-                                <span class="badge bg-info bg-opacity-10 text-info">
+                                <span class="badge bg-info bg-opacity-10 text-info text-white">
                                     {{ $turno->codigo_corta ?? 'Sin código' }}
                                 </span>
                             </td>
-                            <td>
-                                {{ $turno->fecha_corta ? \Carbon\Carbon::parse($turno->fecha_corta)->format('d/m/Y') : 'Sin fecha' }}
-                            </td>
+                            
                             <td class="pe-4 text-end">
                                 <div class="btn-group" role="group">
                                     <button class="btn btn-sm btn-outline-primary rounded-start-pill me-1"
@@ -69,101 +67,6 @@
                                 </div>
                             </td>
                         </tr>
-
-                        <!-- Modal Ver Turno - Nuevo -->
-                        <div class="modal fade" id="viewTurnoModal{{ $turno->id_turno }}" tabindex="-1"
-                             aria-labelledby="viewTurnoLabel{{ $turno->id_turno }}" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content border-0 shadow">
-                                    <div class="modal-header bg-gradient-info text-white">
-                                        <h5 class="modal-title">
-                                            <i class="fas fa-info-circle me-2"></i>Detalles del Turno
-                                        </h5>
-                                        <button type="button" class="btn-close btn-close-white"
-                                                data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body p-4">
-                                        <div class="row mb-3">
-                                            <div class="col-md-6">
-                                                <h6 class="text-muted">ID Turno:</h6>
-                                                <p class="fw-bold">{{ $turno->id_turno }}</p>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h6 class="text-muted">Fecha Registro:</h6>
-                                                <p class="fw-bold">{{ $turno->created_at?->format('d/m/Y H:i') ?? 'Sin fecha' }}</p>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col-md-6">
-                                                <h6 class="text-muted">Parcela:</h6>
-                                                <p class="fw-bold">{{ $turno->parcela->nom_parcela }}</p>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h6 class="text-muted">Productor:</h6>
-                                                <p class="fw-bold">
-                                                    {{ $turno->parcela->productor->persona->nom ?? 'N/A' }}
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col-md-6">
-                                                <h6 class="text-muted">Código de Corta:</h6>
-                                                <p class="fw-bold">{{ $turno->codigo_corta ?? 'Sin código' }}</p>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h6 class="text-muted">Fecha de Corta:</h6>
-                                                <p class="fw-bold">
-                                                    {{ $turno->fecha_corta ? \Carbon\Carbon::parse($turno->fecha_corta)->format('d/m/Y') : 'Sin fecha' }}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary rounded-pill"
-                                                data-bs-dismiss="modal">Cerrar</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Modal Editar Turno - Mejorado -->
-                        <div class="modal fade" id="editTurnoModal{{ $turno->id_turno }}" tabindex="-1"
-                             aria-labelledby="editTurnoLabel{{ $turno->id_turno }}" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content border-0 shadow">
-                                    <div class="modal-header bg-gradient-primary text-white">
-                                        <h5 class="modal-title">
-                                            <i class="fas fa-edit me-2"></i>Editar Turno
-                                        </h5>
-                                        <button type="button" class="btn-close btn-close-white"
-                                                data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body p-4">
-                                        <form method="POST" action="{{ route('turno_cortas.update', $turno->id_turno) }}">
-                                            @csrf
-                                            @method('PUT')
-                                            <div class="mb-3">
-                                                <label class="form-label text-muted">Parcela</label>
-                                                <select name="id_parcela" class="form-select border-2" required>
-                                                    @foreach ($parcelas as $parcela)
-                                                    <option value="{{ $parcela->id_parcela }}" {{ $parcela->id_parcela == $turno->id_parcela ? 'selected' : '' }}>
-                                                        {{ $parcela->nom_parcela }} ({{ $parcela->productor->persona->nom ?? 'N/A' }})
-                                                    </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
-                                                <button type="button" class="btn btn-outline-secondary me-md-2 rounded-pill"
-                                                        data-bs-dismiss="modal">Cancelar</button>
-                                                <button type="submit" class="btn btn-primary rounded-pill">
-                                                    <i class="fas fa-save me-1"></i>Guardar Cambios
-                                                </button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         @endforeach
                     </tbody>
                 </table>
@@ -172,16 +75,108 @@
     </div>
 </div>
 
-<!-- Modal Crear Turno - Mejorado -->
-<div class="modal fade" id="createTurnoModal" tabindex="-1" aria-labelledby="createTurnoLabel" aria-hidden="true">
+<!-- Modales fuera de la tabla -->
+@foreach ($turnos as $turno)
+<!-- Modal Ver Turno -->
+<div class="modal fade" id="viewTurnoModal{{ $turno->id_turno }}" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header bg-gradient-info text-white">
+                <h5 class="modal-title text-white">
+                    <i class="fas fa-info-circle me-2"></i>Detalles del Turno
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <h6 class="text-muted">ID Turno:</h6>
+                        <p class="fw-bold">{{ $turno->id_turno }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="text-muted">Fecha Registro:</h6>
+                        <p class="fw-bold">{{ $turno->created_at?->format('d/m/Y') ?? 'Sin fecha' }}</p>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <h6 class="text-muted">Parcela:</h6>
+                        <p class="fw-bold">{{ $turno->parcela->nom_parcela }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="text-muted">Productor:</h6>
+                        <p class="fw-bold">
+                            {{ $turno->parcela->productor->persona->nom ?? 'N/A' }} {{ $turno->parcela->productor->persona->ap ?? 'N/A' }} {{ $turno->parcela->productor->persona->am ?? 'N/A' }}
+                        </p>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <h6 class="text-muted">Código de Corta:</h6>
+                        <p class="fw-bold">{{ $turno->codigo_corta ?? 'Sin código' }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="text-muted">Fecha de Corta:</h6>
+                        <p class="fw-bold">
+                            {{ $turno->fecha_corta ? \Carbon\Carbon::parse($turno->fecha_corta)->format('d/m/Y') : 'Sin fecha' }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Editar Turno -->
+<div class="modal fade" id="editTurnoModal{{ $turno->id_turno }}" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow">
             <div class="modal-header bg-gradient-primary text-white">
-                <h5 class="modal-title">
+                <h5 class="modal-title text-white">
+                    <i class="fas fa-edit me-2"></i>Editar Turno
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <form method="POST" action="{{ route('turno_cortas.update', $turno->id_turno) }}">
+                    @csrf
+                    @method('PUT')
+                    <div class="mb-3">
+                        <label class="form-label text-muted">Parcela</label>
+                        <select name="id_parcela" class="form-select border-2" required>
+                            @foreach ($parcelas as $parcela)
+                            <option value="{{ $parcela->id_parcela }}" {{ $parcela->id_parcela == $turno->id_parcela ? 'selected' : '' }}>
+                                {{ $parcela->nom_parcela }} ({{ $parcela->productor->persona->nom  ?? 'N/A' }} {{ $parcela->productor->persona->ap  ?? 'N/A' }} {{ $parcela->productor->persona->am  ?? 'N/A' }}) 
+                            </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                        <button type="button" class="btn btn-outline-secondary me-md-2 rounded-pill"
+                                data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary rounded-pill">
+                            <i class="fas fa-save me-1"></i>Guardar Cambios
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
+
+<!-- Modal Crear Turno -->
+<div class="modal fade" id="createTurnoModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header bg-gradient-primary text-white">
+                <h5 class="modal-title text-white">
                     <i class="fas fa-plus-circle me-2"></i>Nuevo Turno
                 </h5>
-                <button type="button" class="btn-close btn-close-white"
-                        data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-4">
                 <form method="POST" action="{{ route('turno_cortas.store') }}">
@@ -192,7 +187,7 @@
                             <option value="" selected disabled>Seleccione una parcela</option>
                             @foreach ($parcelas as $parcela)
                             <option value="{{ $parcela->id_parcela }}">
-                                {{ $parcela->nom_parcela }} ({{ $parcela->productor->persona->nom ?? 'N/A' }})
+                                {{ $parcela->nom_parcela }} ({{ $parcela->productor->persona->nom ?? 'N/A' }} {{ $parcela->productor->persona->ap ?? 'N/A' }} {{ $parcela->productor->persona->am ?? 'N/A' }})
                             </option>
                             @endforeach
                         </select>
@@ -210,10 +205,89 @@
     </div>
 </div>
 
-<!-- SweetAlert -->
+<!-- Scripts Mejorados -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
-    function confirmDelete(url) {
+// Sistema de gestión de modales mejorado
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. Inicialización controlada de modales
+    const modalInstances = new Map();
+    let currentBackdrop = null;
+
+    // Función para manejar la apertura de modales
+    function handleModalOpen(e) {
+        e.preventDefault();
+        const modalId = this.getAttribute('data-bs-target');
+        const modalElement = document.querySelector(modalId);
+        
+        if (!modalElement) return;
+        
+        // Cerrar modal actual si existe
+        if (modalInstances.size > 0) {
+            closeAllModals();
+        }
+        
+        // Crear nueva instancia de modal
+        const modalInstance = new bootstrap.Modal(modalElement, {
+            backdrop: true,
+            keyboard: true
+        });
+        
+        // Configurar eventos para este modal
+        modalElement.addEventListener('hidden.bs.modal', function() {
+            // Limpiar el backdrop manualmente si es necesario
+            const backdrops = document.querySelectorAll('.modal-backdrop');
+            backdrops.forEach(backdrop => {
+                backdrop.parentNode.removeChild(backdrop);
+            });
+            document.body.classList.remove('modal-open');
+            document.body.style.overflow = '';
+            document.body.style.paddingRight = '';
+            
+            modalInstances.delete(modalId);
+        });
+
+        modalInstances.set(modalId, modalInstance);
+        modalInstance.show();
+    }
+    
+    // Función para cerrar todos los modales y limpiar
+    function closeAllModals() {
+        modalInstances.forEach(instance => {
+            instance.hide();
+            // Limpieza adicional
+            const modalElement = instance._element;
+            modalElement.classList.remove('show');
+            modalElement.style.display = 'none';
+            modalElement.removeAttribute('aria-modal');
+            modalElement.removeAttribute('role');
+            modalElement.setAttribute('aria-hidden', 'true');
+        });
+        
+        // Limpiar backdrops manualmente
+        const backdrops = document.querySelectorAll('.modal-backdrop');
+        backdrops.forEach(backdrop => {
+            backdrop.parentNode.removeChild(backdrop);
+        });
+        
+        // Restaurar el estado del body
+        document.body.classList.remove('modal-open');
+        document.body.style.overflow = '';
+        document.body.style.paddingRight = '';
+        
+        modalInstances.clear();
+    }
+    
+    // Asignar eventos a los botones
+    document.querySelectorAll('[data-bs-toggle="modal"]').forEach(btn => {
+        btn.addEventListener('click', handleModalOpen);
+    });
+    
+    // 2. Función para eliminar con confirmación
+    window.confirmDelete = function(url) {
         Swal.fire({
             title: '¿Confirmar eliminación?',
             text: 'El turno de corta será eliminado permanentemente',
@@ -230,69 +304,69 @@
             }
         }).then((result) => {
             if (result.isConfirmed) {
-                let form = document.createElement('form');
+                const form = document.createElement('form');
                 form.method = 'POST';
                 form.action = url;
-                form.innerHTML = '@csrf @method("DELETE")';
+                form.innerHTML = `@csrf @method("DELETE")`;
                 document.body.appendChild(form);
                 form.submit();
             }
         });
-    }
-
-    // Solución para el problema de modales que se traban
-    $(document).ready(function() {
-        $('.modal').on('show.bs.modal', function (e) {
-            $('body').addClass('modal-open');
-        });
-
-        $('.modal').on('hidden.bs.modal', function (e) {
-            $('body').removeClass('modal-open');
-            $('.modal-backdrop').remove();
-        });
-    });
-
+    };
+    
+    // 3. Notificaciones automáticas mejoradas
     @if(session('register'))
-    Swal.fire({
-        title: '¡Registro Exitoso!',
-        text: 'Turno de corta registrado correctamente',
-        icon: 'success',
-        confirmButtonText: 'Aceptar',
-        customClass: {
-            popup: 'rounded-3',
-            confirmButton: 'btn btn-primary px-4 rounded-pill'
-        }
-    });
+    showNotification('success', 'Turno de corta registrado correctamente');
     @endif
-
+    
     @if(session('modify'))
-    Swal.fire({
-        title: '¡Actualización Exitosa!',
-        text: 'Turno de corta actualizado correctamente',
-        icon: 'success',
-        confirmButtonText: 'Aceptar',
-        customClass: {
-            popup: 'rounded-3',
-            confirmButton: 'btn btn-primary px-4 rounded-pill'
-        }
-    });
+    showNotification('success', 'Turno de corta actualizado correctamente');
     @endif
-
+    
     @if(session('destroy'))
-    Swal.fire({
-        title: '¡Eliminación Exitosa!',
-        text: 'Turno de corta eliminado correctamente',
-        icon: 'success',
-        confirmButtonText: 'Aceptar',
-        customClass: {
-            popup: 'rounded-3',
-            confirmButton: 'btn btn-primary px-4 rounded-pill'
-        }
-    });
+    showNotification('success', 'Turno de corta eliminado correctamente');
     @endif
+    
+    function showNotification(type, message) {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            background: 'var(--wood-light)',
+            color: 'var(--wood-text)',
+            iconColor: 'var(--wood-primary)',
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer);
+                toast.addEventListener('mouseleave', Swal.resumeTimer);
+            }
+        });
+        
+        Toast.fire({
+            icon: type,
+            title: message
+        });
+    }
+});
 </script>
 
 <style>
+    /* Fix crítico para el backdrop */
+    .modal-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1040;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5) !important;
+    }
+    
+    .modal {
+        z-index: 1050 !important;
+    }
+    
     /* Estilos personalizados para esta vista */
     .bg-gradient-forest {
         background: linear-gradient(135deg, #2e7d32, #1b5e20);

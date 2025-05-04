@@ -229,7 +229,8 @@
                                     id="cedula" 
                                     name="cedula" 
                                     placeholder="Cédula"
-                                    value="{{ old('cedula') }}">
+                                    value="{{ old('cedula') ?? '' }}"
+">
                                 <label for="cedula">{{ __('Cédula Profesional') }}</label>
                                 @error('cedula')
                                     <div class="invalid-feedback">{{ $message }}</div>

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('correo')->unique();
             $table->string('contrasena');
             $table->unsignedBigInteger('id_rol');
-            
+            $table->boolean('is_producer')->default(false); // O el tipo adecuado
             $table->foreign('id_rol')->references('id_rol')->on('roles');
             $table->timestamps();
         });

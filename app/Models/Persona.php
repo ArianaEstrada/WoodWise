@@ -12,7 +12,6 @@ class Persona extends Model
     protected $primaryKey = 'id_persona';
 
     protected $fillable = ['nom', 'ap', 'am', 'telefono', 'correo', 'contrasena', 'id_rol'];
-    public $timestamps = false;
 
     public function user()
     {
@@ -23,6 +22,12 @@ class Persona extends Model
     {
         return $this->belongsTo(Rol::class, 'id_rol');
     }
-    
+    public $timestamps = true; // Si no usas created_at/updated_at
+    protected $dates = [
+        'created_at',
+        'updated_at'
+    ];
+    public $incrementing = true;
+
 }
 

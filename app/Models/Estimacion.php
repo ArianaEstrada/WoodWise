@@ -35,5 +35,8 @@ class Estimacion extends Model
     }
 
     public $incrementing = true;
-    public $timestamps = false;
-}
+    public $timestamps = true; // Si no usas created_at/updated_at
+    protected $dates = [
+        'created_at',
+        'updated_at'
+    ];}

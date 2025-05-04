@@ -19,7 +19,10 @@ class User extends Authenticatable
     ];
 
     protected $hidden = ['password', 'remember_token'];
-
+    protected $dates = [
+        'created_at',
+        'updated_at'
+    ];
     public function persona()
     {
         return $this->belongsTo(Persona::class, 'id_persona');
@@ -29,7 +32,9 @@ class User extends Authenticatable
     {
         return $this->persona ? $this->persona->id_rol : null;
     }
-    
+    public $timestamps = true; // Si no usas created_at/updated_at
+    public $incrementing = true;
+
 
 }
 

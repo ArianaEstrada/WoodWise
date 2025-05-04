@@ -39,7 +39,11 @@ class Troza extends Model
     {
         return $this->longitud * 100; // Convierte metros a cm
     }
+    public $incrementing = true;
 
     // Configuración adicional
-    public $timestamps = false; // Si no usas created_at/updated_at
-}
+    public $timestamps = true; // Si no usas created_at/updated_at
+    protected $dates = [
+        'created_at',
+        'updated_at'
+    ];}

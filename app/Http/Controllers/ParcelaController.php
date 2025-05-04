@@ -31,7 +31,7 @@ class ParcelaController extends Controller
     {
         $parcelas = Parcela::with('productor')->get();
         $productores = Productor::all(); // Obtener todos los productores para el select
-        return view('parcelas.index', compact('parcelas', 'productores'));
+        return view('parcelas.index1', compact('parcelas', 'productores'));
     }
 
     /**
