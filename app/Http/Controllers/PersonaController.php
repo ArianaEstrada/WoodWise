@@ -7,6 +7,7 @@ use App\Models\Persona;
 use App\Models\Rol;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PersonaController extends Controller
 {
@@ -89,17 +90,42 @@ class PersonaController extends Controller
     /**
      * Eliminar un usuario
      */
-    public function destroy(string $id)
-    {
-        $persona = Persona::findOrFail($id);
+   public function destroy(string $id)
+{
+    try {
+        $persona = Persona::with(['user', 'tecnico', 'productor'])->findOrFail($id);
 
         // Prevenir eliminación del usuario autenticado
-        if ($persona->id_persona === Auth::id()) {
+        if ($persona->id_persona === Auth::user()->persona->id_persona) {
             return redirect()->route('usuarios.index')->with('error', 'No puedes eliminar tu propia cuenta.');
         }
 
-        $persona->delete();
+        // Usar transacción para asegurar integridad de datos
+        DB::transaction(function () use ($persona) {
+            // Eliminar usuario asociado si existe
+            if ($persona->user) {
+                $persona->user->delete();
+            }
+
+            // Eliminar registro técnico si existe
+            if ($persona->tecnico) {
+                $persona->tecnico->delete();
+            }
+
+            // Eliminar registro productor si existe
+            if ($persona->productor) {
+                $persona->productor->delete();
+            }
+
+            // Finalmente eliminar la persona
+            $persona->delete();
+        });
 
         return redirect()->route('usuarios.index')->with('destroy', 'Usuario eliminado exitosamente.');
+
+    } catch (\Exception $e) {
+        return redirect()->route('usuarios.index')
+               ->with('error', 'No se pudo eliminar el usuario: ' . $e->getMessage());
     }
+}
 }

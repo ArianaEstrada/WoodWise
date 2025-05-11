@@ -24,9 +24,17 @@ class ParcelaController extends Controller
             return $next($request);
         });
     }
-    /**
-     * Listar parcelas.
-     */
+   public function show($id)
+{
+    $parcela = Parcela::with([
+        'trozas.especie', 
+        'estimaciones.tipoEstimacion', 
+        'estimaciones.formula',
+        'turnosCorta'
+    ])->findOrFail($id);
+$parcelas = Parcela::with(['trozas.estimacion'])->find($id);
+    return view('parcelas.show', compact('parcela'));
+}
     public function index()
     {
         $parcelas = Parcela::with('productor')->get();

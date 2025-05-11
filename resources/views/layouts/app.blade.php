@@ -12,15 +12,20 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
 
     <style>
-        :root {
-            --wood-dark: #5E3023;
-            --wood-medium: #895737;
-            --wood-light: #B88B4A;
-            --wood-accent: #6B8E23;
-            --wood-text: #3A2D13;
-            --wood-bg-light: #F8F5F0;
-        }
-
+       :root {
+    /* Colores principales (ajustados para mejor contraste) */
+    --wood-dark: #4a251a;        /* Un poco más oscuro para mejor legibilidad */
+    --wood-medium: #7a4a32;      /* Más cálido */
+    --wood-light: #d4a762;       /* Más brillante para destacar */
+    --wood-accent: #6B8E23;      /* Mantenido (verde forestal) */
+    --wood-text: #3a2d13;        /* Texto principal */
+    --wood-bg-light: #f9f7f3;    /* Fondo más cálido */
+    
+    /* Nuevas variables para consistencia */
+    --wood-border-radius: 12px;   /* Radio de borde consistente */
+    --wood-box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Sombra consistente */
+    --wood-transition: all 0.3s ease-in-out; /* Transición uniforme */
+}
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--wood-bg-light);
@@ -28,25 +33,63 @@
             overflow-x: hidden;
         }
 
-        /* Navbar Premium */
-        .navbar {
-            background: linear-gradient(135deg, var(--wood-dark), var(--wood-medium));
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-            padding: 0.8rem 0;
-            transition: all 0.3s;
-        }
+       /* Navbar Premium Mejorado */
+.navbar {
+    background: linear-gradient(135deg, var(--wood-dark), var(--wood-medium));
+    box-shadow: var(--wood-box-shadow);
+    padding: 0.8rem 0;
+    transition: var(--wood-transition);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
 
-        .navbar.scrolled {
-            padding: 0.5rem 0;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
+.navbar-brand {
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    transition: var(--wood-transition);
+}
 
-        .navbar-brand {
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            display: flex;
-            align-items: center;
-        }
+.navbar-brand:hover {
+    transform: translateY(-2px);
+}
+
+.nav-link {
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    margin: 0 0.3rem;
+    border-radius: var(--wood-border-radius);
+    transition: var(--wood-transition);
+    color: white !important;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.nav-link.active {
+    background: var(--wood-accent);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+/* Efecto hover más suave */
+.nav-link:hover:not(.active) {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-2px);
+}
+
+/* Indicador activo para menú */
+.nav-link.active:after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 3px;
+    background: var(--wood-light);
+    border-radius: 3px;
+}
 
         .text-gradient {
             background: linear-gradient(to right, var(--wood-light), #d4a762);
@@ -174,23 +217,50 @@
         }
 
         /* Botones */
-        .btn-wood {
-            background-color: var(--wood-accent);
-            color: white;
-            font-weight: 600;
-            border: none;
-            padding: 0.7rem 1.8rem;
-            border-radius: 8px;
-            transition: all 0.3s;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+       /* Botones mejorados */
+.btn-wood {
+    background-color: var(--wood-accent);
+    color: white;
+    font-weight: 600;
+    border: none;
+    padding: 0.7rem 1.8rem;
+    border-radius: var(--wood-border-radius);
+    transition: var(--wood-transition);
+    box-shadow: var(--wood-box-shadow);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
 
-        .btn-wood:hover {
-            background-color: #5a7720;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
-            color: white;
-        }
+.btn-wood:hover {
+    background-color: #5a7720;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    color: white;
+}
+
+/* Variantes de botones */
+.btn-wood-outline {
+    background: transparent;
+    border: 2px solid var(--wood-accent);
+    color: var(--wood-accent);
+}
+
+.btn-wood-outline:hover {
+    background: var(--wood-accent);
+    color: white;
+}
+
+.btn-wood-light {
+    background-color: var(--wood-light);
+    color: var(--wood-text);
+}
+
+.btn-wood-light:hover {
+    background-color: #c99b4a;
+    color: var(--wood-text);
+}
 
         /* Efectos */
         @keyframes float {
@@ -217,6 +287,226 @@
                 margin-bottom: 2rem;
             }
         }
+        /* Tarjetas mejoradas */
+.wood-card {
+    border: none;
+    border-radius: var(--wood-border-radius);
+    box-shadow: var(--wood-box-shadow);
+    transition: var(--wood-transition);
+    overflow: hidden;
+    background: white;
+}
+
+.wood-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+.wood-card-header {
+    background: linear-gradient(135deg, var(--wood-medium), var(--wood-dark));
+    color: white;
+    padding: 1.2rem;
+    border-bottom: 2px solid var(--wood-light);
+}
+
+.wood-card-body {
+    padding: 1.5rem;
+}
+
+.wood-card-footer {
+    background: var(--wood-bg-light);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 1rem 1.5rem;
+}
+/* Tablas mejoradas */
+.wood-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: var(--wood-border-radius);
+    overflow: hidden;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+.wood-table thead th {
+    background: linear-gradient(to bottom, var(--wood-medium), var(--wood-dark));
+    color: white;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    border: none;
+}
+
+.wood-table tbody tr {
+    transition: var(--wood-transition);
+}
+
+.wood-table tbody tr:hover {
+    background-color: rgba(184, 139, 74, 0.1);
+}
+
+.wood-table tbody td {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    vertical-align: middle;
+}
+
+.wood-table tbody tr:last-child td {
+    border-bottom: none;
+}
+/* Footer mejorado */
+.footer {
+    background: linear-gradient(135deg, var(--wood-dark), #001524);
+    color: white;
+    padding: 4rem 0 2rem;
+    position: relative;
+    margin-top: 4rem;
+}
+
+.footer:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(to right, var(--wood-accent), var(--wood-light));
+}
+
+.footer h5 {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    display: inline-block;
+    font-weight: 600;
+}
+
+.footer h5:after {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 3px;
+    background: var(--wood-light);
+    bottom: -8px;
+    left: 0;
+    border-radius: 3px;
+}
+
+.social-icons a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+    color: white;
+    margin-right: 12px;
+    transition: var(--wood-transition);
+    font-size: 1.1rem;
+}
+
+.social-icons a:hover {
+    background: var(--wood-light);
+    transform: translateY(-3px) scale(1.1);
+    color: var(--wood-text);
+}
+/* Efectos visuales mejorados */
+@keyframes float {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-12px) rotate(2deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+}
+
+.floating {
+    animation: float 4s ease-in-out infinite;
+    transition: var(--wood-transition);
+}
+
+.floating:hover {
+    animation-play-state: paused;
+}
+
+/* Efecto de onda para elementos interactivos */
+.wave-effect {
+    position: relative;
+    overflow: hidden;
+}
+
+.wave-effect:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.4);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%);
+    transform-origin: 50% 50%;
+}
+
+.wave-effect:focus:after,
+.wave-effect:active:after {
+    animation: wave 0.6s ease-out;
+}
+
+@keyframes wave {
+    0% {
+        transform: scale(0, 0);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(20, 20);
+        opacity: 0;
+    }
+}
+/* Clases utilitarias */
+.wood-bg-gradient {
+    background: linear-gradient(135deg, var(--wood-medium), var(--wood-dark));
+}
+
+.wood-text-gradient {
+    background: linear-gradient(to right, var(--wood-light), var(--wood-accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.wood-divider {
+    height: 3px;
+    background: linear-gradient(to right, transparent, var(--wood-light), transparent);
+    border: none;
+    margin: 2rem 0;
+}
+
+.wood-badge {
+    display: inline-block;
+    padding: 0.35em 0.65em;
+    font-size: 0.75em;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 50rem;
+    background: var(--wood-accent);
+    color: white;
+}
+
+/* Sombras consistentes */
+.wood-shadow-sm {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.wood-shadow {
+    box-shadow: var(--wood-box-shadow);
+}
+
+.wood-shadow-lg {
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
     </style>
     @stack('styles')
 </head>

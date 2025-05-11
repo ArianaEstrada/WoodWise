@@ -9,37 +9,38 @@ use Illuminate\Support\Facades\Auth;
 
 class TecnicoController extends Controller
 {
-
-    public function __construct()
-{
-    $this->middleware('auth');
-    $this->middleware(function ($request, $next) {
-        if (Auth::user()->persona->rol->nom_rol !== 'Administrador') {
-            // Redirige a la vista 'denegado' con un código HTTP 403 (Forbidden)
-            return response()->view('denegado', [], 403);
-
-            // Opcional: Si prefieres usar abort (mostrará la vista 403 personalizada)
-            // abort(403, 'No tienes permisos de administrador');
-        }
-        return $next($request);
-    });
-}
-    public function getNombreCompletoAttribute()
+ public function __construct()
     {
-        return "{$this->nom} {$this->ap} {$this->am}";
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->persona->rol->nom_rol !== 'Administrador') {
+                // Redirige a la vista 'denegado' con un código HTTP 403 (Forbidden)
+                return response()->view('denegado', [], 403);
+                
+                // Opcional: Si prefieres usar abort (mostrará la vista 403 personalizada)
+                // abort(403, 'No tienes permisos de administrador');
+            }
+            return $next($request);
+        });
     }
 
     /**
-     * Listar técnicos.
+     * Muestra el dashboard del técnico
+     */
+   
+    /**
+     * Lista todos los técnicos
      */
     public function index()
     {
         $tecnicos = Tecnico::with('persona')->get();
-        $personas = Persona::all(); // Obtener todas las personas para el select
+        $personas = Persona::whereDoesntHave('tecnico')->get(); // Solo personas sin técnico asignado
         return view('tecnicos.index', compact('tecnicos', 'personas'));
     }
 
-
+    /**
+     * Almacena un nuevo técnico
+     */
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -47,46 +48,53 @@ class TecnicoController extends Controller
             'cedula_p'   => 'nullable|string|max:50|unique:tecnicos,cedula_p',
         ]);
 
-        // Generar una clave única para el técnico
-        do {
-            $clave_tecnico = strtoupper(str()->random(8)); // Generar clave aleatoria de 8 caracteres
-        } while (Tecnico::where('clave_tecnico', $clave_tecnico)->exists());
-
-        // Agregar la clave generada al arreglo de datos validados
-        $validatedData['clave_tecnico'] = $clave_tecnico;
+        $validatedData['clave_tecnico'] = $this->generarClaveUnica();
 
         Tecnico::create($validatedData);
 
-        return redirect()->route('tecnicos.index')->with('register', 'Técnico agregado exitosamente.');
+        return redirect()->route('tecnicos.index')
+               ->with('success', 'Técnico registrado exitosamente.');
     }
 
-
     /**
-     * Actualizar técnico.
+     * Actualiza un técnico existente
      */
-    public function update(Request $request, string $id_tecnico)
+    public function update(Request $request, $id_tecnico)
     {
         $tecnico = Tecnico::findOrFail($id_tecnico);
 
         $validatedData = $request->validate([
-            'cedula_p'      => 'required|string|max:50|unique:tecnicos,cedula_p,' . $tecnico->id_tecnico . ',id_tecnico',
-            'clave_tecnico' => 'nullable|string|max:50|unique:tecnicos,clave_tecnico,' . $tecnico->id_tecnico . ',id_tecnico',
+            'cedula_p' => 'required|string|max:50|unique:tecnicos,cedula_p,'.$tecnico->id_tecnico.',id_tecnico',
+            'clave_tecnico' => 'nullable|string|max:50|unique:tecnicos,clave_tecnico,'.$tecnico->id_tecnico.',id_tecnico',
         ]);
 
         $tecnico->update($validatedData);
 
-        return redirect()->route('tecnicos.index')->with('modify', 'Técnico actualizado exitosamente.');
+        return redirect()->route('tecnicos.index')
+               ->with('success', 'Técnico actualizado exitosamente.');
     }
 
     /**
-     * Eliminar técnico.
+     * Elimina un técnico
      */
-    public function destroy(string $id_tecnico)
+    public function destroy($id_tecnico)
     {
         $tecnico = Tecnico::findOrFail($id_tecnico);
         $tecnico->delete();
 
-        return redirect()->route('tecnicos.index')->with('destroy', 'Técnico eliminado exitosamente.');
+        return redirect()->route('tecnicos.index')
+               ->with('success', 'Técnico eliminado exitosamente.');
     }
 
+    /**
+     * Genera una clave única para técnicos
+     */
+    protected function generarClaveUnica()
+    {
+        do {
+            $clave = strtoupper(str()->random(8));
+        } while (Tecnico::where('clave_tecnico', $clave)->exists());
+
+        return $clave;
+    }
 }

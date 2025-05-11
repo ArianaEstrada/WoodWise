@@ -23,7 +23,10 @@ class Troza extends Model
     {
         return $this->belongsTo(Especie::class, 'id_especie');
     }
-
+   public function estimacion()
+{
+    return $this->hasOne(Estimacion::class, 'id_troza');
+}
     public function parcela()
     {
         return $this->belongsTo(Parcela::class, 'id_parcela');

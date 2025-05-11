@@ -30,7 +30,7 @@
       <hr class="horizontal dark mt-0 mb-2 mx-3" style="border-color: rgba(255,255,255,0.15);">
       <div class="collapse navbar-collapse w-auto h-100" id="sidenav-collapse-main">
         <ul class="navbar-nav">
-          <!-- Sección Administrador -->
+     
           @if(Auth::user()->persona->rol->nom_rol == 'Administrador')
           <li class="nav-item mb-1">
             <a class="nav-link {{ request()->is('usuarios*') ? 'active' : '' }}" href="{{ route('usuarios.index') }}">
@@ -39,7 +39,7 @@
               </div>
               <span class="nav-link-text text-white">Gestión de Usuarios</span>
             </a>
-          </li>
+          </li>      
 
           <li class="nav-item mb-1">
             <a class="nav-link {{ request()->is('especies*') ? 'active' : '' }}" href="{{ route('especies.index') }}">

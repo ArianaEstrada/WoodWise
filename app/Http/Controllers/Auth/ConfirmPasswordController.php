@@ -1,23 +1,12 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ConfirmsPasswords;
+use Illuminate\Support\Facades\Auth;
 
 class ConfirmPasswordController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Confirm Password Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller is responsible for handling password confirmations and
-    | uses a simple trait to include the behavior. You're free to explore
-    | this trait and override any functions that require customization.
-    |
-    */
-
     use ConfirmsPasswords;
 
     /**
@@ -28,10 +17,27 @@ class ConfirmPasswordController extends Controller
     protected $redirectTo = '/dashboard1';
 
     /**
-     * Create a new controller instance.
+     * Get the post password confirmation redirect path.
      *
-     * @return void
+     * @return string
      */
+    protected function redirectTo()
+    {
+        if (Auth::check() && Auth::user()->persona) {
+            $rol = Auth::user()->persona->rol->nom_rol;
+            
+            switch ($rol) {
+                case 'Tecnico':
+                    return route('tecnico.dashboard');
+                case 'Productor':
+                    return '/P/Dashboard';
+                default:
+                    return $this->redirectTo;
+            }
+        }
+        return $this->redirectTo;
+    }
+
     public function __construct()
     {
         $this->middleware('auth');

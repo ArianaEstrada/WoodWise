@@ -4,33 +4,12 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Models\Rol;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
     use AuthenticatesUsers;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/dashboard1';
-
-    protected function redirectTo()
-    {
-        return '/dashboard1';
-    }
     /**
      * Create a new controller instance.
      *
@@ -39,7 +18,33 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
-        $this->middleware('auth')->only('logout');
     }
-    
+
+    /**
+     * Determine donde redirigir al usuario después del login.
+     *
+     * @return string
+     */
+    protected function redirectTo()
+    {
+        // Verificar si el usuario tiene persona asociada
+        if (!auth()->user()->persona) {
+            return '/dashboard1'; // Ruta por defecto si no tiene persona
+        }
+
+        // Obtener el nombre del rol
+        $rol = auth()->user()->persona->rol->nom_rol;
+
+        // Redirigir según el rol
+        switch ($rol) {
+            case 'Tecnico':
+                return route('tecnico.dashboard');
+            case 'Productor':
+                return '/P/Dashboard';
+            case 'Administrador':
+                return '/dashboard1';
+            default:
+                return '/dashboard1';
+        }
+    }
 }

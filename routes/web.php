@@ -18,6 +18,8 @@ use App\Http\Controllers\ProductorController;
 use App\Http\Controllers\TecnicoController;
 use App\Http\Controllers\TurnoCortaController;
 use App\Http\Controllers\AsignaParcelaController;
+use App\Http\Controllers\TecnicoDashboardController;
+
 
 
 
@@ -69,3 +71,11 @@ Route::middleware(['auth'])->group(function() {
     Route::resource('estimaciones', EstimacionController::class);
     Route::get('/estimaciones/formulas-por-tipo/{tipoId}', [EstimacionController::class, 'getFormulasByTipo']);
     Route::get('/catalogo-especies', [EspecieController::class, 'catalogo'])->name('especies.catalogo');
+    Route::get('/tecnicos/dashboard', [TecnicoController::class, 'dashboard'])
+    ->name('tecnicos.dashboard');
+
+    // Rutas para técnicos
+Route::prefix('T')->group(function () {
+    Route::get('/index', [TecnicoDashboardController::class, 'index'])->name('tecnico.dashboard');
+    });
+    Route::get('/parcelas/{id}/detalle', [ParcelaController::class, 'show'])->name('parcelas.show');

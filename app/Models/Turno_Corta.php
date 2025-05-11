@@ -20,7 +20,9 @@ class Turno_Corta extends Model
         'codigo_corta',
         'fecha_corta',
     ];
-
+protected $casts = [
+    'fecha_corta' => 'datetime', // Convierte automáticamente a Carbon
+];
     // Relación con la tabla 'parcelas'
     public function parcela()
     {

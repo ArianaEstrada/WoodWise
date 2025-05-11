@@ -24,7 +24,14 @@ class Parcela extends Model
         'direccion',
         'CP',
     ];
-
+public function turnosCorta()
+{
+    return $this->hasMany(Turno_Corta::class, 'id_parcela');
+}
+public function estimacion()
+{
+    return $this->hasOne(Estimacion::class, 'id_parcela');
+}
     // Relación con la tabla 'productores'
     public function productor()
     {
@@ -39,7 +46,18 @@ class Parcela extends Model
     {
         return $this->hasMany(Troza::class, 'id_parcela');
     }
-
+// En Parcela.php
+public function estimaciones()
+{
+    return $this->hasManyThrough(
+        Estimacion::class,
+        Troza::class,
+        'id_parcela', // Foreign key on trozas table
+        'id_troza',   // Foreign key on estimaciones table
+        'id_parcela', // Local key on parcelas table
+        'id_troza'    // Local key on trozas table
+    );
+}
     // Si la clave primaria no es auto-incrementable
     public $incrementing = true;
 

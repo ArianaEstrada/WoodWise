@@ -4,20 +4,10 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\VerifiesEmails;
+use Illuminate\Support\Facades\Auth;
 
 class VerificationController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Email Verification Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller is responsible for handling email verification for any
-    | user that recently registered with the application. Emails may also
-    | be re-sent if the user didn't receive the original email message.
-    |
-    */
-
     use VerifiesEmails;
 
     /**
@@ -28,10 +18,27 @@ class VerificationController extends Controller
     protected $redirectTo = '/dashboard1';
 
     /**
-     * Create a new controller instance.
+     * Get the post verification redirect path.
      *
-     * @return void
+     * @return string
      */
+    protected function redirectTo()
+    {
+        if (Auth::check() && Auth::user()->persona) {
+            $rol = Auth::user()->persona->rol->nom_rol;
+            
+            switch ($rol) {
+                case 'Tecnico':
+                    return route('tecnico.dashboard');
+                case 'Productor':
+                    return '/P/Dashboard';
+                default:
+                    return $this->redirectTo;
+            }
+        }
+        return $this->redirectTo;
+    }
+
     public function __construct()
     {
         $this->middleware('auth');

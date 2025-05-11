@@ -29,10 +29,10 @@ class Estimacion extends Model
         return $this->belongsTo(Formula::class, 'id_formula');
     }
 
-    public function troza()
-    {
-        return $this->belongsTo(Troza::class, 'id_troza');
-    }
+   public function troza()
+{
+    return $this->belongsTo(Troza::class, 'id_troza');
+}
 
     public $incrementing = true;
     public $timestamps = true; // Si no usas created_at/updated_at
