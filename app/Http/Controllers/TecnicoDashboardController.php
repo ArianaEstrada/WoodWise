@@ -8,6 +8,8 @@ use App\Models\Parcela;
 use App\Models\Tipo_Estimacion;
 use App\Models\Formula;
 use App\Models\Troza;
+use App\Models\Especie;
+
 
 class TecnicoDashboardController extends Controller
 {
@@ -39,8 +41,8 @@ class TecnicoDashboardController extends Controller
         // Obtener tipos de estimación y fórmulas para los modales
         $tiposEstimacion = Tipo_Estimacion::all();
         $formulas = Formula::all();
-
-        return view('T.index', [
+        $especies=Especie::all();
+        return view('T.index', compact('especies'), [
             'user' => Auth::user(),
             'tecnico' => $tecnico,
             'parcelas' => $parcelas,

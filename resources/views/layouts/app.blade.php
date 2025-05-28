@@ -14,7 +14,7 @@
     <style>
        :root {
     /* Colores principales (ajustados para mejor contraste) */
-    --wood-dark: #4a251a;        /* Un poco más oscuro para mejor legibilidad */
+    --wood-dark: #4e2113;        /* Un poco más oscuro para mejor legibilidad */
     --wood-medium: #7a4a32;      /* Más cálido */
     --wood-light: #d4a762;       /* Más brillante para destacar */
     --wood-accent: #6B8E23;      /* Mantenido (verde forestal) */
@@ -138,7 +138,7 @@
 
         /* Footer Premium */
         .footer {
-            background: linear-gradient(135deg, var(--wood-dark), #001524);
+            background: linear-gradient(135deg, var(--wood-dark),#001524);
             color: white;
             padding: 4rem 0 2rem;
         }
@@ -234,7 +234,7 @@
 }
 
 .btn-wood:hover {
-    background-color: #5a7720;
+    background-color:#5a7720;
     transform: translateY(-3px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     color: white;

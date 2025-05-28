@@ -107,8 +107,10 @@
                                         <span class="text-muted">{{ number_format($troza->longitud, 2) }}m × {{ number_format($troza->diametro, 2) }}cm</span>
                                     </td>
                                     <td>
-                                        <span class="text-forest-accent">{{ number_format($troza->estimacion->calculo, 4) }} m³</span>
-                                    </td>
+                                    <span class="text-forest-accent">
+                                        {{ $troza->estimacion ? number_format($troza->estimacion->calculo, 4) : 'Sin cálculo' }} m³
+                                    </span>
+                                </td>
                                     <td>
                                         <span class="text-muted">{{ number_format($troza->densidad, 2) }}</span>
                                     </td>
@@ -263,8 +265,9 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0">
                                 <span class="text-muted">Volumen:</span>
-                                <span class="text-forest-accent">{{ number_format($troza->estimacion->calculo, 4) }} m³</span>
-                            </li>
+<span class="text-forest-accent">
+        {{ $troza->estimacion ? number_format($troza->estimacion->calculo, 4) : 'Sin cálculo' }} m³
+    </span>                            </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0">
                                 <span class="text-muted">Densidad:</span>
                                 <span class="text-forest-dark">{{ $troza->densidad }}</span>

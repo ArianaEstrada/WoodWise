@@ -237,9 +237,11 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Productor</label>
-                            <select class="form-select" name="id_productor">
-                                <option value="" selected disabled>Seleccionar productor</option>
-                                <!-- Aquí irían los productores -->
+                            <select class="form-select border-2" name="id_especie" required>
+                                <option value="" selected disabled>Seleccione una especie</option>
+                                @foreach ($especies as $especie)
+                                <option value="{{ $especie->id_especie }}">{{ $especie->nom_cientifico }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -298,10 +300,12 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Especie</label>
-                        <select class="form-select" name="id_especie" required>
-                            <option value="" selected disabled>Seleccionar especie</option>
-                            <!-- Aquí irían las especies -->
-                        </select>
+                        <select class="form-select border-2" name="id_especie" required>
+                                <option value="" selected disabled>Seleccione una especie</option>
+                                @foreach ($especies as $especie)
+                                <option value="{{ $especie->id_especie }}">{{ $especie->nom_cientifico }}</option>
+                                @endforeach
+                            </select>
                     </div>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
                         <button type="button" class="btn btn-outline-secondary me-md-2 rounded-pill"
@@ -423,8 +427,8 @@
 <style>
     /* Paleta de colores forestales elegantes */
     :root {
-        --forest-dark: #2C4A3E;       /* Verde oscuro elegante */
-        --forest-medium: #537A5A;     /* Verde medio */
+        --forest-dark: #184d33;       /* Verde oscuro elegante */
+        --forest-medium: #23502b;     /* Verde medio */
         --forest-light: #8AAE92;      /* Verde claro suave */
         --forest-accent: #6B8E23;     /* Verde oliva para acentos */
         --forest-bg: #F5F9F7;         /* Fondo muy claro */

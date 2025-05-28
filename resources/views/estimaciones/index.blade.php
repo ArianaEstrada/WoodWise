@@ -52,6 +52,7 @@
                                         <i class="fas fa-tree text-success"></i>
                                     </div>
                                     <span>
+                                        {{ $estimacion->troza->id_troza ?? 'N/A' }}
                                         {{ $estimacion->troza->especie->nom_comun ?? 'N/A' }} / 
                                         {{ $estimacion->troza->parcela->nom_parcela ?? 'N/A' }}
                                     </span>
@@ -251,7 +252,7 @@
                             <option value="">Seleccione una troza</option>
                             @foreach ($trozas as $troza)
                             <option value="{{ $troza->id_troza }}">
-                                {{ $troza->especie->nom_comun ?? 'N/A' }} ({{ $troza->parcela->nom_parcela ?? 'N/A' }})
+                               {{ $troza->id_troza ?? 'N/A' }} {{ $troza->especie->nom_comun ?? 'N/A' }} ({{ $troza->parcela->nom_parcela ?? 'N/A' }})
                             </option>
                             @endforeach
                         </select>

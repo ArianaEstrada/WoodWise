@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Tecnico;
+use App\Models\Especie;
+
 use App\Models\Persona;
 use Illuminate\Support\Facades\Auth;
 
@@ -35,7 +37,8 @@ class TecnicoController extends Controller
     {
         $tecnicos = Tecnico::with('persona')->get();
         $personas = Persona::whereDoesntHave('tecnico')->get(); // Solo personas sin técnico asignado
-        return view('tecnicos.index', compact('tecnicos', 'personas'));
+        $especies=Especie::all();
+        return view('tecnicos.index', compact('tecnicos', 'personas','especies'));
     }
 
     /**

@@ -79,3 +79,5 @@ Route::prefix('T')->group(function () {
     Route::get('/index', [TecnicoDashboardController::class, 'index'])->name('tecnico.dashboard');
     });
     Route::get('/parcelas/{id}/detalle', [ParcelaController::class, 'show'])->name('parcelas.show');
+    Route::get('/estimaciones/formulas/{tipoId}', [EstimacionController::class, 'getFormulasByTipo'])
+     ->name('estimaciones.formulas');

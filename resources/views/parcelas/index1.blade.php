@@ -172,7 +172,7 @@
                         <select name="id_productor" class="form-select border-2" required>
                             @foreach ($productores as $productor)
                             <option value="{{ $productor->id_productor }}" {{ $productor->id_productor == $parcela->id_productor ? 'selected' : '' }}>
-                                {{ $parcela->productor->persona->nom }} {{ $parcela->productor->persona->ap }} {{ $parcela->productor->persona->am }}
+                                {{ $productor->persona->nom }} {{ $productor->persona->ap }} {{ $productor->persona->am }}
                             </option>
                             @endforeach
                         </select>
@@ -233,7 +233,7 @@
                             <option value="" selected disabled>Seleccione un productor</option>
                             @foreach ($productores as $productor)
                             <option value="{{ $productor->id_productor }}">
-                                {{ $parcela->productor->persona->nom }} {{ $parcela->productor->persona->ap }} {{ $parcela->productor->persona->am }}
+                                {{ $productor->persona->nom }} {{ $productor->persona->ap }} {{ $productor->persona->am }}
                             </option>
                             @endforeach
                         </select>

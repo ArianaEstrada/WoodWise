@@ -6,7 +6,7 @@
 <div class="container-fluid py-4">
     <div class="card border-0 shadow-lg">
         <!-- Card Header -->
-        <div class="card-header bg-gradient-primary text-white d-flex justify-content-between align-items-center">
+        <div class="card-header bg-gradient-forest text-white d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center">
                 <i class="fas fa-square-root-alt fa-lg me-3"></i>
                 <h5 class="mb-0 font-weight-bold text-white">Lista de Fórmulas</h5>
@@ -20,7 +20,7 @@
         <div class="card-body p-0">
             <div class="table-responsive rounded-lg">
                 <table class="table table-hover align-middle mb-0">
-                    <thead class="bg-light-primary text-white">
+                    <thead class="bg-light-forest text-white">
                         <tr>
                             <th class="py-3 ps-4">ID</th>
                             <th class="py-3">Nombre</th>
@@ -359,12 +359,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <style>
     /* Estilos personalizados para esta vista */
+     .bg-light-forest {
+        background-color: rgba(46, 125, 50, 0.9);
+    }
+    .bg-gradient-forest {
+        background: linear-gradient(135deg, #2e7d32, #1b5e20);
+    }
+    
     .bg-gradient-primary {
         background: linear-gradient(135deg, var(--wood-primary), var(--wood-primary-dark));
     }
     
     .bg-light-primary {
-        background-color: rgba(69, 117, 63, 0.9);
+        background-color:  #2e7d32;
     }
     
     .card {

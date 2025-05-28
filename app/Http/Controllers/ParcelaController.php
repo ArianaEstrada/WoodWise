@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Parcela;
 use App\Models\Productor;
+use App\Models\Especie;
 use Illuminate\Support\Facades\Auth;
 
 class ParcelaController extends Controller
@@ -37,9 +38,10 @@ $parcelas = Parcela::with(['trozas.estimacion'])->find($id);
 }
     public function index()
     {
-        $parcelas = Parcela::with('productor')->get();
+        $parcelas = Parcela::all();
         $productores = Productor::all(); // Obtener todos los productores para el select
-        return view('parcelas.index1', compact('parcelas', 'productores'));
+        $especies=Especie::all();
+        return view('parcelas.index1', compact('parcelas', 'productores','especies'));
     }
 
     /**

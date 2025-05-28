@@ -14,7 +14,7 @@ class TrozaController extends Controller
     {
         $this->middleware('auth');
         $this->middleware(function ($request, $next) {
-            if (Auth::user()->persona->rol->nom_rol !== 'Administrador' && Auth::user()->persona->rol->nom_rol !== 'Tecnico') {
+            if (Auth::user()->persona->rol->nom_rol !== 'Administrador' ) {
                 return response()->view('denegado', [], 403);
             }
             return $next($request);
@@ -65,7 +65,7 @@ class TrozaController extends Controller
             'diametro' => 'required|numeric|min:0.01|max:5',
             'diametro_otro_extremo' => 'nullable|numeric|min:0.01|max:5',
             'diametro_medio' => 'nullable|numeric|min:0.01|max:5',
-            'densidad' => 'required|numeric|min:0.1|max:2',
+            'densidad' => 'required|numeric|min:0.1|max:1000',
             'id_especie' => 'required|exists:especies,id_especie',
             'id_parcela' => 'required|exists:parcelas,id_parcela',
         ]);
@@ -100,7 +100,7 @@ class TrozaController extends Controller
             'diametro' => 'required|numeric|min:0.01|max:5',
             'diametro_otro_extremo' => 'nullable|numeric|min:0.01|max:5',
             'diametro_medio' => 'nullable|numeric|min:0.01|max:5',
-            'densidad' => 'required|numeric|min:0.1|max:2',
+            'densidad' => 'required|numeric|min:0.1|max:1000',
             'id_especie' => 'required|exists:especies,id_especie',
             'id_parcela' => 'required|exists:parcelas,id_parcela',
         ]);
