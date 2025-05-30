@@ -11,7 +11,6 @@ return new class extends Migration
         Schema::create('roles', function (Blueprint $table) {
             $table->id('id_rol');
             $table->string('nom_rol')->unique();
-            $table->string('desc_rol');
             $table->timestamps();
         });
     }

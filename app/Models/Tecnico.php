@@ -19,7 +19,6 @@ class Tecnico extends Model
     protected $fillable = [
         'id_persona',
         'cedula_p',
-        'clave_tecnico',
     ];
 
     // Relación con la tabla 'personas'

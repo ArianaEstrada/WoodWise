@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('turno_cortas', function (Blueprint $table) {
-            $table->id('id_turno');
+        Schema::create('arboles', function (Blueprint $table) {
+            $table->id('id_arbol');
+            $table->unsignedBigInteger('id_especie');
             $table->unsignedBigInteger('id_parcela');
-            $table->string('codigo_corta')->unique();
-            $table->date('fecha_corta');
-            $table->date('fecha_fin');
+             $table->decimal('altura_total',10,5);
+            $table->decimal('diametro_pecho',10,5);
+            $table->foreign('id_especie')->references('id_especie')->on('especies');
             $table->foreign('id_parcela')->references('id_parcela')->on('parcelas');
             $table->timestamps();
         });
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('turno_cortas');
+        Schema::dropIfExists('arboles');
     }
 };
