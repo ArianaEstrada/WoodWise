@@ -19,8 +19,13 @@ class Formula extends Model
     protected $fillable = [
         'nom_formula',
         'expresion',
+        'id_tipo_e',
+
     ];
-  
+   public function tipoEstimacion()
+    {
+        return $this->belongsTo(Tipo_Estimacion::class, 'id_tipo_e');
+    }
     // Si la clave primaria no es auto-incrementable
     public $incrementing = true;
 

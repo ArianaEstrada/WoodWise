@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('productores', function (Blueprint $table) {
-            $table->id('id_productor');
-            $table->unsignedBigInteger('id_persona');
-            $table->foreign('id_persona')->references('id_persona')->on('personas');
+        Schema::create('catalogos', function (Blueprint $table) {
+            $table->id('id_cat');
+            $table->String('nom_cat');
             $table->timestamps();
         });
     }
@@ -24,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pruductores');
+        Schema::dropIfExists('catalogos');
     }
 };

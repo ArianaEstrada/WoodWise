@@ -5,16 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Troza extends Model
+class Arbol extends Model
 {
-    protected $table = 'trozas';
-    protected $primaryKey = 'id_troza';
+  protected $table = 'arboles';
+    protected $primaryKey = 'id_arbol';
     protected $fillable = [
-        'longitud',
-        'diametro',
-        'diametro_otro_extremo', // Campo opcional
-        'diametro_medio',       // Campo opcional
-        'densidad',
+        'altura_total',
+        'diametro_pecho',
         'id_especie',
         'id_parcela',
     ];
@@ -26,23 +23,14 @@ class Troza extends Model
     }
    public function estimacion()
 {
-    return $this->hasOne(Estimacion::class, 'id_troza');
+    return $this->hasOne(Estimacion1::class, 'id_arbol');
 }
     public function parcela()
     {
         return $this->belongsTo(Parcela::class, 'id_parcela');
     }
 
-    // Métodos de acceso (opcionales)
-    public function getDiametroCmAttribute()
-    {
-        return $this->diametro * 100; // Convierte metros a cm
-    }
-
-    public function getLongitudCmAttribute()
-    {
-        return $this->longitud * 100; // Convierte metros a cm
-    }
+   
     public $incrementing = true;
 
     // Configuración adicional
