@@ -81,3 +81,6 @@ Route::prefix('T')->group(function () {
     Route::get('/parcelas/{id}/detalle', [ParcelaController::class, 'show'])->name('parcelas.show');
     Route::get('/estimaciones/formulas/{tipoId}', [EstimacionController::class, 'getFormulasByTipo'])
      ->name('estimaciones.formulas');
+Route::get('/parcelas/{id_parcela}/export-pdf', [TecnicoDashboardController::class, 'exportParcelaToPdf'])
+    ->name('parcelas.export.pdf')
+    ->middleware('auth');

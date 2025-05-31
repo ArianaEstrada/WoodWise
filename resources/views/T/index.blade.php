@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container-fluid py-4">
-        <!-- Encabezado Premium Mejorado -->
+        <!-- Encabezado -->
         <div class="row mb-5">
             <div class="col-12">
                 <div class="card border-0 wood-shadow-lg">
@@ -21,7 +21,7 @@
             </div>
         </div>
 
-        <!-- Tarjeta de Información del Técnico - Versión Elegante -->
+        <!-- Tarjeta de Información -->
         <div class="row mb-5">
             <div class="col-md-12">
                 <div class="wood-card wood-shadow">
@@ -33,12 +33,12 @@
                             <div>
                                 <h3 class="text-forest-dark mb-1">Técnico {{ $user->persona->nom ?? 'Usuario' }}</h3>
                                 <div class="d-flex align-items-center">
-                                <span class="badge bg-forest-light text-forest-dark me-2">
-                                    <i class="fas fa-id-card me-1"></i> {{ $tecnico->cedula_p ?? 'No disponible' }}
-                                </span>
+                                    <span class="badge bg-forest-light text-forest-dark me-2">
+                                        <i class="fas fa-id-card me-1"></i> {{ $tecnico->cedula_p ?? 'No disponible' }}
+                                    </span>
                                     <span class="badge bg-forest-accent text-white">
-                                    <i class="fas fa-key me-1"></i> {{ $tecnico->clave_tecnico }}
-                                </span>
+                                        <i class="fas fa-key me-1"></i> {{ $tecnico->clave_tecnico }}
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -46,7 +46,7 @@
                         <hr class="wood-divider my-4">
 
                         <div class="row">
-                            <!-- Tarjeta de Parcelas -->
+                            <!-- Tarjetas de resumen -->
                             <div class="col-md-3 mb-3 mb-md-0">
                                 <div class="wood-card h-100 wood-shadow-sm">
                                     <div class="card-body text-center p-3">
@@ -59,7 +59,6 @@
                                 </div>
                             </div>
 
-                            <!-- Tarjeta de Trozas -->
                             <div class="col-md-3 mb-3 mb-md-0">
                                 <div class="wood-card h-100 wood-shadow-sm">
                                     <div class="card-body text-center p-3">
@@ -72,7 +71,6 @@
                                 </div>
                             </div>
 
-                            <!-- Tarjeta de Estimaciones -->
                             <div class="col-md-3 mb-3 mb-md-0">
                                 <div class="wood-card h-100 wood-shadow-sm">
                                     <div class="card-body text-center p-3">
@@ -85,7 +83,6 @@
                                 </div>
                             </div>
 
-                            <!-- Tarjeta de Volumen Maderable -->
                             <div class="col-md-3">
                                 <div class="wood-card h-100 wood-shadow-sm">
                                     <div class="card-body text-center p-3">
@@ -103,7 +100,7 @@
             </div>
         </div>
 
-        <!-- Listado de Parcelas - Versión Elegante -->
+        <!-- Listado de Parcelas -->
         <div class="row">
             <div class="col-12">
                 <div class="wood-card wood-shadow">
@@ -175,15 +172,20 @@
                                             <span class="wood-badge">{{ $parcela->trozas_count }}</span>
                                         </td>
                                         <td>
-                                            <span class="wood-badge bg-info">{{ $parcela->estimaciones_count ?? 0 }}</span>
+                                            <span class="wood-badge bg-info">{{ $parcela->estimaciones_count }}</span>
                                         </td>
                                         <td>
                                             <span class="wood-badge bg-success">
-                                                {{ number_format($parcela->estimaciones_sum_calculo ?? 0, 2) }} m³
+                                                {{ number_format($parcela->volumen_maderable, 2) }} m³
                                             </span>
                                         </td>
                                         <td class="pe-4">
                                             <div class="vertical-actions">
+                                                <a href="{{ route('parcelas.export.pdf', $parcela->id_parcela) }}"
+                                                   class="btn btn-sm btn-pdf mb-2 w-100 text-start"
+                                                   data-bs-tooltip="tooltip" title="Exportar a PDF">
+                                                    <i class="fas fa-file-pdf me-2"></i> Exportar PDF
+                                                </a>
                                                 <button class="btn btn-sm btn-wood-action mb-2 w-100 text-start"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#addTrozaModal{{ $parcela->id_parcela }}"
@@ -195,12 +197,6 @@
                                                         data-bs-target="#estimacionModal{{ $parcela->id_parcela }}"
                                                         data-bs-tooltip="tooltip" title="Realizar estimación">
                                                     <i class="fas fa-calculator me-2"></i> Estimación
-                                                </button>
-                                                <button class="btn btn-sm btn-wood-action mb-2 w-100 text-start"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#turnoModal{{ $parcela->id_parcela }}"
-                                                        data-bs-tooltip="tooltip" title="Programar turno">
-                                                    <i class="fas fa-calendar-alt me-2"></i> Programar Turno
                                                 </button>
                                                 <a href="{{ route('parcelas.show', $parcela->id_parcela) }}"
                                                    class="btn btn-sm btn-wood-action w-100 text-start"
@@ -690,11 +686,26 @@
             transform: translateY(-2px);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
         }
-    </style>
+        .btn-pdf {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            transition: all 0.3s ease;
+        }
 
+        .btn-pdf:hover {
+            background-color: #c0392b;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        .btn-pdf i {
+            margin-right: 5px;
+        }
+    </style>
     <script>
-        // Inicializar tooltips
         document.addEventListener('DOMContentLoaded', function() {
+            // Inicializar tooltips
             var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
             var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
                 return new bootstrap.Tooltip(tooltipTriggerEl);
