@@ -38,7 +38,7 @@ class RegisterController extends Controller
                 case 'Tecnico':
                     return route('tecnico.dashboard');
                 case 'Productor':
-                    return '/P/Dashboard';
+                    return route('productor.dashboard');
                 default:
                     return '/dashboard1';
             }
@@ -105,7 +105,6 @@ class RegisterController extends Controller
                 Tecnico::create([
                     'id_persona' => $persona->id_persona,
                     'cedula_p' => $data['cedula'] ?? null,
-                    'clave_tecnico' => $this->generateTecnicoCode(),
                 ]);
                 break;
                 

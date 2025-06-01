@@ -40,11 +40,11 @@ class LoginController extends Controller
             case 'Tecnico':
                 return route('tecnico.dashboard');
             case 'Productor':
-                return '/P/Dashboard';
+               return route('productor.dashboard');
             case 'Administrador':
                 return '/dashboard1';
             default:
-                return '/dashboard1';
+               return route('productor.dashboard');
         }
     }
 }

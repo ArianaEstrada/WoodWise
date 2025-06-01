@@ -19,6 +19,7 @@ use App\Http\Controllers\TecnicoController;
 use App\Http\Controllers\TurnoCortaController;
 use App\Http\Controllers\AsignaParcelaController;
 use App\Http\Controllers\TecnicoDashboardController;
+use App\Http\Controllers\ProductorDashboardController;
 
 
 
@@ -84,3 +85,8 @@ Route::prefix('T')->group(function () {
 Route::get('/parcelas/{id_parcela}/export-pdf', [TecnicoDashboardController::class, 'exportParcelaToPdf'])
     ->name('parcelas.export.pdf')
     ->middleware('auth');
+
+
+    Route::prefix('P')->group(function () {
+    Route::get('/index', [ProductorDashboardController::class, 'index'])->name('productor.dashboard');
+    });
