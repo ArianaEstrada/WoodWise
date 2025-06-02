@@ -18,7 +18,23 @@
     <link href="{{ asset('/css/db.css') }}" rel="stylesheet" />
 
   </head>
+<style>
+  .sidenav .navbar-nav {
+  max-height: calc(100vh - 140px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #90caf9 #1e2a38;
+}
+.sidenav .navbar-nav::-webkit-scrollbar {
+  width: 8px;
+  background: #1e2a38;
+}
+.sidenav .navbar-nav::-webkit-scrollbar-thumb {
+  background: #90caf9;
+  border-radius: 6px;
+}
 
+  </style>
   <body class="g-sidenav-show bg-light">
     <!-- Sidebar - Versión mejorada visualmente -->
     <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 fixed-start" id="sidenav-main">
@@ -137,7 +153,23 @@
             </a>
           </li>
        
-         
+         <li class="nav-item mb-1">
+  <a class="nav-link {{ request()->is('arboles_completos*') ? 'active' : '' }}" href="{{ route('arboles.index') }}">
+    <div class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+      <i class="fas fa-tree fa-sm text-warning"></i>
+    </div>
+    <span class="nav-link-text text-white">Árboles Completos</span>
+  </a>
+</li>
+
+<li class="nav-item mb-1">
+  <a class="nav-link {{ request()->is('estimaciones_arboles_completos*') ? 'active' : '' }}" href="{{ route('estimaciones1.index') }}">
+    <div class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+      <i class="fas fa-chart-bar fa-sm text-success"></i>
+    </div>
+    <span class="nav-link-text text-white">Estimaciones Árboles Completos</span>
+  </a>
+</li>
        
   
      

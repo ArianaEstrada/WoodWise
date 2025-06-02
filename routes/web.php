@@ -20,6 +20,8 @@ use App\Http\Controllers\TurnoCortaController;
 use App\Http\Controllers\AsignaParcelaController;
 use App\Http\Controllers\TecnicoDashboardController;
 use App\Http\Controllers\ProductorDashboardController;
+use App\Http\Controllers\ArbolController;
+use App\Http\Controllers\Estimacion1Controller;
 
 
 
@@ -67,6 +69,9 @@ Route::middleware(['auth'])->group(function() {
     Route::resource('tecnicos', TecnicoController::class);
     Route::resource('parcelas', ParcelaController::class);
     Route::resource('trozas', TrozaController::class);
+    Route::resource('arboles', ArbolController::class);
+    Route::resource('estimaciones1', Estimacion1Controller::class);
+
     Route::resource('turno_cortas', TurnoCortaController::class);
     Route::resource('asigna_parcelas', AsignaParcelaController::class);
     Route::resource('estimaciones', EstimacionController::class);
