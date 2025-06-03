@@ -9,13 +9,17 @@ class Productor extends Model
 {
     use HasFactory;
 
-    // Definir el nombre de la tabla (si no es el plural de la clase)
+    // Nombre de la tabla
     protected $table = 'productores';
 
-    // Definir la clave primaria si no es 'id'
+    // Clave primaria personalizada
     protected $primaryKey = 'id_productor';
 
-    // Definir los campos que pueden ser asignados masivamente
+    // Auto-incremento y timestamps
+    public $incrementing = true;
+    public $timestamps = true;
+
+    // Campos asignables masivamente
     protected $fillable = [
         'id_persona',
     ];
@@ -31,13 +35,4 @@ class Productor extends Model
     {
         return $this->hasMany(Parcela::class, 'id_productor');
     }
-
-    // Si la clave primaria no es auto-incrementable
-    public $incrementing = true;
-
-    // Si no estás utilizando las marcas de tiempo (created_at y updated_at)
-    public $timestamps = true; // Si no usas created_at/updated_at
-    protected $dates = [
-        'created_at',
-        'updated_at'
-    ];}
+}

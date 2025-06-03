@@ -4,40 +4,31 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\{User, Persona, Tecnico, Productor, Rol};
-use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
 {
     use RegistersUsers;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('guest');
     }
 
-    /**
-     * Get the post-registration redirect path.
-     *
-     * @return string
-     */
+    // Redirige después del registro, según el rol del usuario
     protected function redirectTo()
     {
         if (auth()->check() && auth()->user()->persona) {
-            $rol = auth()->user()->persona->rol->nom_rol;
-            
-            switch ($rol) {
-                case 'Tecnico':
+            $rol = auth()->user()->persona->rol->nom_rol ?? '';
+
+            switch (strtolower(trim($rol))) {
+                case 'tecnico':
                     return route('tecnico.dashboard');
-                case 'Productor':
+                case 'productor':
                     return route('productor.dashboard');
                 default:
                     return '/dashboard1';
@@ -46,23 +37,14 @@ class RegisterController extends Controller
         return '/dashboard1';
     }
 
-    /**
-     * Show the application registration form.
-     *
-     * @return \Illuminate\View\View
-     */
+    // Muestra el formulario de registro con los roles disponibles
     public function showRegistrationForm()
     {
         $roles = Rol::where('nom_rol', '!=', 'Administrador')->get();
         return view('auth.register', compact('roles'));
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
+    // Valida los datos del registro
     protected function validator(array $data)
     {
         return Validator::make($data, [
@@ -70,24 +52,21 @@ class RegisterController extends Controller
             'ap' => ['required', 'string', 'max:255'],
             'am' => ['required', 'string', 'max:255'],
             'telefono' => ['required', 'string', 'max:20'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'unique:personas,correo'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email', 'unique:personas,correo'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'cedula' => ['nullable', 'string', 'min:5'],
             'id_rol' => ['required', 'exists:roles,id_rol'],
         ]);
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\Models\User
-     */
+    // Crea el usuario y las entidades asociadas (Persona, Tecnico, Productor)
     protected function create(array $data)
     {
+        // Obtén el rol desde la base de datos
         $rol = Rol::findOrFail($data['id_rol']);
+        $rolNombre = strtolower(trim($rol->nom_rol));
 
-        // Crear persona
+        // Crear la persona asociada al usuario
         $persona = Persona::create([
             'nom' => $data['nom'],
             'ap' => $data['ap'],
@@ -99,23 +78,28 @@ class RegisterController extends Controller
             'cedula' => $data['cedula'] ?? null,
         ]);
 
-        // Registrar según el rol
-        switch ($rol->nom_rol) {
-            case 'Tecnico':
+        // Registrar según el rol del usuario
+        switch ($rolNombre) {
+            case 'tecnico':
                 Tecnico::create([
                     'id_persona' => $persona->id_persona,
                     'cedula_p' => $data['cedula'] ?? null,
                 ]);
                 break;
-                
-            case 'Productor':
+
+            case 'productor':
                 Productor::create([
                     'id_persona' => $persona->id_persona,
                 ]);
                 break;
+
+            default:
+                // Opcional: log o acción en caso de rol desconocido
+                // throw new \Exception("Rol no reconocido: {$rol->nom_rol}");
+                break;
         }
 
-        // Crear usuario
+        // Crear el usuario
         return User::create([
             'name' => "{$data['nom']} {$data['ap']} {$data['am']}",
             'email' => $data['email'],
@@ -124,15 +108,11 @@ class RegisterController extends Controller
         ]);
     }
 
-    /**
-     * Generate unique técnico code
-     * 
-     * @return string
-     */
+    // Genera un código único para los técnicos (si se necesita)
     protected function generateTecnicoCode()
     {
         do {
-            $code = strtoupper(Str::random(8));
+            $code = strtoupper(Str::random(8)); // Código aleatorio de 8 caracteres
         } while (Tecnico::where('clave_tecnico', $code)->exists());
 
         return $code;

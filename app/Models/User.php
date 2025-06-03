@@ -27,7 +27,7 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Persona::class, 'id_persona');
     }
-    
+
     public function getRolIdAttribute()
     {
         return $this->persona ? $this->persona->id_rol : null;

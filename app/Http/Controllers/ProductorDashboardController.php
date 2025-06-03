@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class ProductorDashboardController extends Controller
 {
-   
+
 
     public function index()
     {

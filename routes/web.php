@@ -92,6 +92,14 @@ Route::get('/parcelas/{id_parcela}/export-pdf', [TecnicoDashboardController::cla
     ->middleware('auth');
 
 
-    Route::prefix('P')->group(function () {
-    Route::get('/index', [ProductorDashboardController::class, 'index'])->name('productor.dashboard');
-    });
+
+Route::prefix('P')->middleware(['auth'])->group(function () {
+    Route::get('/index', [ProductorDashboardController::class, 'index'])
+        ->name('productor.dashboard');
+
+    Route::get('/parcela/{id}/pdf', [ProductorDashboardController::class, 'generarPdfParcela'])
+        ->name('parcela.pdf');
+
+    Route::get('/troza/{id}/pdf', [ProductorDashboardController::class, 'generarPdfTroza'])
+        ->name('troza.pdf');
+});
