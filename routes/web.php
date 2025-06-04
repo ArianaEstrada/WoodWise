@@ -93,9 +93,20 @@ Route::get('/parcelas/{id_parcela}/export-pdf', [TecnicoDashboardController::cla
 
 
 
+
+
 Route::prefix('P')->middleware(['auth'])->group(function () {
     Route::get('/index', [ProductorDashboardController::class, 'index'])
         ->name('productor.dashboard');
+
+    Route::get('/parcelas/export', [ProductorDashboardController::class, 'exportarParcelas'])
+        ->name('parcelas.export');
+
+    Route::get('/trozas/export', [ProductorDashboardController::class, 'exportarTrozas'])
+        ->name('trozas.export');
+
+    Route::get('/estimaciones/export', [ProductorDashboardController::class, 'exportarEstimaciones'])
+        ->name('estimaciones.export');
 
     Route::get('/parcela/{id}/pdf', [ProductorDashboardController::class, 'generarPdfParcela'])
         ->name('parcela.pdf');
