@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Persona;
 use App\Models\Rol;
+use App\Models\User;
+
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -44,23 +46,60 @@ class PersonaController extends Controller
      * Guardar un nuevo usuario
      */
     public function store(Request $request)
-    {
-        $validatedData = $request->validate([
-            'nom'       => 'required|string|max:100',
-            'ap'        => 'required|string|max:100',
-            'am'        => 'nullable|string|max:100',
-            'telefono'  => 'required|string|max:15',
-            'correo'    => 'required|email|unique:personas,correo',
-            'contrasena'=> 'required|string|min:6|confirmed',
-            'id_rol'    => 'required|exists:roles,id_rol',
-        ]);
+{
+    $validatedData = $request->validate([
+        'nom' => 'required|string|max:100',
+        'ap' => 'required|string|max:100',
+        'am' => 'nullable|string|max:100',
+        'telefono' => 'required|string|max:15',
+        'email' => 'required|email|unique:personas,correo|unique:users,email',
+        'password' => 'required|string|min:6|confirmed',
+        'id_rol' => 'required|exists:roles,id_rol',
+        'cedula' => 'nullable|string|max:20' // Solo para técnicos
+    ]);
 
-        $validatedData['contrasena'] = Hash::make($request->contrasena);
+    // Obtener el rol
+    $rol = Rol::findOrFail($validatedData['id_rol']);
+    $rolNombre = strtolower(trim($rol->nom_rol));
 
-        Persona::create($validatedData);
+    // Crear la persona
+    $persona = Persona::create([
+        'nom' => $validatedData['nom'],
+        'ap' => $validatedData['ap'],
+        'am' => $validatedData['am'],
+        'telefono' => $validatedData['telefono'],
+        'correo' => $validatedData['email'],
+        'contrasena' => Hash::make($validatedData['password']),
+        'id_rol' => $validatedData['id_rol'],
+        'cedula' => $validatedData['cedula'] ?? null,
+    ]);
 
-        return redirect()->route('usuarios.index')->with('register', 'Usuario creado exitosamente.');
+    // Registrar según el rol
+    switch ($rolNombre) {
+        case 'tecnico':
+            Tecnico::create([
+                'id_persona' => $persona->id_persona,
+                'cedula_p' => $validatedData['cedula'] ?? null,
+            ]);
+            break;
+
+        case 'productor':
+            Productor::create([
+                'id_persona' => $persona->id_persona,
+            ]);
+            break;
     }
+
+    // Crear el usuario de autenticación
+    User::create([
+        'name' => "{$validatedData['nom']} {$validatedData['ap']} {$validatedData['am']}",
+        'email' => $validatedData['email'],
+        'password' => Hash::make($validatedData['password']),
+        'id_persona' => $persona->id_persona,
+    ]);
+
+    return redirect()->route('usuarios.index')->with('register', 'Usuario creado exitosamente.');
+}
 
     /**
      * Actualizar un usuario

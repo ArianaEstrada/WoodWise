@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" type="image/png" href="{{ asset('img/roda.jpg') }}">
@@ -16,38 +16,76 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="{{ asset('/assets/css/soft-ui-dashboard.css?v=1.0.7') }}" rel="stylesheet" />
     <link href="{{ asset('/css/db.css') }}" rel="stylesheet" />
-
-  </head>
-<style>
-  .sidenav .navbar-nav {
-  max-height: calc(100vh - 140px);
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: #90caf9 #1e2a38;
-}
-.sidenav .navbar-nav::-webkit-scrollbar {
-  width: 8px;
-  background: #1e2a38;
-}
-.sidenav .navbar-nav::-webkit-scrollbar-thumb {
-  background: #90caf9;
-  border-radius: 6px;
-}
-
-  </style>
-  <body class="g-sidenav-show bg-light">
-    <!-- Sidebar - Versión mejorada visualmente -->
+    <style>
+      .sidenav .navbar-nav {
+        max-height: calc(100vh - 140px);
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: #90caf9 #1e2a38;
+      }
+      .sidenav .navbar-nav::-webkit-scrollbar {
+        width: 8px;
+        background: #1e2a38;
+      }
+      .sidenav .navbar-nav::-webkit-scrollbar-thumb {
+        background: #90caf9;
+        border-radius: 6px;
+      }
+      
+      /* Estilos para la pantalla de bienvenida */
+      .welcome-card {
+        background: linear-gradient(135deg, #2e7d32, #1b5e20);
+        border-radius: 16px;
+        color: white;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      }
+      
+      .welcome-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: rgba(255,255,255,0.9);
+      }
+      
+      .quick-stats-card {
+        background: white;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+      }
+      
+      .quick-stats-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+      }
+      
+      .stat-icon {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+    </style>
+</head>
+<body class="g-sidenav-show bg-light">
+    <!-- Sidebar -->
     <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 fixed-start" id="sidenav-main">
       <div class="sidenav-header">
         <a class="navbar-brand m-0" href="{{ route('dashboard1') }}">
           <img src="{{ asset('img/woodwise.png') }}" class="me-2" height="32" alt="WoodWise Logo">
-          <span class="font-weight-bold text-white">WoodWise</span>        </a>
+          <span class="font-weight-bold text-white">WoodWise</span>
+        </a>
       </div>
       <hr class="horizontal dark mt-0 mb-2 mx-3" style="border-color: rgba(255,255,255,0.15);">
       <div class="collapse navbar-collapse w-auto h-100" id="sidenav-collapse-main">
         <ul class="navbar-nav">
-     
           @if(Auth::user()->persona->rol->nom_rol == 'Administrador')
+          <!-- Menú del administrador -->
+          <li class="nav-item mb-1">
+            <a class="nav-link {{ request()->is('dashboard1') ? 'active' : '' }}" href="{{ route('dashboard1') }}">
+              <div class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="fas fa-home fa-sm text-primary"></i>
+              </div>
+              <span class="nav-link-text text-white">Inicio</span>
+            </a>
+          </li>
+          
           <li class="nav-item mb-1">
             <a class="nav-link {{ request()->is('usuarios*') ? 'active' : '' }}" href="{{ route('usuarios.index') }}">
               <div class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -170,9 +208,8 @@
     <span class="nav-link-text text-white">Estimaciones Árboles Completos</span>
   </a>
 </li>
-       
-  
-     
+          
+          <!-- ... resto de elementos del menú ... -->
           @endif
         </ul>
       </div>
@@ -184,7 +221,7 @@
     </aside>
 
     <main class="main-content position-relative border-radius-lg">
-      <!-- Navbar superior - Versión mejorada -->
+      <!-- Navbar superior -->
       <nav class="navbar navbar-main navbar-expand-lg px-3 py-2 shadow-sm" id="navbarBlur">
         <div class="container-fluid">
           <nav aria-label="breadcrumb">
@@ -226,15 +263,121 @@
 
       <!-- Contenido principal -->
       <div class="container-fluid py-4">
-        @yield('crud_content')
+        @if(request()->is('dashboard1') && Auth::user()->persona->rol->nom_rol == 'Administrador')
+          <!-- Pantalla de bienvenida para administrador -->
+          <div class="row mb-4">
+            <div class="col-12">
+              <div class="card welcome-card p-4">
+                <div class="row align-items-center">
+                  <div class="col-md-8">
+                    <h2 class="text-white mb-3">Bienvenido, {{ Auth::user()->persona->nom }} {{ Auth::user()->persona->ap }}</h2>
+                    <p class="text-white opacity-8 mb-0">Panel de administración del sistema WoodWise. Desde aquí podrás gestionar todos los aspectos del sistema forestal.</p>
+                  </div>
+                  <div class="col-md-4 text-center">
+                    <div class="welcome-icon">
+                      <i class="fas fa-tree"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Estadísticas rápidas -->
+          <div class="row mb-4">
+            <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
+              <div class="card quick-stats-card h-100 p-3">
+                <div class="card-body text-center">
+                  <div class="stat-icon text-success">
+                    <i class="fas fa-users"></i>
+                  </div>
+                  <h5 class="font-weight-bold mb-2">Usuarios</h5>
+                  <h3 class="mb-0">{{ \App\Models\User::count() }}</h3>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
+              <div class="card quick-stats-card h-100 p-3">
+                <div class="card-body text-center">
+                  <div class="stat-icon text-info">
+                    <i class="fas fa-map-marked-alt"></i>
+                  </div>
+                  <h5 class="font-weight-bold mb-2">Parcelas</h5>
+                  <h3 class="mb-0">{{ \App\Models\Parcela::count() }}</h3>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
+              <div class="card quick-stats-card h-100 p-3">
+                <div class="card-body text-center">
+                  <div class="stat-icon text-warning">
+                    <i class="fas fa-tree"></i>
+                  </div>
+                  <h5 class="font-weight-bold mb-2">Especies</h5>
+                  <h3 class="mb-0">{{ \App\Models\Especie::count() }}</h3>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
+              <div class="card quick-stats-card h-100 p-3">
+                <div class="card-body text-center">
+                  <div class="stat-icon text-danger">
+                    <i class="fas fa-calendar-alt"></i>
+                  </div>
+                  <h5 class="font-weight-bold mb-2">Turnos Activos</h5>
+                  <h3 class="mb-0">{{ \App\Models\Turno_Corta::whereNull('fecha_fin')->count() }}</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Acciones rápidas -->
+          <div class="row">
+            <div class="col-12">
+              <div class="card shadow-sm">
+                <div class="card-header bg-white">
+                  <h5 class="mb-0">Acciones Rápidas</h5>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-3 mb-3">
+                      <a href="{{ route('usuarios.index') }}" class="btn btn-outline-primary w-100">
+                        <i class="fas fa-user-plus me-2"></i> Nuevo Usuario
+                      </a>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                      <a href="{{ route('parcelas.index') }}" class="btn btn-outline-success w-100">
+                        <i class="fas fa-map-marked-alt me-2"></i> Registrar Parcela
+                      </a>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                      <a href="{{ route('turno_cortas.index') }}" class="btn btn-outline-info w-100">
+                        <i class="fas fa-calendar-plus me-2"></i> Planificar Corta
+                      </a>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                      <a href="{{ route('especies.index') }}" class="btn btn-outline-warning w-100">
+                        <i class="fas fa-tree me-2"></i> Agregar Especie
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        @else
+          <!-- Contenido normal de CRUDs -->
+          @yield('crud_content')
+        @endif
       </div>
     </main>
+
     <!-- Scripts -->
-    <!-- jQuery (solo si realmente lo necesitas para otras funcionalidades) -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Bootstrap JS actualizado -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <script>

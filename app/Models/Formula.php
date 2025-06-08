@@ -20,12 +20,22 @@ class Formula extends Model
         'nom_formula',
         'expresion',
         'id_tipo_e',
+        'id_cat',
 
     ];
    public function tipoEstimacion()
     {
         return $this->belongsTo(Tipo_Estimacion::class, 'id_tipo_e');
     }
+    public function catalogo()
+    {
+        return $this->belongsTo(Catalogo::class, 'id_cat');
+    }
+    public function getFormattedCreatedAtAttribute()
+{
+    return $this->created_at ? $this->created_at->format('d/m/Y') : null;
+}
+
     // Si la clave primaria no es auto-incrementable
     public $incrementing = true;
 

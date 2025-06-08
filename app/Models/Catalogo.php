@@ -13,7 +13,7 @@ class Catalogo extends Model
     protected $table = 'catalogos';
 
     // Definir la clave primaria si no es 'id'
-    protected $primaryKey = 'id_catalogo';
+    protected $primaryKey = 'id_cat';
 
     // Definir los campos que pueden ser asignados masivamente
     protected $fillable = [

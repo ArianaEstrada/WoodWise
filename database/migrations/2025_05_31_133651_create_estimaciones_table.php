@@ -16,12 +16,9 @@ return new class extends Migration
             $table->unsignedBigInteger('id_tipo_e');
             $table->unsignedBigInteger('id_formula');
             $table->double('calculo');
-
             $table->double('biomasa')->default(0);
             $table->double('carbono')->default(0);
-
             $table->unsignedBigInteger('id_troza');
-            
             $table->foreign('id_tipo_e')->references('id_tipo_e')->on('tipo_estimaciones');
             $table->foreign('id_formula')->references('id_formula')->on('formulas');
             $table->foreign('id_troza')->references('id_troza')->on('trozas');

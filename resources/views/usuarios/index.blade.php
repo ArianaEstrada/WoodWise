@@ -204,36 +204,65 @@
                         data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-4">
-                <form method="POST" action="{{ route('usuarios.store') }}">
+                <form method="POST" action="{{ route('usuarios.store') }}" id="userCreateForm">
                     @csrf
-                    <div class="mb-3">
-                        <label class="form-label text-muted">Nombre</label>
-                        <input type="text" name="nom" class="form-control border-2" required>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label text-muted">Nombre <span class="text-danger">*</span></label>
+                            <input type="text" name="nom" class="form-control border-2" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label text-muted">Apellido Paterno <span class="text-danger">*</span></label>
+                            <input type="text" name="ap" class="form-control border-2" required>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label text-muted">Apellido Paterno</label>
-                        <input type="text" name="ap" class="form-control border-2" required>
-                    </div>
+                    
                     <div class="mb-3">
                         <label class="form-label text-muted">Apellido Materno</label>
                         <input type="text" name="am" class="form-control border-2">
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label text-muted">Correo Electrónico</label>
-                        <input type="email" name="correo" class="form-control border-2" required>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label text-muted">Correo Electrónico <span class="text-danger">*</span></label>
+                            <input type="email" name="email" class="form-control border-2" required>
+                            <div class="invalid-feedback">Por favor ingrese un correo válido</div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label text-muted">Teléfono <span class="text-danger">*</span></label>
+                            <input type="text" name="telefono" class="form-control border-2" required>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label text-muted">Teléfono</label>
-                        <input type="text" name="telefono" class="form-control border-2" required>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label text-muted">Contraseña <span class="text-danger">*</span></label>
+                            <input type="password" name="password" id="password" class="form-control border-2" required minlength="6">
+                            <div class="invalid-feedback">La contraseña debe tener al menos 6 caracteres</div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label text-muted">Confirmar Contraseña <span class="text-danger">*</span></label>
+                            <input type="password" name="password_confirmation" class="form-control border-2" required>
+                            <div class="invalid-feedback">Las contraseñas no coinciden</div>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label text-muted">Rol</label>
-                        <select name="id_rol" class="form-select border-2" required>
-                            @foreach ($roles as $rol)
-                            <option value="{{ $rol->id_rol }}">{{ $rol->nom_rol }}</option>
-                            @endforeach
-                        </select>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label text-muted">Rol <span class="text-danger">*</span></label>
+                            <select name="id_rol" id="rolSelect" class="form-select border-2" required>
+                                @foreach ($roles as $rol)
+                                <option value="{{ $rol->id_rol }}">{{ $rol->nom_rol }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3" id="cedulaField" style="display: none;">
+                            <label class="form-label text-muted">Cédula Profesional</label>
+                            <input type="text" name="cedula" class="form-control border-2">
+                            <small class="text-muted">Solo para técnicos</small>
+                        </div>
                     </div>
+                    
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
                         <button type="button" class="btn btn-outline-secondary me-md-2 rounded-pill" 
                                 data-bs-dismiss="modal">Cancelar</button>
@@ -253,6 +282,39 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+    const rolSelect = document.getElementById('rolSelect');
+    const cedulaField = document.getElementById('cedulaField');
+    
+    // Mostrar campo cédula solo para técnicos
+    rolSelect.addEventListener('change', function() {
+        const selectedOption = this.options[this.selectedIndex].text.toLowerCase();
+        if(selectedOption.includes('tecnico')) {
+            cedulaField.style.display = 'block';
+            cedulaField.querySelector('input').setAttribute('required', 'required');
+        } else {
+            cedulaField.style.display = 'none';
+            cedulaField.querySelector('input').removeAttribute('required');
+        }
+    });
+    
+    // Validación de contraseñas coincidentes
+    const form = document.getElementById('userCreateForm');
+    form.addEventListener('submit', function(e) {
+        const password = document.getElementById('password').value;
+        const confirmPassword = form.querySelector('input[name="password_confirmation"]').value;
+        
+        if(password !== confirmPassword) {
+            e.preventDefault();
+            alert('Las contraseñas no coinciden');
+        }
+    });
+    
+    // Disparar el evento change al cargar para ver el estado inicial
+    const event = new Event('change');
+    rolSelect.dispatchEvent(event);
+});
 // Sistema de gestión de modales mejorado para Usuarios
 document.addEventListener('DOMContentLoaded', function() {
     // 1. Inicialización controlada de modales
