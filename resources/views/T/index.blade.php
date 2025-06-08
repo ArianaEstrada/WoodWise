@@ -238,8 +238,8 @@
     <div class="modal fade" id="createParcelaModal" tabindex="-1" aria-labelledby="createParcelaLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0 shadow-lg">
-                <div class="modal-header bg-gradient-primary text-white">
-                    <h5 class="modal-title">
+                <div class="modal-header bg-gradient-primary text-dark">
+                    <h5 class="modal-title text-white">
                         <i class="fas fa-map-marked-alt me-2"></i>Nueva Parcela
                     </h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -304,169 +304,318 @@
         </div>
     </div>
 
-    <!-- Modales para acciones por parcela -->
-    @foreach($parcelas as $parcela)
-        <!-- Modal para agregar troza -->
-        <div class="modal fade" id="addTrozaModal{{ $parcela->id_parcela }}" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content border-0 shadow-lg">
-                    <div class="modal-header bg-gradient-primary text-white">
-                        <h5 class="modal-title">
-                            <i class="fas fa-plus me-2"></i>Nueva Troza en {{ $parcela->nom_parcela }}
-                        </h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+  <!-- Modales para acciones por parcela -->
+@foreach($parcelas as $parcela)
+    <!-- Modal para agregar troza -->
+    <div class="modal fade wood-modal" id="addTrozaModal{{ $parcela->id_parcela }}" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 wood-modal-content">
+                <div class="modal-header wood-modal-header wood-bg-primary">
+                    <div class="d-flex align-items-center">
+                        <div class="wood-modal-icon me-3">
+                            <i class="fas fa-tree"></i>
+                        </div>
+                        <div>
+                            <h5 class="modal-title wood-modal-title text-white">Nueva Troza</h5>
+                            <p class="wood-modal-subtitle mb-0">Parcela: {{ $parcela->nom_parcela }}</p>
+                        </div>
                     </div>
-                    <div class="modal-body p-4">
-                        <form method="POST" action="{{ route('trozas.store') }}">
-                            @csrf
-                            <input type="hidden" name="id_parcela" value="{{ $parcela->id_parcela }}">
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Longitud (m)</label>
-                                    <input type="number" step="0.01" name="longitud" class="form-control" required>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Diámetro (m)</label>
-                                    <input type="number" step="0.01" name="diametro" class="form-control" required>
-                                </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4 wood-modal-body">
+                    <form method="POST" action="{{ route('trozas.store') }}">
+                        @csrf
+                        <input type="hidden" name="id_parcela" value="{{ $parcela->id_parcela }}">
+                        
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="wood-form-label">Longitud (m)</label>
+                                <input type="number" step="0.01" name="longitud" class="wood-form-control" required>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Diámetro otro extremo (m)</label>
-                                    <input type="number" step="0.01" name="diametro_otro_extremo" class="form-control">
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Diámetro medio (m)</label>
-                                    <input type="number" step="0.01" name="diametro_medio" class="form-control">
-                                </div>
+                            <div class="col-md-6">
+                                <label class="wood-form-label">Diámetro (m)</label>
+                                <input type="number" step="0.01" name="diametro" class="wood-form-control" required>
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label">Densidad</label>
-                                <input type="number" step="0.01" name="densidad" class="form-control" required>
+                            
+                            <div class="col-md-6">
+                                <label class="wood-form-label">Diámetro otro extremo (m)</label>
+                                <input type="number" step="0.01" name="diametro_otro_extremo" class="wood-form-control">
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label">Especie</label>
-                                <select class="form-select border-2" name="id_especie" required>
+                            <div class="col-md-6">
+                                <label class="wood-form-label">Diámetro medio (m)</label>
+                                <input type="number" step="0.01" name="diametro_medio" class="wood-form-control">
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label class="wood-form-label">Densidad</label>
+                                <input type="number" step="0.01" name="densidad" class="wood-form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="wood-form-label">Especie</label>
+                                <select class="wood-form-select" name="id_especie" required>
                                     <option value="" selected disabled>Seleccione una especie</option>
                                     @foreach ($especies as $especie)
                                         <option value="{{ $especie->id_especie }}">{{ $especie->nom_cientifico }}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
-                                <button type="button" class="btn btn-outline-secondary me-md-2 rounded-pill px-4"
-                                        data-bs-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="btn btn-wood rounded-pill px-4">
-                                    <i class="fas fa-check-circle me-1"></i> Registrar Troza
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                        </div>
+                        
+                        <div class="wood-modal-footer mt-4">
+                            <button type="button" class="btn btn-wood-outline" data-bs-dismiss="modal">
+                                <i class="fas fa-times me-1"></i> Cancelar
+                            </button>
+                            <button type="submit" class="btn btn-wood">
+                                <i class="fas fa-check-circle me-1"></i> Registrar Troza
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Modal para estimación -->
-        <div class="modal fade" id="estimacionModal{{ $parcela->id_parcela }}" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content border-0 shadow-lg">
-                    <div class="modal-header bg-gradient-info text-white">
-                        <h5 class="modal-title">
-                            <i class="fas fa-calculator me-2"></i>Estimación para {{ $parcela->nom_parcela }}
-                        </h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+    <!-- Modal para estimación -->
+    <div class="modal fade wood-modal" id="estimacionModal{{ $parcela->id_parcela }}" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 wood-modal-content">
+                <div class="modal-header wood-modal-header wood-bg-info">
+                    <div class="d-flex align-items-center">
+                        <div class="wood-modal-icon me-3">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <div>
+                            <h5 class="modal-title wood-modal-title text-white">Estimación Volumétrica</h5>
+                            <p class="wood-modal-subtitle mb-0">Parcela: {{ $parcela->nom_parcela }}</p>
+                        </div>
                     </div>
-                    <div class="modal-body p-4">
-                        <form method="POST" action="{{ route('estimaciones.store') }}">
-                            @csrf
-                            <input type="hidden" name="id_parcela" value="{{ $parcela->id_parcela }}">
-                            <div class="mb-3">
-                                <label class="form-label">Seleccionar Troza</label>
-                                <select class="form-select" name="id_troza" required>
-                                    <option value="" selected disabled>Seleccione una troza</option>
-                                    @foreach($parcela->trozas as $troza)
-                                        <option value="{{ $troza->id_troza }}">Troza #{{ $troza->id_troza }} ({{ $troza->longitud }}m x {{ $troza->diametro }}m)</option>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4 wood-modal-body">
+                    <form method="POST" action="{{ route('estimaciones.store') }}">
+                        @csrf
+                        <input type="hidden" name="id_parcela" value="{{ $parcela->id_parcela }}">
+                        
+                        <div class="mb-3">
+                            <label class="wood-form-label">Seleccionar Troza</label>
+                            <select class="wood-form-select" name="id_troza" required>
+                                <option value="" selected disabled>Seleccione una troza</option>
+                                @foreach($parcela->trozas as $troza)
+                                    <option value="{{ $troza->id_troza }}">Troza #{{ $troza->id_troza }} ({{ $troza->longitud }}m x {{ $troza->diametro }}m)</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="wood-form-label">Tipo de Estimación</label>
+                                <select class="wood-form-select" name="id_tipo_e" required>
+                                    <option value="" selected disabled>Seleccione un tipo</option>
+                                    @foreach($tiposEstimacion as $tipo)
+                                        <option value="{{ $tipo->id_tipo_e }}">{{ $tipo->desc_estimacion }}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Tipo de Estimación</label>
-                                    <select class="form-select" name="id_tipo_e" required>
-                                        <option value="" selected disabled>Seleccione un tipo</option>
-                                        @foreach($tiposEstimacion as $tipo)
-                                            <option value="{{ $tipo->id_tipo_e }}">{{ $tipo->desc_estimacion }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Fórmula a Aplicar</label>
-                                    <select class="form-select" name="id_formula" required>
-                                        <option value="" selected disabled>Seleccione una fórmula</option>
-                                        @foreach($formulas as $formula)
-                                            <option value="{{ $formula->id_formula }}">{{ $formula->nom_formula }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                            <div class="col-md-6">
+                                <label class="wood-form-label">Fórmula a Aplicar</label>
+                                <select class="wood-form-select" name="id_formula" required>
+                                    <option value="" selected disabled>Seleccione una fórmula</option>
+                                    @foreach($formulas as $formula)
+                                        <option value="{{ $formula->id_formula }}">{{ $formula->nom_formula }}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label">Cálculo (m³)</label>
-                                <input type="number" step="0.01" class="form-control" name="calculo" required>
-                            </div>
-                            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
-                                <button type="button" class="btn btn-outline-secondary me-md-2 rounded-pill px-4"
-                                        data-bs-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="btn btn-info rounded-pill px-4">
-                                    <i class="fas fa-calculator me-1"></i> Calcular Estimación
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="wood-form-label">Cálculo (m³)</label>
+                            <input type="number" step="0.01" class="wood-form-control" name="calculo" required>
+                        </div>
+                        
+                        <div class="wood-modal-footer mt-4">
+                            <button type="button" class="btn btn-wood-outline" data-bs-dismiss="modal">
+                                <i class="fas fa-times me-1"></i> Cancelar
+                            </button>
+                            <button type="submit" class="btn btn-wood-info">
+                                <i class="fas fa-calculator me-1"></i> Calcular Estimación
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Modal para turno de corta -->
-        <div class="modal fade" id="turnoModal{{ $parcela->id_parcela }}" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content border-0 shadow-lg">
-                    <div class="modal-header bg-gradient-warning text-white">
-                        <h5 class="modal-title">
-                            <i class="fas fa-calendar-alt me-2"></i>Programar Turno de Corta para {{ $parcela->nom_parcela }}
-                        </h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+    <!-- Modal para turno de corta -->
+    <div class="modal fade wood-modal" id="turnoModal{{ $parcela->id_parcela }}" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 wood-modal-content">
+                <div class="modal-header wood-modal-header wood-bg-warning">
+                    <div class="d-flex align-items-center">
+                        <div class="wood-modal-icon me-3">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div>
+                            <h5 class="modal-title wood-modal-title text-white">Programar Turno de Corta</h5>
+                            <p class="wood-modal-subtitle mb-0">Parcela: {{ $parcela->nom_parcela }}</p>
+                        </div>
                     </div>
-                    <div class="modal-body p-4">
-                        <form method="POST" action="{{ route('turno_cortas.store') }}">
-                            @csrf
-                            <input type="hidden" name="id_parcela" value="{{ $parcela->id_parcela }}">
-                            <div class="mb-3">
-                                <label class="form-label">Código de Corta</label>
-                                <input type="text" name="codigo_corta" class="form-control" required>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4 wood-modal-body">
+                    <form method="POST" action="{{ route('turno_cortas.store') }}">
+                        @csrf
+                        <input type="hidden" name="id_parcela" value="{{ $parcela->id_parcela }}">
+                        
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="wood-form-label">Código de Corta</label>
+                                <input type="text" name="codigo_corta" class="wood-form-control" required>
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label">Fecha de Corta</label>
-                                <input type="date" name="fecha_corta" class="form-control" required>
+                            <div class="col-md-6">
+                                <label class="wood-form-label">Fecha de Corta</label>
+                                <input type="date" name="fecha_corta" class="wood-form-control" required>
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label">Notas adicionales</label>
-                                <textarea class="form-control" name="notas" rows="2"></textarea>
-                            </div>
-                            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
-                                <button type="button" class="btn btn-outline-secondary me-md-2 rounded-pill px-4"
-                                        data-bs-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="btn btn-warning rounded-pill px-4">
-                                    <i class="fas fa-calendar-check me-1"></i> Programar Turno
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="wood-form-label">Notas adicionales</label>
+                            <textarea class="wood-form-control" name="notas" rows="3"></textarea>
+                        </div>
+                        
+                        <div class="wood-modal-footer mt-4">
+                            <button type="button" class="btn btn-wood-outline" data-bs-dismiss="modal">
+                                <i class="fas fa-times me-1"></i> Cancelar
+                            </button>
+                            <button type="submit" class="btn btn-wood-warning">
+                                <i class="fas fa-calendar-check me-1"></i> Programar Turno
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-    @endforeach
+    </div>
+@endforeach
 
     <style>
+        /* Estilos para modales personalizados */
+.wood-modal .modal-content {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.wood-modal-header {
+    padding: 1.5rem;
+    border-bottom: none;
+}
+
+.wood-modal-title {
+    font-weight: 700;
+    font-size: 1.4rem;
+    margin-bottom: 0.25rem;
+}
+
+.wood-modal-subtitle {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.wood-modal-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+.wood-modal-body {
+    padding: 1.5rem;
+}
+
+.wood-form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--wood-text);
+}
+
+.wood-form-control,
+.wood-form-select {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: all 0.3s;
+    background-color: #fff;
+}
+
+.wood-form-control:focus,
+.wood-form-select:focus {
+    border-color: var(--wood-medium);
+    box-shadow: 0 0 0 3px rgba(122, 74, 50, 0.1);
+    outline: none;
+}
+
+.wood-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Colores de cabecera */
+.wood-bg-primary {
+    background: linear-gradient(135deg, var(--wood-dark), var(--wood-medium));
+}
+
+.wood-bg-info {
+    background: linear-gradient(135deg, #1a6e8a, #2d9cb5);
+}
+
+.wood-bg-warning {
+    background: linear-gradient(135deg, #d4a762, #e8c897);
+}
+
+/* Botones específicos para modales */
+.btn-wood-info {
+    background-color: #2d9cb5;
+    color: white;
+    border: none;
+}
+
+.btn-wood-warning {
+    background-color: #d4a762;
+    color: var(--wood-text);
+    border: none;
+}
+
+/* Modo oscuro */
+@media (prefers-color-scheme: dark) {
+    .wood-modal-content {
+        background-color: #2a2a2a;
+    }
+    
+    .wood-form-control,
+    .wood-form-select {
+        background-color: #333;
+        border-color: #444;
+        color: #eee;
+    }
+    
+    .wood-form-label {
+        color: #ddd;
+    }
+    
+    .wood-modal-footer {
+        border-top-color: rgba(255, 255, 255, 0.05);
+    }
+}
         /* Paleta de colores forestales elegantes */
         :root {
             --forest-dark: #184d33;       /* Verde oscuro elegante */

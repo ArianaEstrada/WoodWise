@@ -10,29 +10,46 @@
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-       :root {
-    /* Colores principales (ajustados para mejor contraste) */
-    --wood-dark: #4e2113;        /* Un poco más oscuro para mejor legibilidad */
-    --wood-medium: #7a4a32;      /* Más cálido */
-    --wood-light: #d4a762;       /* Más brillante para destacar */
-    --wood-accent: #6B8E23;      /* Mantenido (verde forestal) */
-    --wood-text: #3a2d13;        /* Texto principal */
-    --wood-bg-light: #f9f7f3;    /* Fondo más cálido */
+      :root {
+    /* Paleta profesional de verdes forestales */
+    --wood-dark: #1a3a16;        /* Verde bosque profundo - profesional y legible */
+    --wood-medium: #4a3c27;      /* Marrón corteza - elegante y neutral */
+    --wood-light: #e8d8b5;       /* Beige claro - más suave que el anterior */
+    --wood-accent: #4a7c30;      /* Verde profesional - menos vibrante, más serio */
+    --wood-text: #2b2b2b;        /* Texto casi negro - mejor contraste */
+    --wood-bg-light: #f5f7f2;    /* Fondo claro con tono verde muy suave */
+    --wood-bg-dark: #0f1a0c;     /* Fondo oscuro verde oscuro - profesional */
     
-    /* Nuevas variables para consistencia */
-    --wood-border-radius: 12px;   /* Radio de borde consistente */
-    --wood-box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Sombra consistente */
-    --wood-transition: all 0.3s ease-in-out; /* Transición uniforme */
+    /* Variables de diseño (sin cambios) */
+    --wood-border-radius: 12px;
+    --wood-box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    --wood-transition: all 0.3s ease-in-out;
 }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--wood-bg-light);
-            color: var(--wood-text);
-            overflow-x: hidden;
+              font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    letter-spacing: 0.01em;
         }
+/* Mejores títulos */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    margin-bottom: 1.25rem;
+}
 
+/* Espaciado consistente */
+.container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+main {
+    padding-top: 3rem;
+    padding-bottom: 5rem;
+}
        /* Navbar Premium Mejorado */
 .navbar {
     background: linear-gradient(135deg, var(--wood-dark), var(--wood-medium));
@@ -64,6 +81,7 @@
     position: relative;
     display: flex;
     align-items: center;
+    overflow: hidden;
 }
 
 .nav-link.active {
@@ -71,7 +89,17 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
     transform: translateY(-2px);
 }
-
+.nav-link:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--wood-light);
+    transform: translateX(-100%);
+    transition: var(--wood-transition);
+}
 /* Efecto hover más suave */
 .nav-link:hover:not(.active) {
     background: rgba(255, 255, 255, 0.08);
@@ -90,7 +118,21 @@
     background: var(--wood-light);
     border-radius: 3px;
 }
+.nav-link:hover:after {
+    transform: translateX(0);
+}
 
+/* Animaciones mejoradas */
+@keyframes float {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(3deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+}
+
+.floating {
+    animation: float 5s ease-in-out infinite;
+    filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2));
+}
         .text-gradient {
             background: linear-gradient(to right, var(--wood-light), #d4a762);
             -webkit-background-clip: text;
@@ -137,11 +179,39 @@
         }
 
         /* Footer Premium */
-        .footer {
-            background: linear-gradient(135deg, var(--wood-dark),#001524);
-            color: white;
-            padding: 4rem 0 2rem;
-        }
+       .footer {
+    position: relative;
+    overflow: hidden;
+}
+
+.footer:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    background: linear-gradient(to right, var(--wood-accent), var(--wood-light));
+    z-index: 1;
+}
+
+.footer:before {
+    content: '';
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    width: 200%;
+    height: 100px;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' fill='%23f8f5f0'/%3E%3C/svg%3E");
+    background-size: 50% 100px;
+    animation: wave 15s linear infinite;
+    opacity: 0.1;
+}
+
+@keyframes wave {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
 
         .footer-logo {
             font-size: 1.8rem;
@@ -215,7 +285,29 @@
             font-size: 0.9rem;
             color: #adb5bd;
         }
+.wood-card {
+    border: none;
+    border-radius: var(--wood-border-radius);
+    overflow: hidden;
+    transition: var(--wood-transition);
+    background: white;
+    position: relative;
+}
 
+.wood-card:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(to right, var(--wood-accent), var(--wood-light));
+}
+
+.wood-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
         /* Botones */
        /* Botones mejorados */
 .btn-wood {

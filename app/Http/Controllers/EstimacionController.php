@@ -21,7 +21,17 @@ class EstimacionController extends Controller
             return $next($request);
         });
     }
-
+    public function edit($id)
+{
+    $estimacion = Estimacion::with(['tipoEstimacion', 'formula', 'troza'])->findOrFail($id);
+    
+    return view('estimaciones.edit', [
+        'estimacion' => $estimacion,
+        'tiposEstimacion' => TipoEstimacion::all(),
+        'formulas' => Formula::all(),
+        'trozas' => Troza::all(),
+    ]);
+}
     public function index()
     {
         $estimaciones = Estimacion::with(['tipoEstimacion', 'formula', 'troza.especie', 'troza.parcela'])->get();

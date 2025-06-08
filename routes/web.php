@@ -84,12 +84,16 @@ Route::middleware(['auth'])->group(function() {
 Route::prefix('T')->group(function () {
     Route::get('/index', [TecnicoDashboardController::class, 'index'])->name('tecnico.dashboard');
     });
-    Route::get('/parcelas/{id}/detalle', [ParcelaController::class, 'show'])->name('parcelas.show');
-    Route::get('/estimaciones/formulas/{tipoId}', [EstimacionController::class, 'getFormulasByTipo'])
+   Route::put('/gestion/trozas/{id_troza}', [ParcelaController::class, 'updateTroza'])->name('gestion.trozas.update');
+
+Route::put('/gestion/estimaciones/{id_estimacion}', [ParcelaController::class, 'updateEstimacion'])->name('gestion.estimaciones.update');
+
+Route::get('/parcelas/{id}/detalle', [ParcelaController::class, 'show'])->name('parcelas.show');    Route::get('/estimaciones/formulas/{tipoId}', [EstimacionController::class, 'getFormulasByTipo'])
      ->name('estimaciones.formulas');
 Route::get('/parcelas/{id_parcela}/export-pdf', [TecnicoDashboardController::class, 'exportParcelaToPdf'])
     ->name('parcelas.export.pdf')
     ->middleware('auth');
+Route::put('/trozas/{id_troza}', [TrozaController::class, 'update1'])->name('trozas.update1');
 
 
 

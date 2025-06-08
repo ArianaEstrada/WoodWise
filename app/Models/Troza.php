@@ -24,10 +24,11 @@ class Troza extends Model
     {
         return $this->belongsTo(Especie::class, 'id_especie');
     }
- public function estimaciones()
+ public function estimacion()
 {
-    return $this->hasMany(Estimacion::class,'id_troza');
+    return $this->hasOne(Estimacion::class, 'id_troza');
 }
+
     public function parcela()
     {
         return $this->belongsTo(Parcela::class, 'id_parcela');

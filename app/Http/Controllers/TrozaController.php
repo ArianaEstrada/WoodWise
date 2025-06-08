@@ -114,6 +114,29 @@ class TrozaController extends Controller
             ->with('modify', 'Troza actualizada exitosamente.');
     }
 
+    public function update1(Request $request, $id_troza)
+    {
+        $troza = Troza::findOrFail($id_troza);
+
+        $validatedData = $request->validate([
+            'longitud' => 'required|numeric|min:0.01|max:50',
+            'diametro' => 'required|numeric|min:0.01|max:5',
+            'diametro_otro_extremo' => 'nullable|numeric|min:0.01|max:5',
+            'diametro_medio' => 'nullable|numeric|min:0.01|max:5',
+            'densidad' => 'required|numeric|min:0.1|max:1000',
+            'id_especie' => 'required|exists:especies,id_especie',
+            'id_parcela' => 'required|exists:parcelas,id_parcela',
+        ]);
+
+        // Recalcular volumen
+        $validatedData['volumen'] = $this->calcularVolumen($validatedData);
+
+        $troza->update($validatedData);
+
+        return redirect("/parcelas/{$validatedData['id_parcela']}/detalle")
+    ->with('modify', 'Troza actualizada exitosamente.');
+
+    }
     /**
      * Eliminar troza
      */

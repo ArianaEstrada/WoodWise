@@ -8,6 +8,7 @@ use App\Models\Parcela;
 use App\Models\Tipo_Estimacion;
 use App\Models\Formula;
 use App\Models\Troza;
+use AppModels\Turno_Corta;
 use App\Models\Especie;
 use App\Models\Productor;
 use App\Models\Estimacion;
@@ -121,13 +122,37 @@ class TecnicoDashboardController extends Controller
             $this->createOrUpdateEstimacion($troza, $validated);
 
             DB::commit();
-            return back()->with('success', 'Estimación registrada correctamente');
+            return redirect()->route('tecnico.dashboard')->with('success', 'Estimación registrada correctamente');
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->with('error', 'Error al registrar la estimación: ' . $e->getMessage());
+            return redirect()->route('tecnico.dashboard')->with('error', 'Error al registrar la estimación: ' . $e->getMessage());
         }
     }
+ public function storeTroza(Request $request)
+    {
+        $validated = $request->validate([
+            'id_parcela' => 'required|exists:parcelas,id_parcela',
+            'id_especie' => 'required|exists:especies,id_especie',
+            'longitud' => 'required|numeric|min:0',
+            'diametro' => 'required|numeric|min:0',
+            'diametro_otro_extremo' => 'nullable|numeric|min:0',
+            'diametro_medio' => 'nullable|numeric|min:0',
+            'densidad' => 'required|numeric|min:0',
+            'codigo_troza' => 'required|unique:trozas,codigo_troza'
+        ]);
 
+        try {
+            DB::beginTransaction();
+
+            Troza::create($validated);
+
+            DB::commit();
+            return redirect()->route('tecnico.dashboard')->with('success', 'Troza creada correctamente');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('tecnico.dashboard')->with('error', 'Error al crear la troza: ' . $e->getMessage());
+        }
+    }
     protected function validateEstimacionRequest(Request $request)
     {
         $persona = Auth::user()->persona;
@@ -220,6 +245,129 @@ class TecnicoDashboardController extends Controller
                 'success' => false,
                 'message' => 'Error al obtener las trozas: ' . $e->getMessage()
             ], 500);
+        }
+    }
+     public function storeParcela(Request $request)
+    {
+        $validated = $request->validate([
+            'id_productor' => 'required|exists:productores,id_productor',
+            'nom_parcela' => 'required|string|max:255',
+            'ubicacion' => 'required|string|max:255',
+            'hectareas' => 'required|numeric|min:0',
+            'tipo_suelo' => 'required|string|max:255',
+            'codigo_parcela' => 'required|unique:parcelas,codigo_parcela'
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            $parcela = Parcela::create($validated);
+            
+            // Asignar la parcela al técnico
+            $persona = Auth::user()->persona;
+            $tecnico = Tecnico::where('id_persona', $persona->id_persona)->firstOrFail();
+            $tecnico->parcelas()->attach($parcela->id_parcela);
+
+            DB::commit();
+            return redirect()->route('tecnico.dashboard')->with('success', 'Parcela creada y asignada correctamente');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('tecnico.dashboard')->with('error', 'Error al crear la parcela: ' . $e->getMessage());
+        }
+    }
+     public function storeTurnoCorta(Request $request)
+    {
+        $validated = $request->validate([
+            'id_parcela' => 'required|exists:parcelas,id_parcela',
+            'codigo_corta' => 'required|string|max:255|unique:turno_cortas,codigo_corta',
+            'fecha_corta' => 'required|date',
+            'fecha_fin' => 'required|date|after_or_equal:fecha_corta'
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            Turno_Corta::create($validated);
+
+            DB::commit();
+            return redirect()->route('tecnico.dashboard')->with('success', 'Turno de corta creado correctamente');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('tecnico.dashboard')->with('error', 'Error al crear el turno de corta: ' . $e->getMessage());
+        }
+    }
+     public function updateEstimacion(Request $request, $id)
+    {
+        $validated = $this->validateEstimacionRequest($request);
+
+        try {
+            DB::beginTransaction();
+
+            $estimacion = Estimacion::findOrFail($id);
+            $estimacion->update($validated);
+
+            DB::commit();
+            return redirect()->route('tecnico.dashboard')->with('success', 'Estimación actualizada correctamente');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('tecnico.dashboard')->with('error', 'Error al actualizar la estimación: ' . $e->getMessage());
+        }
+    }
+
+    public function updateTroza(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'id_especie' => 'required|exists:especies,id_especie',
+            'longitud' => 'required|numeric|min:0',
+            'diametro' => 'required|numeric|min:0',
+            'diametro_otro_extremo' => 'nullable|numeric|min:0',
+            'diametro_medio' => 'nullable|numeric|min:0',
+            'densidad' => 'required|numeric|min:0'
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            $troza = Troza::findOrFail($id);
+            $troza->update($validated);
+
+            DB::commit();
+            return redirect()->route('tecnico.dashboard')->with('success', 'Troza actualizada correctamente');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('tecnico.dashboard')->with('error', 'Error al actualizar la troza: ' . $e->getMessage());
+        }
+    }
+
+    public function destroyEstimacion($id)
+    {
+        try {
+            DB::beginTransaction();
+
+            $estimacion = Estimacion::findOrFail($id);
+            $estimacion->delete();
+
+            DB::commit();
+            return redirect()->route('tecnico.dashboard')->with('success', 'Estimación eliminada correctamente');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('tecnico.dashboard')->with('error', 'Error al eliminar la estimación: ' . $e->getMessage());
+        }
+    }
+
+    public function destroyTroza($id)
+    {
+        try {
+            DB::beginTransaction();
+
+            $troza = Troza::findOrFail($id);
+            $troza->delete();
+
+            DB::commit();
+            return redirect()->route('tecnico.dashboard')->with('success', 'Troza eliminada correctamente');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('tecnico.dashboard')->with('error', 'Error al eliminar la troza: ' . $e->getMessage());
         }
     }
 }
