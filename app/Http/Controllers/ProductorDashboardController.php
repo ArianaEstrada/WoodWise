@@ -16,7 +16,7 @@ class ProductorDashboardController extends Controller
     {
         $userId = Auth::id();
 
-        $parcelas = Parcela::with(['trozas', 'trozas.estimaciones'])
+        $parcelas = Parcela::with(['trozas', 'trozas.estimacion'])
             ->where('id_productor', $userId)
             ->orderBy('nom_parcela')
             ->get();
@@ -28,7 +28,7 @@ class ProductorDashboardController extends Controller
             }),
             'total_estimaciones' => $parcelas->sum(function($parcela) {
                 return $parcela->trozas->sum(function($troza) {
-                    return $troza->estimaciones->count();
+                    return $troza->estimacion->count();
                 });
             }),
             'ultima_actualizacion' => now()->format('d/m/Y H:i')
@@ -124,7 +124,7 @@ class ProductorDashboardController extends Controller
     {
         $userId = Auth::id();
 
-        $parcela = Parcela::with('trozas.estimaciones')
+        $parcela = Parcela::with('trozas.estimacion')
             ->where('id_parcela', $id)
             ->where('id_productor', $userId)
             ->firstOrFail();
@@ -135,7 +135,7 @@ class ProductorDashboardController extends Controller
             'logo' => public_path('images/logo.png')
         ];
 
-        $pdf = PDF::loadView('P.pdf_parcela', $data)
+        $pdf = PDF::loadView('pdf.parcela', compact('parcela'), $data)
             ->setPaper('a4', 'portrait')
             ->setOptions([
                 'isHtml5ParserEnabled' => true,
@@ -152,7 +152,7 @@ class ProductorDashboardController extends Controller
 
         $parcelasIds = Parcela::where('id_productor', $userId)->pluck('id_parcela');
 
-        $troza = Troza::with(['parcela', 'estimaciones'])
+        $trozas = Troza::with(['parcela', 'estimacion'])
             ->where('id_troza', $id)
             ->whereIn('id_parcela', $parcelasIds)
             ->firstOrFail();
@@ -163,7 +163,7 @@ class ProductorDashboardController extends Controller
             'logo' => public_path('images/logo.png')
         ];
 
-        $pdf = PDF::loadView('P.pdf_troza', $data)
+        $pdf = PDF::loadView('P.pdf_export_trozas',compact('trozas'), $data)
             ->setPaper('a4', 'portrait')
             ->setOptions([
                 'isHtml5ParserEnabled' => true,

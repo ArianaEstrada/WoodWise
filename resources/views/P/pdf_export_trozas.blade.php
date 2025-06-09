@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>{{ $titulo }}</title>
+    <title>Trozas</title>
     <style>
         body { font-family: 'DejaVu Sans', sans-serif; }
         .header { text-align: center; margin-bottom: 20px; }
@@ -21,7 +21,7 @@
     @if(file_exists($logo))
         <img src="{{ $logo }}" class="logo">
     @endif
-    <div class="title">{{ $titulo }}</div>
+    <div class="title">Trozas</div>
     <div class="subtitle">Generado el: {{ $fecha }}</div>
 </div>
 
