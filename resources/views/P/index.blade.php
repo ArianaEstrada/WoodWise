@@ -10,6 +10,9 @@
                 </h1>
                 <p class="hero-subtitle">Gestión inteligente de recursos forestales</p>
             </div>
+            <button class="export-btn pulse" onclick="window.location.href='{{ route('exportar.general') }}'">
+                <i class="fas fa-download"></i> Exportar General
+            </button>
         </div>
 
         <!-- Stats Cards with Hover Effects -->
@@ -22,9 +25,6 @@
                     <div class="progress-bar">
                         <div class="progress-fill" style="width: {{ min(100, $stats['total_parcelas'] * 10) }}%"></div>
                     </div>
-                    <button class="section-export-btn parcelas-export">
-                        <i class="fas fa-download"></i> Exportar Parcelas
-                    </button>
                 </div>
             </div>
 
@@ -36,9 +36,6 @@
                     <div class="progress-bar">
                         <div class="progress-fill" style="width: {{ min(100, $stats['total_trozas'] / 20) }}%"></div>
                     </div>
-                    <button class="section-export-btn trozas-export">
-                        <i class="fas fa-download"></i> Exportar Trozas
-                    </button>
                 </div>
             </div>
 
@@ -50,9 +47,6 @@
                     <div class="progress-bar">
                         <div class="progress-fill" style="width: {{ min(100, $stats['total_estimaciones'] / 10) }}%"></div>
                     </div>
-                    <button class="section-export-btn estimaciones-export">
-                        <i class="fas fa-download"></i> Exportar Estimaciones
-                    </button>
                 </div>
             </div>
         </div>
@@ -151,6 +145,39 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="details-section">
+                            <h4><i class="fas fa-calculator"></i> Estimaciones</h4>
+                            @if($parcela->estimaciones->count() > 0)
+                                <div class="trozas-table">
+                                    <div class="table-header">
+                                        <div>ID</div>
+                                        <div>Fecha</div>
+                                        <div>Volumen</div>
+                                        <div>Calidad</div>
+                                        <div>Acciones</div>
+                                    </div>
+                                    @foreach($parcela->estimaciones as $estimacion)
+                                        <div class="table-row">
+                                            <div>#{{ $estimacion->id_estimacion }}</div>
+                                            <div>{{ $estimacion->fecha_estimacion }}</div>
+                                            <div>{{ $estimacion->volumen_estimado }} m³</div>
+                                            <div>{{ $estimacion->calidad }}</div>
+                                            <div>
+                                                <a href="{{ route('estimacion.pdf', $estimacion->id_estimacion) }}" class="action-btn">
+                                                    <i class="fas fa-file-export"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @else
+                                <div class="empty-state">
+                                    <i class="fas fa-calculator"></i>
+                                    <p>No hay estimaciones registradas para esta parcela</p>
+                                </div>
+                            @endif
                         </div>
 
                         <div class="details-section">
@@ -323,21 +350,12 @@
                 details.style.maxHeight = '0';
             }
         }
-
-        // Export buttons functionality
-        document.querySelector('.parcelas-export').addEventListener('click', function() {
-            window.location.href = "{{ route('parcelas.export') }}";
-        });
-
-        document.querySelector('.trozas-export').addEventListener('click', function() {
-            window.location.href = "{{ route('trozas.export') }}";
-        });
-
-        document.querySelector('.estimaciones-export').addEventListener('click', function() {
-            window.location.href = "{{ route('estimaciones.export') }}";
-        });
     </script>
 @endpush
+
+
+
+
 
 @push('styles')
     <style>
@@ -430,11 +448,6 @@
             margin-bottom: 0;
         }
 
-        .hero-actions {
-            position: relative;
-            z-index: 1;
-        }
-
         .export-btn {
             background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
@@ -501,8 +514,6 @@
 
         .stat-content {
             flex-grow: 1;
-            position: relative;
-            padding-bottom: 2.5rem;
         }
 
         .stat-label {
@@ -529,63 +540,6 @@
         .progress-fill {
             height: 100%;
             border-radius: 3px;
-        }
-
-        /* Section Export Buttons */
-        .section-export-btn {
-            margin-top: 1rem;
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-        }
-
-        .section-export-btn i {
-            margin-right: 0.5rem;
-        }
-
-        .parcelas-export {
-            background: rgba(58, 95, 11, 0.1);
-            color: var(--primary-dark);
-            border: 1px solid rgba(58, 95, 11, 0.3);
-        }
-
-        .parcelas-export:hover {
-            background: rgba(58, 95, 11, 0.2);
-            transform: translateY(-2px);
-        }
-
-        .trozas-export {
-            background: rgba(107, 142, 35, 0.1);
-            color: var(--secondary-dark);
-            border: 1px solid rgba(107, 142, 35, 0.3);
-        }
-
-        .trozas-export:hover {
-            background: rgba(107, 142, 35, 0.2);
-            transform: translateY(-2px);
-        }
-
-        .estimaciones-export {
-            background: rgba(139, 69, 19, 0.1);
-            color: var(--accent);
-            border: 1px solid rgba(139, 69, 19, 0.3);
-        }
-
-        .estimaciones-export:hover {
-            background: rgba(139, 69, 19, 0.2);
-            transform: translateY(-2px);
         }
 
         /* Card specific styles */

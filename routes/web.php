@@ -103,6 +103,9 @@ Route::prefix('P')->middleware(['auth'])->group(function () {
     Route::get('/index', [ProductorDashboardController::class, 'index'])
         ->name('productor.dashboard');
 
+    Route::get('/exportar-general', [ProductorDashboardController::class, 'exportarGeneral'])
+        ->name('exportar.general');
+
     Route::get('/parcelas/export', [ProductorDashboardController::class, 'exportarParcelas'])
         ->name('parcelas.export');
 
@@ -117,4 +120,6 @@ Route::prefix('P')->middleware(['auth'])->group(function () {
 
     Route::get('/troza/{id}/pdf', [ProductorDashboardController::class, 'generarPdfTroza'])
         ->name('troza.pdf');
+    Route::get('/estimacion/{id}/pdf', [ProductorDashboardController::class, 'generarPdfEstimacion'])
+        ->name('estimacion.pdf');
 });
