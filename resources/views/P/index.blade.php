@@ -8,7 +8,7 @@
                 <h1 class="hero-title">
                     <span class="icon-forest">🌲</span> Wood<span class="text-gradient">Wise</span>
                 </h1>
-                <p class="hero-subtitle">Gestión inteligente de recursos forestales</p>
+                <p class="hero-subtitle">Gestión inteligente de recursos forestales</p><p>Bienvendio Productor</p>
             </div>
             <button class="export-btn pulse" onclick="window.location.href='{{ route('exportar.general') }}'">
                 <i class="fas fa-download"></i> Exportar General

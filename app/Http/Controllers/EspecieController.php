@@ -16,7 +16,7 @@ class EspecieController extends Controller
             if (Auth::user()->persona->rol->nom_rol !== 'Administrador') {
                 // Redirige a la vista 'denegado' con un código HTTP 403 (Forbidden)
                 return response()->view('denegado', [], 403);
-                
+
                 // Opcional: Si prefieres usar abort (mostrará la vista 403 personalizada)
                 // abort(403, 'No tienes permisos de administrador');
             }
@@ -36,27 +36,27 @@ class EspecieController extends Controller
 
     public function store(Request $request)
     {
-    
+
         $validatedData = $request->validate([
             'nom_cientifico' => 'required|string|max:255',
             'nom_comun' => 'required|string|max:255',
             'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
-    
+
         // Si hay imagen, almacenarla
         if ($request->hasFile('imagen')) {
             $imagePath = $request->file('imagen')->store('imagenes_especies', 'public');
             $validatedData['imagen'] = $imagePath;
-    
+
             // Imprimir la ruta donde se guarda la imagen
         }
-    
+
         Especie::create($validatedData);
-    
+
         return redirect()->route('especies.index')->with('register', ' ');
     }
-    
-    
+
+
 
 
     public function update(Request $request, string $id)

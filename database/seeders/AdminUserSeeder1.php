@@ -25,7 +25,7 @@ class AdminUserSeeder1 extends Seeder
             'am' => 'Principal',
             'telefono' => '0000000000',
             'correo' => 'admin@empresa.com',
-            'contrasena' => Hash::make('AdminPassword123!'), // Se encripta correctamente con Bcrypt
+                'contrasena' => Hash::make('AdminPassword123!'), // Se encripta correctamente con Bcrypt
             'id_rol' => $adminRol->id_rol,
             'is_producer' => 0
         ]);

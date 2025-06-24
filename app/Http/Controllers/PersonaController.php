@@ -23,7 +23,7 @@ class PersonaController extends Controller
             if (Auth::user()->persona->rol->nom_rol !== 'Administrador') {
                 // Redirige a la vista 'denegado' con un código HTTP 403 (Forbidden)
                 return response()->view('denegado', [], 403);
-                
+
                 // Opcional: Si prefieres usar abort (mostrará la vista 403 personalizada)
                 // abort(403, 'No tienes permisos de administrador');
             }
@@ -76,7 +76,7 @@ class PersonaController extends Controller
 
     // Registrar según el rol
     switch ($rolNombre) {
-        case 'tecnico':
+        case 'Tecnico':
             Tecnico::create([
                 'id_persona' => $persona->id_persona,
                 'cedula_p' => $validatedData['cedula'] ?? null,
