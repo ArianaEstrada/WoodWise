@@ -49,10 +49,10 @@ class TipoEstimacionController extends Controller
     }
 
     public function destroy($id)
-    {
-        Tipo_Estimacion::findOrFail($id)->delete();
-        return response()->json(['success' => 'Eliminado correctamente.']);
-    }
+{
+    Tipo_Estimacion::findOrFail($id)->delete();
+    return redirect()->route('tipo_estimaciones.index')->with('success', 'Tipo de estimación eliminado correctamente.');
+}
 }
 
 

@@ -220,23 +220,21 @@
                             </div>
                         </div>
 
-
-                        <!-- Cédula (condicional) -->
-                        <div id="cedula-container" class="mb-4" style="display: none;">
-                            <div class="form-floating">
-                                <input type="text" 
-                                    class="form-control @error('cedula') is-invalid @enderror" 
-                                    id="cedula" 
-                                    name="cedula" 
-                                    placeholder="Cédula"
-                                    value="{{ old('cedula') ?? '' }}"
-">
-                                <label for="cedula">{{ __('Cédula Profesional') }}</label>
-                                @error('cedula')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
+<!-- Cédula (condicional) -->
+<div id="cedula-container" class="mb-4" style="display: none;">
+    <div class="form-floating">
+        <input type="text" 
+            class="form-control @error('cedula') is-invalid @enderror" 
+            id="cedula" 
+            name="cedula" 
+            placeholder="Cédula"
+            value="{{ old('cedula') ?? '' }}">
+        <label for="cedula">{{ __('Cédula Profesional') }}</label>
+        @error('cedula')
+            <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
 
                         <!-- Botón de Registro -->
                         <div class="d-grid mt-4">
@@ -272,17 +270,13 @@
         this.parentElement.querySelector('.input-group-text').style.borderColor = '#e9ecef';
     });
     // Mostrar/ocultar campo de cédula según rol seleccionado
-    document.getElementById('id_rol').addEventListener('change', function() {
-        const cedulaContainer = document.getElementById('cedula-container');
-        const selectedRole = this.options[this.selectedIndex].text;
-        
-        cedulaContainer.style.display = selectedRole === "Tecnico" ? 'block' : 'none';
-        if(selectedRole === "Tecnico") {
-            document.getElementById('cedula').required = true;
-        } else {
-            document.getElementById('cedula').required = false;
-        }
-    });
+document.getElementById('id_rol').addEventListener('change', function() {
+    const cedulaContainer = document.getElementById('cedula-container');
+    const selectedRole = this.options[this.selectedIndex].text;
+    
+    cedulaContainer.style.display = selectedRole === "Tecnico" ? 'block' : 'none';
+    // Eliminamos las líneas que establecen el atributo required
+});
 
     // Función para mostrar/ocultar contraseña
     function togglePassword(fieldId) {

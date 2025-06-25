@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Persona;
 use App\Models\Rol;
 use App\Models\User;
+use App\Models\Tecnico;
+use App\Models\Productor;
+
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -76,14 +79,14 @@ class PersonaController extends Controller
 
     // Registrar según el rol
     switch ($rolNombre) {
-        case 'tecnico':
+        case 'Tecnico':
             Tecnico::create([
                 'id_persona' => $persona->id_persona,
                 'cedula_p' => $validatedData['cedula'] ?? null,
             ]);
             break;
 
-        case 'productor':
+        case 'Productor':
             Productor::create([
                 'id_persona' => $persona->id_persona,
             ]);

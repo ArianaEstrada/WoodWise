@@ -34,28 +34,43 @@ class EspecieController extends Controller
         return view('especies.index', compact('especies'));
     }
 
-    public function store(Request $request)
-    {
-    
-        $validatedData = $request->validate([
-            'nom_cientifico' => 'required|string|max:255',
-            'nom_comun' => 'required|string|max:255',
-            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
-        ]);
-    
-        // Si hay imagen, almacenarla
-        if ($request->hasFile('imagen')) {
-            $imagePath = $request->file('imagen')->store('imagenes_especies', 'public');
-            $validatedData['imagen'] = $imagePath;
-    
-            // Imprimir la ruta donde se guarda la imagen
-        }
-    
-        Especie::create($validatedData);
-    
-        return redirect()->route('especies.index')->with('register', ' ');
+  public function store(Request $request)
+{
+    $validatedData = $request->validate([
+        'nom_cientifico' => 'required|string|max:255',
+        'nom_comun' => 'required|string|max:255',
+        'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,bmp,svg,ico,tiff,psd,ai,eps,raw,heif,heic|max:5120' // 5MB máximo
+    ]);
+
+    // Si hay imagen, almacenarla
+    if ($request->hasFile('imagen')) {
+        $imagePath = $request->file('imagen')->store('imagenes_especies', 'public');
+        $validatedData['imagen'] = $imagePath;
+        
+        // Opcional: Generar miniaturas
+        $this->generateThumbnails($imagePath);
     }
-    
+
+    Especie::create($validatedData);
+
+    return redirect()->route('especies.index')->with('register', 'Especie creada exitosamente.');
+}
+
+// Método opcional para generar miniaturas
+protected function generateThumbnails($imagePath)
+{
+    try {
+        $image = Image::make(public_path('storage/'.$imagePath));
+        
+        // Generar miniatura de 300x300
+        $image->fit(300, 300, function ($constraint) {
+            $constraint->upsize();
+        })->save(public_path('storage/'.dirname($imagePath).'/thumbs/'.basename($imagePath)));
+        
+    } catch (\Exception $e) {
+        Log::error('Error al generar miniaturas: '.$e->getMessage());
+    }
+}
     
 
 
@@ -64,7 +79,7 @@ class EspecieController extends Controller
         $validatedData = $request->validate([
             'nom_cientifico' => 'required|string|max:255',
             'nom_comun' => 'required|string|max:255',
-            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,bmp,svg,ico,tiff,psd,ai,eps,raw,heif,heic|max:5120' // 5MB máximo
         ]);
 
         $especie = Especie::findOrFail($id);

@@ -51,7 +51,6 @@ class TecnicoController extends Controller
             'cedula_p'   => 'nullable|string|max:50|unique:tecnicos,cedula_p',
         ]);
 
-        $validatedData['clave_tecnico'] = $this->generarClaveUnica();
 
         Tecnico::create($validatedData);
 

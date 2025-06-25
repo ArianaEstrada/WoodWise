@@ -283,11 +283,11 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label class="form-label text-muted">Diámetro Otro Extremo (metros)</label>
-                            <input type="number" step="0.01" name="diametro_otro_extremo" class="form-control border-2" placeholder="Opcional">
+                            <input type="number" step="0.01" name="diametro_otro_extremo" class="form-control border-2" >
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label text-muted">Diámetro Medio (metros)</label>
-                            <input type="number" step="0.01" name="diametro_medio" class="form-control border-2" placeholder="Opcional">
+                            <input type="number" step="0.01" name="diametro_medio" class="form-control border-2" >
                         </div>
                     </div>
                     <div class="mb-3">
