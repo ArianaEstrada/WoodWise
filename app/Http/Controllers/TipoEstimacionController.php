@@ -53,6 +53,7 @@ class TipoEstimacionController extends Controller
     Tipo_Estimacion::findOrFail($id)->delete();
     return redirect()->route('tipo_estimaciones.index')->with('success', 'Tipo de estimación eliminado correctamente.');
 }
+
 }
 
 
