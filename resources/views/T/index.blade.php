@@ -326,7 +326,7 @@
                     <form method="POST" action="{{ route('trozas.store') }}">
                         @csrf
                         <input type="hidden" name="id_parcela" value="{{ $parcela->id_parcela }}">
-                        
+
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label class="wood-form-label">Longitud (m)</label>
@@ -336,7 +336,7 @@
                                 <label class="wood-form-label">Diámetro (m)</label>
                                 <input type="number" step="0.01" name="diametro" class="wood-form-control" required>
                             </div>
-                            
+
                             <div class="col-md-6">
                                 <label class="wood-form-label">Diámetro otro extremo (m)</label>
                                 <input type="number" step="0.01" name="diametro_otro_extremo" class="wood-form-control">
@@ -345,7 +345,7 @@
                                 <label class="wood-form-label">Diámetro medio (m)</label>
                                 <input type="number" step="0.01" name="diametro_medio" class="wood-form-control">
                             </div>
-                            
+
                             <div class="col-md-6">
                                 <label class="wood-form-label">Densidad</label>
                                 <input type="number" step="0.01" name="densidad" class="wood-form-control" required>
@@ -360,7 +360,7 @@
                                 </select>
                             </div>
                         </div>
-                        
+
                         <div class="wood-modal-footer mt-4">
                             <button type="button" class="btn btn-wood-outline" data-bs-dismiss="modal">
                                 <i class="fas fa-times me-1"></i> Cancelar
@@ -395,7 +395,7 @@
                     <form method="POST" action="{{ route('estimaciones.store') }}">
                         @csrf
                         <input type="hidden" name="id_parcela" value="{{ $parcela->id_parcela }}">
-                        
+
                         <div class="mb-3">
                             <label class="wood-form-label">Seleccionar Troza</label>
                             <select class="wood-form-select" name="id_troza" required>
@@ -405,7 +405,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        
+
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label class="wood-form-label">Tipo de Estimación</label>
@@ -426,12 +426,12 @@
                                 </select>
                             </div>
                         </div>
-                        
+
                         <div class="mb-3">
                             <label class="wood-form-label">Cálculo (m³)</label>
                             <input type="number" step="0.01" class="wood-form-control" name="calculo" required>
                         </div>
-                        
+
                         <div class="wood-modal-footer mt-4">
                             <button type="button" class="btn btn-wood-outline" data-bs-dismiss="modal">
                                 <i class="fas fa-times me-1"></i> Cancelar
@@ -466,7 +466,7 @@
                     <form method="POST" action="{{ route('turno_cortas.store') }}">
                         @csrf
                         <input type="hidden" name="id_parcela" value="{{ $parcela->id_parcela }}">
-                        
+
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label class="wood-form-label">Código de Corta</label>
@@ -477,12 +477,12 @@
                                 <input type="date" name="fecha_corta" class="wood-form-control" required>
                             </div>
                         </div>
-                        
+
                         <div class="mb-3">
                             <label class="wood-form-label">Notas adicionales</label>
                             <textarea class="wood-form-control" name="notas" rows="3"></textarea>
                         </div>
-                        
+
                         <div class="wood-modal-footer mt-4">
                             <button type="button" class="btn btn-wood-outline" data-bs-dismiss="modal">
                                 <i class="fas fa-times me-1"></i> Cancelar
@@ -600,18 +600,18 @@
     .wood-modal-content {
         background-color: #2a2a2a;
     }
-    
+
     .wood-form-control,
     .wood-form-select {
         background-color: #333;
         border-color: #444;
         color: #eee;
     }
-    
+
     .wood-form-label {
         color: #ddd;
     }
-    
+
     .wood-modal-footer {
         border-top-color: rgba(255, 255, 255, 0.05);
     }
