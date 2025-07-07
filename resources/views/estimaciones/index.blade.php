@@ -26,6 +26,9 @@
                             <th class="py-3">Tipo Estimación</th>
                             <th class="py-3">Fórmula</th>
                             <th class="py-3">Cálculo</th>
+                            <th class="py-3">Biomasa</th>
+                            <th class="py-3">Carbono</th>
+
                             <th class="py-3">Troza</th>
                             <th class="py-3 pe-4 text-end">Acciones</th>
                         </tr>
@@ -42,8 +45,19 @@
                             <td class="fw-semibold">{{ $estimacion->formula->nom_formula }}</td>
                             <td>
                                 <span class="badge bg-success bg-opacity-10 text-success text-white">
-                                    {{ number_format($estimacion->calculo, 6) }} 
-                                    {{ $estimacion->tipoEstimacion->unidad_medida }}
+                                    {{ number_format($estimacion->calculo, 6) }} m3
+                                </span>
+                            </td>
+                             <td>
+                                <span class="badge bg-success bg-opacity-10 text-success text-white">
+                                    {{ number_format($estimacion->biomasa, 6) }} 
+                                    {{ $estimacion->tipoEstimacion->unidad_medida }} kg
+                                </span>
+                            </td>
+                             <td>
+                                <span class="badge bg-success bg-opacity-10 text-success text-white">
+                                    {{ number_format($estimacion->carbono, 6) }} 
+                                    {{ $estimacion->tipoEstimacion->unidad_medida }}kg
                                 </span>
                             </td>
                             <td>
@@ -252,7 +266,7 @@
                             <option value="">Seleccione una troza</option>
                             @foreach ($trozas as $troza)
                             <option value="{{ $troza->id_troza }}">
-                               {{ $troza->id_troza ?? 'N/A' }} {{ $troza->especie->nom_comun ?? 'N/A' }} ({{ $troza->parcela->nom_parcela ?? 'N/A' }})
+                               {{ $troza->id_troza ?? 'N/A' }} {{ $troza->especie->nom_comun ?? 'N/A' }} ({{ $troza->parcela->nom_parcela ?? 'N/A' }}) ({{ number_format($troza->longitud ?? 'N/A',2) }} x {{ number_format($troza->diametro ?? 'N/A',2) }})
                             </option>
                             @endforeach
                         </select>

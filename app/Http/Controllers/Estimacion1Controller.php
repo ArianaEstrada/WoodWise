@@ -28,44 +28,53 @@ class Estimacion1Controller extends Controller
      * Mostrar listado de estimaciones con paginación
      */
     public function index(Request $request)
-    {
-        $query = Estimacion1::with(['tipoEstimacion', 'formula', 'arbol.especie', 'arbol.parcela']);
-        
-        // Búsqueda
-        if ($request->has('search')) {
-            $search = $request->search;
-            $query->where(function($q) use ($search) {
-                $q->where('calculo', 'like', "%$search%")
-                  ->orWhereHas('tipoEstimacion', function($q) use ($search) {
-                      $q->where('desc_estimacion', 'like', "%$search%");
-                  })
-                  ->orWhereHas('formula', function($q) use ($search) {
-                      $q->where('nom_formula', 'like', "%$search%");
-                  })
-                  ->orWhereHas('arbol', function($q) use ($search) {
-                      $q->where('id_arbol', 'like', "%$search%")
-                        ->orWhereHas('especie', function($q) use ($search) {
-                            $q->where('nom_cientifico', 'like', "%$search%");
-                        })
-                        ->orWhereHas('parcela', function($q) use ($search) {
-                            $q->where('nom_parcela', 'like', "%$search%");
-                        });
-                  });
-            });
-        }
-        
-        // Ordenación
-        $sortField = $request->get('sort', 'id_estimacion1');
-        $sortDirection = $request->get('direction', 'asc');
-        $query->orderBy($sortField, $sortDirection);
-        
-        $estimaciones = $query->paginate(10);
-        $tiposEstimacion = Tipo_Estimacion::all();
-        $formulas = Formula::all();
-        $arboles = Arbol::with(['especie', 'parcela'])->get();
-        
-        return view('estimaciones1.index', compact('estimaciones', 'tiposEstimacion', 'formulas', 'arboles'));
+{
+    $query = Estimacion1::with(['tipoEstimacion', 'formula', 'arbol.especie', 'arbol.parcela']);
+    
+    // Búsqueda
+    if ($request->has('search')) {
+        $search = $request->search;
+        $query->where(function($q) use ($search) {
+            $q->where('calculo', 'like', "%$search%")
+              ->orWhereHas('tipoEstimacion', function($q) use ($search) {
+                  $q->where('desc_estimacion', 'like', "%$search%");
+              })
+              ->orWhereHas('formula', function($q) use ($search) {
+                  $q->where('nom_formula', 'like', "%$search%");
+              })
+              ->orWhereHas('arbol', function($q) use ($search) {
+                  $q->where('id_arbol', 'like', "%$search%")
+                    ->orWhereHas('especie', function($q) use ($search) {
+                        $q->where('nom_cientifico', 'like', "%$search%");
+                    })
+                    ->orWhereHas('parcela', function($q) use ($search) {
+                        $q->where('nom_parcela', 'like', "%$search%");
+                    });
+              });
+        });
     }
+    
+    // Ordenación
+    $sortField = $request->get('sort', 'id_estimacion1');
+    $sortDirection = $request->get('direction', 'asc');
+    $query->orderBy($sortField, $sortDirection);
+    
+    $estimaciones = $query->paginate(10);
+    
+    // CORRECCIÓN: Usar whereIn directamente con get()
+    $tiposEstimacion = Tipo_Estimacion::whereIn('desc_estimacion', ['Volumen Maderable'])->get();
+    
+   $formulas = Formula::whereIn('nom_formula', [
+    'Biomasa Pinus montezumae',
+    'Biomasa Quercus crassifolia',
+    'Biomasa Quercus rugosa',
+    'Biomasa Pinus pseudostrobus'
+])->get();
+    
+    $arboles = Arbol::with(['especie', 'parcela'])->get();
+    
+    return view('estimaciones1.index', compact('estimaciones', 'tiposEstimacion', 'formulas', 'arboles'));
+}
 
     /**
      * Obtener fórmulas por tipo (para AJAX)
@@ -157,33 +166,5 @@ class Estimacion1Controller extends Controller
                ->with('success', 'Estimación eliminada correctamente');
     }
 
-    /**
-     * Calcular estimación basada en fórmula y árbol
-     */
-    private function calcularEstimacion($formulaId, $arbolId)
-    {
-        $formula = Formula::findOrFail($formulaId);
-        $arbol = Arbol::with('especie')->findOrFail($arbolId);
-        
-        // Extraer variables necesarias del árbol
-        $variables = [
-            'DAP' => $arbol->diametro_pecho,
-            'ALTURA' => $arbol->altura_total,
-            'FACTOR_ESPECIE' => $arbol->especie->factor_forma ?? 0.5,
-            'DENSIDAD' => $arbol->especie->densidad_madera ?? 0.7
-        ];
-        
-        // Reemplazar variables en la expresión
-        $expresion = $formula->expresion;
-        foreach ($variables as $key => $value) {
-            $expresion = str_replace($key, $value, $expresion);
-        }
-        
-        // Evaluar la expresión matemática
-        try {
-            return eval("return $expresion;");
-        } catch (\Throwable $th) {
-            return 0; // O manejar el error apropiadamente
-        }
-    }
+
 }

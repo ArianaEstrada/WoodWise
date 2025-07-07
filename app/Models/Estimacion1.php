@@ -33,7 +33,13 @@ class Estimacion1 extends Model
 {
     return $this->belongsTo(Arbol::class, 'id_arbol');
 }
+protected $dateFormat = 'Y-m-d H:i:s'; // Formato para todas las fechas
 
+// O para serialización a JSON
+protected function serializeDate(\DateTimeInterface $date)
+{
+    return $date->format('Y-m-d H:i:s');
+}
     public $incrementing = true;
     public $timestamps = true; // Si no usas created_at/updated_at
     protected $dates = [

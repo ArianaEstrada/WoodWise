@@ -35,11 +35,16 @@ class EstimacionController extends Controller
     public function index()
     {
         $estimaciones = Estimacion::with(['tipoEstimacion', 'formula', 'troza.especie', 'troza.parcela'])->get();
-        $tiposEstimacion = Tipo_Estimacion::all();
+        $tiposEstimacion = Tipo_Estimacion::all()->WhereIn('desc_estimacion',['Volumen Maderable']);
         $trozas = Troza::with(['especie', 'parcela'])->get();
-        $formulas = Formula::all();
-
-        return view('estimaciones.index', compact('estimaciones', 'tiposEstimacion', 'formulas', 'trozas'));
+$formulas = Formula::all()  // Obtiene TODOS los registros
+    ->whereIn('nom_formula', [
+        'Formula de Smalian',
+        'Formula de Huber',
+        'Formula Newton',
+        'Formula Tronco Cono'
+    ]);      
+ return view('estimaciones.index', compact('estimaciones', 'tiposEstimacion', 'formulas', 'trozas'));
     }
 
     public function getFormulasByTipo($tipoId)

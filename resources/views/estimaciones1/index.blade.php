@@ -52,7 +52,7 @@
                             </td>
                             <td>{{ $estimacion->formula->nom_formula }}</td>
                             <td>
-                                <span class="badge bg-success bg-opacity-10 text-success">
+                                <span class="badge bg-success bg-opacity-10 text-success text-white">
                                     {{ number_format($estimacion->calculo, 4) }} 
                                     {{ $estimacion->tipoEstimacion->unidad_medida }}
                                 </span>
@@ -130,7 +130,7 @@
                     </div>
                 </div>
                 
-                <div class="row">
+                <div class="row text-white">
                     <div class="col-md-6 mb-3">
                         <h6 class="text-muted">Tipo de Estimación:</h6>
                         <p class="fw-bold">{{ $estimacion->tipoEstimacion->desc_estimacion }}</p>
@@ -139,9 +139,9 @@
                         <h6 class="text-muted">Fórmula Utilizada:</h6>
                         <p class="fw-bold">{{ $estimacion->formula->nom_formula }}</p>
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <h6 class="text-muted">Resultado:</h6>
-                        <p class="fw-bold">
+                    <div class="col-md-6 mb-3 text-white">
+                        <h6 class="text-muted text-white">Resultado:</h6>
+                        <p class="fw-bold text-white">
                             {{ number_format($estimacion->calculo, 6) }} 
                             {{ $estimacion->tipoEstimacion->unidad_medida }}
                         </p>
@@ -167,8 +167,9 @@
                     </div>
                     <div class="col-md-6 mb-3">
                         <h6 class="text-muted">Última Actualización:</h6>
-                        <p class="fw-bold">{{ $estimacion->updated_at->format('d/m/Y H:i') }}</p>
-                    </div>
+<p class="fw-bold">
+    {{ $estimacion->updated_at ? $estimacion->updated_at->format('d/m/Y H:i') : 'Sin fecha' }}
+</p>                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -273,17 +274,16 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label text-muted">Fórmula</label>
-                        <select name="id_formula" id="formula_select" class="form-select border-2" required>
-                            <option value="">Seleccione una fórmula</option>
-                            @foreach ($formulas as $formula)
-                            <option value="{{ $formula->id_formula }}" class="tipo-{{ $formula->id_tipo_e }}" 
-                                {{ old('id_tipo_e') == $formula->id_tipo_e ? '' : 'hidden' }}>
-                                {{ $formula->nom_formula }}
-                            </option>
-                            @endforeach
-                        </select>
-                    </div>
+    <label class="form-label text-muted">Fórmula</label>
+    <select name="id_formula" id="formula_select" class="form-select border-2" required>
+        <option value="">Seleccione una fórmula</option>
+        @foreach ($formulas as $formula)
+        <option value="{{ $formula->id_formula }}">
+            {{ $formula->nom_formula }}
+        </option>
+        @endforeach
+    </select>
+</div>
                     <div class="mb-3">
                         <label class="form-label text-muted">Árbol</label>
                         <select name="id_arbol" class="form-select border-2" required>
@@ -295,12 +295,7 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label text-muted">Resultado del Cálculo</label>
-                        <input type="number" step="0.000001" name="calculo" 
-                               class="form-control border-2" value="{{ old('calculo') }}">
-                        <small class="text-muted">Dejar en blanco para calcular automáticamente</small>
-                    </div>
+                    
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
                         <button type="button" class="btn btn-outline-secondary me-md-2 rounded-pill" 
                                 data-bs-dismiss="modal">Cancelar</button>
